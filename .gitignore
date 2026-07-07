@@ -26,9 +26,30 @@ reports/
 
 # Logs
 *.log
+*.log.err
 
-# Screenshots
+# Screenshots and test shots
 frontend_e2e_shots/
+gameplay_shots/
+docs/screenshots/
+screenshot_*.png
+
+# Test temp files
+test_*.txt
+godot_*.txt
+tmp_test.ps1
+
+# HTML reports (generated, not source)
+intuita-test-report/
+intuita-final-report/
+gameplay-fix-report/
+.trae-html-share-packages/
+frontend_e2e_*.html
+intuita_pitch.html
+
+# Garbage path-mangled files
+*test_done*
+*failures.txt*
 
 # Python cache
 __pycache__/
