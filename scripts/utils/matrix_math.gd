@@ -1,6 +1,7 @@
 class_name MatrixMath
 
-static func copy_matrix(src: Array[Array]) -> Array[Array]:
+# Accept untyped Array — callers (e.g. ConservationEngine.matrix) use plain Array
+static func copy_matrix(src: Array) -> Array[Array]:
 	var copy: Array[Array] = []
 	for i in range(src.size()):
 		var row: Array = []
