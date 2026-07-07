@@ -40,9 +40,20 @@ jobs:
       - name: Run gdUnit4 tests
         timeout-minutes: 15
         run: |
-          $testOutput = & ./Godot_v4.6.3-stable_win64_console.exe --headless --path . -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://scripts/tests/ --ignoreHeadlessMode 2>&1 | Out-String
-          $testOutput -split "`n" | Select-String "Overall Summary|FAILED|Exit code" | ForEach-Object { Write-Host $_.Line }
+          cmd /c ".\Godot_v4.6.3-stable_win64_console.exe --headless --path . -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://scripts/tests/ --ignoreHeadlessMode > test_output.txt 2>&1"
+          $output = Get-Content test_output.txt -Raw
+          $output -split "`n" | Select-String "Overall Summary|FAILED|Exit code" | ForEach-Object { Write-Host $_.Line }
           # Godot leaks resources at exit causing non-zero process exit code;
-          # trust gdUnit4's own exit code instead
-          if ($testOutput -match "Exit code: 1") { exit 1 }
+          # trust gdUnit4's own exit code string instead
+          if ($output -match "Exit code: 1") {
+            Write-Host "`n=== FULL TEST OUTPUT ==="
+            Write-Host $output
+            exit 1
+          }
           Write-Host "All gdUnit4 tests passed."
+      - name: Upload test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdunit-test-logs
+          path: test_output.txt
