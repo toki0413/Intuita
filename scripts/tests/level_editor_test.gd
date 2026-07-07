@@ -67,7 +67,7 @@ func test_load_level_populates_fields() -> void:
 	assert_bool(success).is_true()
 	var data: Variant = _editor.get_current_data()
 	assert_object(data).is_not_null()
-	assert_str(data.title).is_equal("First Click")
+	assert_str(data.title).is_equal("First Experiment")
 	assert_int(data.space_group_number).is_equal(225)
 	assert_str(data.space_group_symbol).is_equal("Fm-3m")
 	assert_int(data.elements.size()).is_equal(2)

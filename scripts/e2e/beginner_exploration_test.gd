@@ -6,7 +6,7 @@ class_name BeginnerExplorationTest
 extends GdUnitTestSuite
 
 const FIRST_LEVELS: Array[Dictionary] = [
-	{"chapter": 1, "level": 1, "title": "First Click"},
+	{"chapter": 1, "level": 1, "title": "First Experiment"},
 	{"chapter": 1, "level": 2, "title": "More Colors"},
 ]
 

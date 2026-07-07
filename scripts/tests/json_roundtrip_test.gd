@@ -87,7 +87,7 @@ func test_json_file_matches_roundtrip() -> void:
 
 	var ld := LevelData.new()
 	ld.from_json(data)
-	assert_str(ld.title).is_equal("First Click")
+	assert_str(ld.title).is_equal("First Experiment")
 	assert_int(ld.space_group_number).is_equal(225)
 
 func test_empty_json_loads_defaults() -> void:

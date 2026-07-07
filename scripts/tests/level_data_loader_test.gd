@@ -45,7 +45,7 @@ func test_challenge_has_3_levels() -> void:
 func test_load_nacl_level() -> void:
 	var ld = _loader.load_level_data(1, 1)
 	assert_object(ld).is_not_null()
-	assert_str(ld.title).is_equal("First Click")
+	assert_str(ld.title).is_equal("First Experiment")
 	assert_int(ld.space_group_number).is_equal(225)
 	assert_str(ld.space_group_symbol).is_equal("Fm-3m")
 	assert_int(ld.goals.size()).is_greater_equal(1)
