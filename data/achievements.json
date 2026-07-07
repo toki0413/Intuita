@@ -1,0 +1,180 @@
+{
+  "achievements": [
+    {
+      "id": "first_step",
+      "title": "First Step",
+      "title_zh": "第一步",
+      "description": "Complete your first level.",
+      "description_zh": "完成你的第一个关卡。",
+      "condition_type": "level_complete",
+      "condition_params": {"count": 1},
+      "secret": false,
+      "icon": "🏛️"
+    },
+    {
+      "id": "crystal_founder",
+      "title": "Crystal Founder",
+      "title_zh": "晶体奠基者",
+      "description": "Complete all Chapter 1 levels.",
+      "description_zh": "完成第一章所有关卡。",
+      "condition_type": "chapter_complete",
+      "condition_params": {"chapter": 1},
+      "secret": false,
+      "icon": "💎"
+    },
+    {
+      "id": "flow_master",
+      "title": "Flow Master",
+      "title_zh": "流之主",
+      "description": "Complete all Chapter 2 levels.",
+      "description_zh": "完成第二章所有关卡。",
+      "condition_type": "chapter_complete",
+      "condition_params": {"chapter": 2},
+      "secret": false,
+      "icon": "🌊"
+    },
+    {
+      "id": "fire_walker",
+      "title": "Fire Walker",
+      "title_zh": "火行者",
+      "description": "Complete all Chapter 3 levels.",
+      "description_zh": "完成第三章所有关卡。",
+      "condition_type": "chapter_complete",
+      "condition_params": {"chapter": 3},
+      "secret": false,
+      "icon": "🔥"
+    },
+    {
+      "id": "emergence_sage",
+      "title": "Emergence Sage",
+      "title_zh": "涌现贤者",
+      "description": "Complete all Chapter 4 levels.",
+      "description_zh": "完成第四章所有关卡。",
+      "condition_type": "chapter_complete",
+      "condition_params": {"chapter": 4},
+      "secret": false,
+      "icon": "🌌"
+    },
+    {
+      "id": "universal_architect",
+      "title": "Universal Architect",
+      "title_zh": "宇宙架构师",
+      "description": "Complete all campaign levels.",
+      "description_zh": "完成所有战役关卡。",
+      "condition_type": "all_chapters",
+      "condition_params": {},
+      "secret": false,
+      "icon": "🏆"
+    },
+    {
+      "id": "perfect_structure",
+      "title": "Perfect Structure",
+      "title_zh": "完美结构",
+      "description": "Complete a level with 3-star rating.",
+      "description_zh": "以三星评价完成一个关卡。",
+      "condition_type": "level_perfect",
+      "condition_params": {"stars": 3},
+      "secret": false,
+      "icon": "⭐"
+    },
+    {
+      "id": "conservation_purist",
+      "title": "Conservation Purist",
+      "title_zh": "守恒洁癖",
+      "description": "Complete 5 levels with zero warnings.",
+      "description_zh": "零警告完成5个关卡。",
+      "condition_type": "conservation_purist",
+      "condition_params": {"count": 5},
+      "secret": false,
+      "icon": "🧊"
+    },
+    {
+      "id": "speed_builder",
+      "title": "Speed Builder",
+      "title_zh": "速建者",
+      "description": "Complete a level within 60 seconds.",
+      "description_zh": "在60秒内完成一个关卡。",
+      "condition_type": "speed_run",
+      "condition_params": {"time_seconds": 60},
+      "secret": false,
+      "icon": "⚡"
+    },
+    {
+      "id": "fog_master",
+      "title": "Fog Master",
+      "title_zh": "迷雾驱散者",
+      "description": "Resolve 10 fog zones.",
+      "description_zh": "驱散10个迷雾区域。",
+      "condition_type": "fog_master",
+      "condition_params": {"count": 10},
+      "secret": false,
+      "icon": "🌫️"
+    },
+    {
+      "id": "first_evolution",
+      "title": "First Evolution",
+      "title_zh": "首次进化",
+      "description": "Create your first custom rule.",
+      "description_zh": "创建你的第一条自定义规则。",
+      "condition_type": "first_evolution",
+      "condition_params": {},
+      "secret": false,
+      "icon": "🧬"
+    },
+    {
+      "id": "tutorial_complete",
+      "title": "Student of Intuita",
+      "title_zh": "Intuita 学徒",
+      "description": "Complete the tutorial.",
+      "description_zh": "完成教程。",
+      "condition_type": "tutorial_complete",
+      "condition_params": {},
+      "secret": false,
+      "icon": "📖"
+    },
+    {
+      "id": "sandbox_explorer",
+      "title": "Sandbox Explorer",
+      "title_zh": "沙盒探险家",
+      "description": "Place 100 atoms in sandbox mode.",
+      "description_zh": "在沙盒模式中放置100个原子。",
+      "condition_type": "sandbox_explorer",
+      "condition_params": {"atom_count": 100},
+      "secret": false,
+      "icon": "🏗️"
+    },
+    {
+      "id": "streak_master",
+      "title": "Streak Master",
+      "title_zh": "连胜大师",
+      "description": "Complete 10 levels without failing.",
+      "description_zh": "连续完成10个关卡不失败。",
+      "condition_type": "streak_master",
+      "condition_params": {"count": 10},
+      "secret": false,
+      "icon": "🔥"
+    },
+    {
+      "id": "challenge_conqueror",
+      "title": "Challenge Conqueror",
+      "title_zh": "挑战征服者",
+      "description": "Complete all challenge levels.",
+      "description_zh": "完成所有挑战关卡。",
+      "condition_type": "chapter_complete",
+      "condition_params": {"chapter": -1},
+      "secret": false,
+      "icon": "🥇"
+    },
+    {
+      "id": "ca_wizard",
+      "title": "CA Wizard",
+      "title_zh": "元胞巫师",
+      "description": "Complete a Cellular Automaton level.",
+      "description_zh": "完成一个元胞自动机关卡。",
+      "condition_type": "level_complete",
+      "condition_params": {"domain": "cellular_automaton"},
+      "secret": true,
+      "icon": "🔮"
+    }
+  ]
+}

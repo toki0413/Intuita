@@ -1,0 +1,88 @@
+{
+  "v": 1,
+  "chapter": 3,
+  "level": 8,
+  "title": "Slow River",
+  "description": "Build a fluid mesh near a wall. The fluid must stick to the wall (zero speed) and speed up away from it. That gradient is the boundary layer.",
+  "domain": "fluid",
+  "construction_mode": "mesh_build",
+  "space_group_symbol": "P1",
+  "space_group_number": 1,
+  "lattice_parameters": {
+    "x": 20.0,
+    "y": 20.0,
+    "z": 20.0
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "FLUID",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 1
+    },
+    {
+      "symbol": "WALL",
+      "position": {
+        "x": 0.5,
+        "y": 0.0,
+        "z": 0.5
+      },
+      "wyckoff_label": "b",
+      "wyckoff_multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "strain_target",
+      "max_avg_strain": 0.5,
+      "sim_mode": "strain",
+      "description": "运行模拟后，结构平均应变需低于0.5（足够松弛）"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "undecidable",
+      "label": "Separation point",
+      "position": {
+        "x": 0.5,
+        "y": 0.1,
+        "z": 0.5
+      },
+      "radius": 2.5
+    }
+  ],
+  "hint": "No-slip condition: fluid velocity is zero at the wall. The boundary layer thickness depends on Reynolds number.",
+  "journal_entry": "Boundary layer: Where fluid meets wall, velocity surrenders to zero. No-slip is the law. The gradient is the proof.",
+  "scale_label": "nm",
+  "scale_range": {
+    "x": 0.1,
+    "y": 50.0
+  },
+  "scene_config": {
+    "boundary_type": "no_slip",
+    "reynolds_number": 100.0,
+    "flow_direction": [
+      1,
+      0,
+      0
+    ],
+    "wall_position": 0.0,
+    "boundary_layer_thickness": 2.0
+  },
+  "constraints": {},
+  "reward_cores": 6,
+  "available_tools": [
+    "mesh_builder",
+    "boundary_setter",
+    "flow_visualizer"
+  ]
+}

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intuita — 存在即被构造</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700;6..96,900&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030406;
+            --bg-elev: #0a0d12;
+            --paper: #e8e6e3;
+            --muted: #8b919c;
+            --cyan: #00f0ff;
+            --cyan-dim: rgba(0, 240, 255, 0.12);
+            --amber: #ff9f43;
+            --amber-dim: rgba(255, 159, 67, 0.12);
+            --green: #39ff14;
+            --border: rgba(0, 240, 255, 0.16);
+            --border-hover: rgba(0, 240, 255, 0.5);
+            --shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--paper);
+            font-family: 'Lora', 'Songti SC', serif;
+            line-height: 1.75;
+            overflow-x: hidden;
+        }
+
+        /* 背景氛围：噪点 + 网格 + 跟随光斑 */
+        .atmosphere {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 80% 10%, rgba(0, 240, 255, 0.08) 0%, transparent 35%),
+                radial-gradient(circle at 20% 80%, rgba(255, 159, 67, 0.06) 0%, transparent 35%),
+                linear-gradient(180deg, #030406 0%, #070a10 50%, #030406 100%);
+        }
+
+        .atmosphere::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+        }
+
+        .atmosphere::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .spotlight {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        /* 滚动进度条 */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--amber));
+            z-index: 100;
+            width: 0%;
+            box-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* 导航 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(3,4,6,0.9) 0%, transparent 100%);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--paper);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding: 4px 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+        }
+
+        .hero-track {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            margin-bottom: 40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--cyan);
+            background: rgba(0, 240, 255, 0.04);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-track::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+        }
+
+        .hero h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: clamp(72px, 16vw, 180px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            color: var(--paper);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s ease forwards 0.4s;
+        }
+
+        .hero h1 .accent {
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--cyan);
+            text-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+        }
+
+        .hero-tagline {
+            font-size: 22px;
+            color: var(--muted);
+            margin-top: 32px;
+            max-width: 720px;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.9s ease forwards 0.7s;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 1.2s;
+        }
+
+        .scroll-hint .line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--cyan), transparent);
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { transform: scaleY(0.3); opacity: 0.3; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* 内容区 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px 120px;
+        }
+
+        .section {
+            margin-bottom: 24px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: rgba(10, 13, 18, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow), 0 0 40px rgba(0, 240, 255, 0.08);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: var(--paper);
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+        }
+
+        .card h2 .num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+        }
+
+        .card h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--amber);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 28px 0 12px;
+        }
+
+        .card p, .card li {
+            font-size: 17px;
+            color: var(--paper);
+            margin-bottom: 16px;
+        }
+
+        .card ul {
+            padding-left: 28px;
+        }
+
+        .card li {
+            margin-bottom: 12px;
+        }
+
+        .card strong {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .highlight {
+            color: var(--cyan);
+            font-weight: 600;
+            border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+        }
+
+        /* 灵感卡片 */
+        .inspiration {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .insp-card {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.04), rgba(255, 159, 67, 0.04));
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 28px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .insp-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+        }
+
+        .insp-card h4 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 24px;
+            color: var(--paper);
+            margin-bottom: 12px;
+        }
+
+        .insp-card p {
+            font-size: 15px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* 章节卡片 */
+        .chapters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .chapter {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .chapter::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(225deg, var(--cyan-dim), transparent 60%);
+            opacity: 0.5;
+        }
+
+        .chapter:hover {
+            background: rgba(0, 240, 255, 0.04);
+            border-color: var(--border-hover);
+        }
+
+        .chapter h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--green);
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .chapter p {
+            font-size: 15px;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* 特性网格 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            background: rgba(0, 240, 255, 0.03);
+        }
+
+        .feature .icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .feature h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* 截图 */
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-top: 28px;
+        }
+
+        .screenshot {
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #000;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .screenshot:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 240, 255, 0.08);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .screenshot:hover img {
+            transform: scale(1.03);
+        }
+
+        .screenshot::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 240, 255, 0.03) 2px,
+                rgba(0, 240, 255, 0.03) 4px
+            );
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .screenshot:hover::after {
+            opacity: 1;
+        }
+
+        .screenshot .caption {
+            padding: 16px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            background: rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 100px 24px;
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(180deg, transparent, var(--cyan));
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 48px;
+            background: transparent;
+            color: var(--cyan);
+            border: 1px solid var(--cyan);
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover {
+            background: rgba(0, 240, 255, 0.08);
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+            color: var(--paper);
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            nav { padding: 16px 24px; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: clamp(48px, 14vw, 100px); }
+            .card { padding: 32px 24px; }
+            .card h2 { font-size: 28px; }
+            .screenshots { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="atmosphere"></div>
+    <div class="spotlight" id="spotlight"></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav>
+        <a href="#" class="logo">INTUI<span>TA</span></a>
+        <ul class="nav-links">
+            <li><a href="#intro">介绍</a></li>
+            <li><a href="#chapters">关卡</a></li>
+            <li><a href="#users">用户</a></li>
+            <li><a href="#value">价值</a></li>
+            <li><a href="#screens">画面</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-track">学习工作赛道 · 社会公益加选</div>
+        <h1>INTUI<span class="accent">TA</span></h1>
+        <p class="hero-tagline">存在即被构造 —— 一款受 Foldit 与 Besiege 启发的跨域科学构造游戏</p>
+        <div class="scroll-hint">
+            <span>SCROLL</span>
+            <div class="line"></div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="section" id="intro">
+            <div class="card">
+                <h2><span class="num">01</span> 创意介绍</h2>
+                <h3>想解决什么问题</h3>
+                <p>STEM 教育中普遍存在"抽象概念难直观理解、学生只会做题不会建模"的痛点。从晶体结构到分子构型，从流体边界到电磁屏蔽，从催化循环到拓扑缺陷，学生缺少一个能<span class="highlight">亲手构造、实时验证</span>的跨学科实验场。</p>
+                <h3>灵感来源</h3>
+                <p>Intuita 受两款经典游戏启发：<span class="highlight">Foldit</span> 让玩家通过折叠蛋白质解决真实科学问题，证明了"游戏化科研"的力量；<span class="highlight">Besiege</span> 让玩家在中世纪物理沙盒中自由建造并观察系统行为，展示了"构造-模拟-试错"的直觉学习闭环。我们希望把两者的精髓结合起来：既有 Foldit 的<span class="highlight">科学问题深度</span>，又有 Besiege 的<span class="highlight">自由构造乐趣</span>。</p>
+                <div class="inspiration">
+                    <div class="insp-card">
+                        <h4>🧬 来自 Foldit</h4>
+                        <p>把严肃的科学问题变成可玩的谜题；玩家的每一次操作都在探索真实约束。</p>
+                    </div>
+                    <div class="insp-card">
+                        <h4>⚙️ 来自 Besiege</h4>
+                        <p>自由组装、物理即时反馈、错误结构会 spectacularly 失败——从失败中学习。</p>
+                    </div>
+                </div>
+                <h3>大概是什么产品</h3>
+                <p>一款跨平台 3D 科学构造游戏。玩家在 3D 空间里放置原子、构建化学键、搭建拓扑路径、组装纳米器件、调整几何参数，系统通过"守恒矩阵"与"证明树"实时验证结构是否科学。当前已设计 <span class="highlight">42 个固定关卡 + 开放设计沙盒</span>，覆盖晶体、分子、流体、电磁、热力学、统计物理、化学反应、拓扑与器件等多个科学域。</p>
+            </div>
+        </section>
+
+        <section class="section" id="chapters">
+            <div class="card">
+                <h2><span class="num">02</span> 42 关的跨学科旅程</h2>
+                <div class="chapters">
+                    <div class="chapter">
+                        <h4>第1章 · 晶体与分子基础</h4>
+                        <p>NaCl、LiFePO₄、金刚石、水分子、乙醇合成……从空间群 Wyckoff 填充到 VSEPR 分子几何。</p>
+                    </div>
+                    <div class="chapter">
+                        <h4>第2章 · 流动与界面</h4>
+                        <p>锂离子通道、晶界桥接、拓扑相变、流体边界层、电磁屏蔽、热传导路径、扩散方程、多物理场耦合。</p>
+                    </div>
+                    <div class="chapter">
+                        <h4>第3章 · 反应与器件</h4>
+                        <p>催化循环、全固态电池、光催化分解水、锂硫电池、超导临界、量子隧穿二极管、蛋白质折叠漏斗、CO₂ 捕获材料。</p>
+                    </div>
+                    <div class="chapter">
+                        <h4>第4章 · 涌现</h4>
+                        <p>自组装、涌现行为、开放设计，让玩家自己成为"通用材料设计师"。</p>
+                    </div>
+                    <div class="chapter">
+                        <h4>挑战模式</h4>
+                        <p>极简主义、迷雾盲行、守恒洁癖、速度构造、全知全能——综合考验创造力与科学直觉。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="users">
+            <div class="card">
+                <h2><span class="num">03</span> 目标用户与痛点</h2>
+                <ul>
+                    <li><strong>核心用户</strong>：高中及本科阶段的化学、物理、材料、数学专业学生；科学爱好者；教师与科普工作者。</li>
+                    <li><strong>使用场景</strong>：课后自学跨学科概念；课堂演示对称性破缺、相变、流体与电磁现象；科普活动中让公众"亲手搭建"一个分子、拓扑结构或纳米器件。</li>
+                    <li><strong>当前痛点</strong>：专业软件门槛高、教材缺乏空间互动、缺少游戏化反馈导致学习动力不足；学生难以把公式与真实三维结构联系起来。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section" id="value">
+            <div class="card">
+                <h2><span class="num">04</span> 核心价值</h2>
+                <div class="features">
+                    <div class="feature">
+                        <span class="icon">🔬</span>
+                        <h4>直觉化建模</h4>
+                        <p>把抽象的群论、守恒律、拓扑不变量变成可点击、可旋转、可验证的 3D 操作。</p>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">🎮</span>
+                        <h4>游戏化反馈</h4>
+                        <p>每一关都有明确目标与实时验证，错误立刻可见，正确即时奖励。</p>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">🌍</span>
+                        <h4>教育公益</h4>
+                        <p>降低 STEM 教育门槛，让资源不足地区的学生也能接触高质量科学可视化工具。</p>
+                    </div>
+                    <div class="feature">
+                        <span class="icon">🧠</span>
+                        <h4>培养科学思维</h4>
+                        <p>不只是记忆知识点，更是训练"从假设到验证"的完整科学思维链。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="screens">
+            <div class="card">
+                <h2><span class="num">05</span> 实机画面</h2>
+                <div class="screenshots">
+                    <div class="screenshot">
+                        <img src="docs/screenshots/main_menu.png" alt="主菜单">
+                        <div class="caption">INTUITA 主菜单</div>
+                    </div>
+                    <div class="screenshot">
+                        <img src="docs/screenshots/atom_placed.png" alt="游戏场景">
+                        <div class="caption">3D 构造场景 — 点击 Wyckoff 标记后成功放置原子</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="card">
+                <h2><span class="num">06</span> 技术亮点</h2>
+                <ul>
+                    <li><strong>Godot 4 + Rust GDExtension</strong>：高性能 3D 渲染与物理计算。</li>
+                    <li><strong>多层验证管线</strong>：符号层、类型系统层、逻辑层、语义层、形式化证明层逐层把关。</li>
+                    <li><strong>守恒引擎</strong>：实时检查电荷、质量、几何约束，错误结构即时瓦解。</li>
+                    <li><strong>自动化 QA</strong>：42 关全部通过 Godot 单元测试 + pyautogui 实机烟雾测试。</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <section class="cta-section">
+        <a href="#" class="cta-button">
+            <span>下载试玩 Windows 版</span>
+            <span class="arrow">→</span>
+        </a>
+    </section>
+
+    <footer>
+        <p>Intuita Team · 2026 · 让科学触手可及</p>
+    </footer>
+
+    <script>
+        // 滚动进度条
+        const progressBar = document.getElementById('progressBar');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            progressBar.style.width = progress + '%';
+        });
+
+        // 光标跟随光斑
+        const spotlight = document.getElementById('spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.left = e.clientX + 'px';
+            spotlight.style.top = e.clientY + 'px';
+            spotlight.style.opacity = '1';
+        });
+        document.addEventListener('mouseleave', () => {
+            spotlight.style.opacity = '0';
+        });
+
+        // 滚动进入动画
+        const sections = document.querySelectorAll('.section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

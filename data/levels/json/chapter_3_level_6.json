@@ -1,0 +1,94 @@
+{
+    "v": 1,
+    "chapter": 3,
+    "level": 6,
+    "title": "Faraday Cage",
+    "description": "Build a cage that blocks electromagnetic waves. Any gap and radiation leaks through.",
+    "domain": "electromagnetics",
+    "construction_mode": "assembly",
+    "space_group_symbol": "P1",
+    "space_group_number": 1,
+    "lattice_parameters": {
+        "x": 5.0,
+        "y": 5.0,
+        "z": 5.0
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "Cu_panel_top",
+            "position": { "x": 0.5, "y": 0.5, "z": 1.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Cu_panel_bot",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Cu_panel_front",
+            "position": { "x": 0.5, "y": 0.0, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Cu_panel_back",
+            "position": { "x": 0.5, "y": 1.0, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Cu_panel_left",
+            "position": { "x": 0.0, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Cu_panel_right",
+            "position": { "x": 1.0, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "Fe",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        }
+    ],
+    "goals": [
+        {
+            "type": "survives_simulation",
+            "description": "The Faraday cage structure must survive electromagnetic stress",
+            "min_atoms": 3,
+            "sim_mode": "strain"
+        }
+    ],
+    "fog_zones": [
+        {
+            "fog_type": "semi_decidable",
+            "label": "Gap detection zone",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "radius": 1.5
+        }
+    ],
+    "hint": "Six panels make a complete cage - any gap leaks. Skin depth determines how thick the conductor needs to be.",
+    "journal_entry": "Faraday cage: Six panels, zero gaps. Maxwell's equations demand continuity — a constructive proof of electromagnetic shielding.",
+    "scale_label": "nm",
+    "scale_range": { "x": 0.1, "y": 5.0 },
+    "scene_config": {
+        "cage_type": "faraday",
+        "panel_material": "Cu",
+        "max_gap": 2.0,
+        "panel_count": 6
+    },
+    "constraints": {},
+    "reward_cores": 7,
+    "available_tools": ["panel_placer", "conductivity_checker", "em_tester"]
+}

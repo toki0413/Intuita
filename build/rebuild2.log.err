@@ -1,0 +1,26 @@
+SCRIPT ERROR: Parse Error: Cannot infer the type of "chosen" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/hud/core_shop_panel.gd:324)
+ERROR: Failed to load script "res://scripts/hud/core_shop_panel.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "status" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/hud/evolve_panel.gd:261)
+ERROR: Failed to load script "res://scripts/hud/evolve_panel.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:150)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:285)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "el" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:288)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:334)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "g" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:337)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "success" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:355)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "success" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:364)
+SCRIPT ERROR: Parse Error: Cannot infer the type of "data" variable because the value doesn't have a set type.
+   at: GDScript::reload (res://scripts/tools/level_editor_panel.gd:378)
+ERROR: Failed to load script "res://scripts/tools/level_editor_panel.gd" with error "Parse error".
+   at: load (modules/gdscript/gdscript.cpp:2907)

@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://intuita.local/level.schema.json",
+  "title": "IntuitaLevel",
+  "description": "Schema for Intuita level data. Version 1 supports both object and compact tuple representations for elements and goals.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["v", "chapter", "level", "title", "description", "goals"],
+  "properties": {
+    "v": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1,
+      "description": "Schema version. Must be 1."
+    },
+    "chapter": {
+      "type": "integer",
+      "description": "Chapter number. Negative values allowed for challenge/extra levels."
+    },
+    "level": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Level number within the chapter."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable level title."
+    },
+    "description": {
+      "type": "string",
+      "description": "Level description shown to the player."
+    },
+    "space_group_number": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "International Tables space group number."
+    },
+    "space_group_symbol": {
+      "type": "string",
+      "description": "Hermann-Mauguin space group symbol."
+    },
+    "lattice_parameters": {
+      "$ref": "#/$defs/vector3",
+      "description": "Unit cell lengths (a, b, c) in Angstroms."
+    },
+    "lattice_angles": {
+      "$ref": "#/$defs/vector3",
+      "description": "Unit cell angles (alpha, beta, gamma) in degrees."
+    },
+    "reward_cores": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of core rewards for completing the level."
+    },
+    "hint": {
+      "type": "string",
+      "description": "Optional hint text for the player."
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["crystal", "molecular", "fluid", "device", "reaction", "topology", "open"],
+      "description": "Gameplay domain."
+    },
+    "construction_mode": {
+      "type": "string",
+      "enum": ["wyckoff_fill", "bond_build", "mesh_build", "path_build", "assembly", "free", "cellular_automaton"],
+      "description": "How the player constructs the structure."
+    },
+    "scene_config": {
+      "type": "object",
+      "description": "Domain-specific scene configuration."
+    },
+    "scale_label": {
+      "type": "string",
+      "description": "Unit label for the scale (e.g., \"Å\", \"nm\")."
+    },
+    "scale_range": {
+      "$ref": "#/$defs/vector2",
+      "description": "Min/max scale range for the camera."
+    },
+    "available_tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of tool IDs unlocked in this level."
+    },
+    "fog_zones": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/fogZone" },
+      "description": "Pre-placed fog zones."
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Level constraints (budget, time, etc.)."
+    },
+    "journal_entry": {
+      "type": "string",
+      "description": "Scientific journal entry shown on level completion."
+    },
+    "elements": {
+      "type": "array",
+      "description": "Target elements / Wyckoff positions. Supports object or compact tuple format.",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/elementObject" },
+          { "$ref": "#/$defs/elementTuple" }
+        ]
+      }
+    },
+    "goals": {
+      "type": "array",
+      "description": "Victory conditions. Supports object or compact tuple format.",
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/goalObject" },
+          { "$ref": "#/$defs/goalTuple" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "vector3": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "z"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+      }
+    },
+    "vector2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" }
+      }
+    },
+    "elementObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["symbol", "position", "wyckoff_label", "wyckoff_multiplicity"],
+      "properties": {
+        "symbol": { "type": "string", "description": "Chemical element symbol (e.g., Na, Cl)." },
+        "position": {
+          "oneOf": [
+            { "$ref": "#/$defs/vector3" },
+            { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number" } }
+          ],
+          "description": "Fractional position in the unit cell."
+        },
+        "wyckoff_label": { "type": "string", "description": "Wyckoff position label (e.g., a, b)." },
+        "wyckoff_multiplicity": { "type": "integer", "minimum": 1, "description": "Multiplicity of the Wyckoff position." }
+      }
+    },
+    "elementTuple": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        { "type": "number", "description": "x (fractional coordinate)" },
+        { "type": "number", "description": "y (fractional coordinate)" },
+        { "type": "number", "description": "z (fractional coordinate)" },
+        { "type": "string", "description": "symbol (chemical element)" },
+        { "type": "string", "description": "wyckoff_label" },
+        { "type": "integer", "minimum": 1, "description": "wyckoff_multiplicity" }
+      ],
+      "items": false
+    },
+    "goalObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "description"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "wyckoff_fill", "conservation_check", "verification",
+            "symmetry_check", "bond_check", "bond_build", "geometry_check",
+            "transport_check", "interface_check", "reaction_path", "assembly_check",
+            "topology_check", "mesh_build", "path_build", "thermal_check",
+            "diffusion_check", "em_check", "ca_pattern_reach",
+            "ca_conservation_maintain", "ca_phase_transition",
+            "fuzzy_check", "ca_step_count", "element_count", "fog_dispel", "bond_count"
+          ],
+          "description": "Goal type."
+        },
+        "description": { "type": "string" },
+        "element": { "type": "string" },
+        "wyckoff": { "type": "string" },
+        "required_count": { "type": "integer", "minimum": 1 },
+        "max_deviation": { "type": "number", "minimum": 0 },
+        "required_layer": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "goalTuple": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 7,
+      "prefixItems": [
+        { "type": "string", "description": "type" },
+        { "type": "string", "description": "description" },
+        { "type": "string", "description": "element (optional, null if not applicable)" },
+        { "type": "string", "description": "wyckoff (optional, null if not applicable)" },
+        { "type": "integer", "minimum": 1, "description": "required_count (optional, null if not applicable)" },
+        { "type": "number", "minimum": 0, "description": "max_deviation (optional, null if not applicable)" },
+        { "type": "integer", "minimum": 0, "description": "required_layer (optional, null if not applicable)" }
+      ],
+      "items": false
+    },
+    "fogZone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["position", "type"],
+      "properties": {
+        "position": {
+          "oneOf": [
+            { "$ref": "#/$defs/vector3" },
+            { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number" } }
+          ]
+        },
+        "type": { "type": "string" },
+        "radius": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

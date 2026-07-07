@@ -1,0 +1,57 @@
+{
+    "v": 1,
+    "chapter": 3,
+    "level": 11,
+    "title": "Topological Defect",
+    "description": "Introduce dislocations and disclinations in a 2D lattice. Understand Burgers vectors and topological charge — defects cannot be continuously removed.",
+    "domain": "topology",
+    "construction_mode": "mesh_build",
+    "space_group_symbol": "P1",
+    "space_group_number": 1,
+    "lattice_parameters": {
+        "x": 15.0,
+        "y": 15.0,
+        "z": 5.0
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "ATOM",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 100
+        }
+    ],
+    "goals": [
+        {
+            "type": "survives_simulation",
+            "description": "The defect lattice must survive strain simulation with at least 30 atoms bonded",
+            "min_atoms": 10,
+            "sim_mode": "strain"
+        }
+    ],
+    "fog_zones": [
+        {
+            "fog_type": "undecidable",
+            "label": "Dislocation core",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "radius": 3.0
+        }
+    ],
+    "hint": "The Burgers vector is a topological invariant — it cannot be removed by continuous deformation. Only annihilation with opposite-sign dislocation works.",
+    "journal_entry": "Topological defect: The Burgers vector is a knot in the lattice. Continuous deformation cannot untie it.",
+    "scale_label": "nm",
+    "scale_range": { "x": 0.1, "y": 20.0 },
+    "scene_config": {
+        "lattice_type": "2d_triangular",
+        "defect_types": ["edge_dislocation", "screw_dislocation", "disclination"],
+        "burgers_vectors": [[1, 0], [0, 1], [1, 1]]
+    },
+    "constraints": {},
+    "reward_cores": 10,
+    "available_tools": ["mesh_builder", "defect_placer", "burgers_calculator"]
+}

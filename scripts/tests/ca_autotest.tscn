@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://caautotest001"]
+
+[ext_resource type="Script" path="res://scripts/tests/ca_autotest_scene.gd" id="1_script"]
+
+[node name="CAAutotest" type="Node"]
+script = ExtResource("1_script")

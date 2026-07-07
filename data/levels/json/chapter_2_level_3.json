@@ -1,0 +1,94 @@
+{
+  "chapter": 2,
+  "level": 3,
+  "title": "The Jump",
+  "description": "Push past the critical point. Cubic becomes tetragonal when c/a exceeds 1.04.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P4mm",
+    "number": 99
+  },
+  "lattice_params": {
+    "a": 3.91,
+    "b": 3.91,
+    "c": 4.07,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Sr",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Ti",
+      "wyckoff": "1b",
+      "position": [
+        0.5,
+        0.5,
+        0.52
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O1",
+      "wyckoff": "1c",
+      "position": [
+        0.5,
+        0.5,
+        0.02
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O2",
+      "wyckoff": "2d",
+      "position": [
+        0.5,
+        0,
+        0.52
+      ],
+      "multiplicity": 2
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [
+    {
+      "fog_type": "independent",
+      "label": "Critical point",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 2.0
+    }
+  ],
+  "hints": [
+    "When c/a > 1.04, the structure snaps from cubic to tetragonal",
+    "This is a phase transition - same atoms, different arrangement"
+  ],
+  "reward_cores": 7,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool",
+    "strain_tool"
+  ]
+}

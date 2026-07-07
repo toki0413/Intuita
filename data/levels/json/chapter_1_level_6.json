@@ -1,0 +1,107 @@
+{
+  "chapter": 1,
+  "level": 6,
+  "title": "Boss: Stress Test",
+  "description": "六个碳原子，没有提示。放好，运行，看结果。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 7.0,
+    "b": 7.0,
+    "c": 7.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "C",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1b",
+      "position": [
+        0.25,
+        0.25,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1c",
+      "position": [
+        0.5,
+        0,
+        0.25
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1d",
+      "position": [
+        0.25,
+        0.5,
+        0.25
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1e",
+      "position": [
+        0.5,
+        0.25,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1f",
+      "position": [
+        0,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ],
+    "hide_conservation_hud": true
+  },
+  "fog_zones": [],
+  "hints": [
+    "信任你的直觉",
+    "碳的应变系数低，但六个一起就不一定了"
+  ],
+  "reward_cores": 8,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

@@ -1,0 +1,507 @@
+[gd_scene load_steps=3 format=3 uid="uid://bleveledt01"]
+
+[ext_resource type="Script" path="res://scripts/tools/level_editor_panel.gd" id="1_script"]
+[ext_resource type="Theme" path="res://resources/ui/qoder_theme.tres" id="2_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass_panel"]
+bg_color = Color(0.047, 0.055, 0.078, 0.82)
+border_color = Color(0, 0.831, 1, 0.45)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_left = 16
+corner_radius_bottom_right = 16
+shadow_color = Color(0, 0.831, 1, 0.16)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[node name="LevelEditorPanel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass_panel")
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="TitleBar" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = ""
+
+[node name="ChapterLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+layout_mode = 2
+text = ""
+
+[node name="ChapterSpin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -100.0
+max_value = 100.0
+value = 1.0
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+layout_mode = 2
+text = ""
+
+[node name="LevelSpin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 100.0
+value = 1.0
+
+[node name="TitleEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/TitleBar"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = ""
+
+[node name="Sep1" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="BasicLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="DescriptionRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/DescriptionRow"]
+layout_mode = 2
+text = ""
+
+[node name="DescriptionEdit" type="TextEdit" parent="MarginContainer/ScrollContainer/VBox/DescriptionRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 60)
+
+[node name="DomainRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/DomainRow"]
+layout_mode = 2
+text = ""
+
+[node name="DomainOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBox/DomainRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="MarginContainer/ScrollContainer/VBox/DomainRow"]
+layout_mode = 2
+text = ""
+
+[node name="ConstructionModeOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBox/DomainRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpaceGroupRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/SpaceGroupRow"]
+layout_mode = 2
+text = ""
+
+[node name="SpaceGroupNumberSpin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/SpaceGroupRow"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 230.0
+value = 1.0
+
+[node name="SpaceGroupSymbolEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/SpaceGroupRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "P1"
+placeholder_text = ""
+
+[node name="Sep2" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="LatticeLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="LatticeRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/LatticeRow"]
+layout_mode = 2
+text = ""
+
+[node name="LatticeX" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/LatticeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.01
+value = 1.0
+
+[node name="LatticeY" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/LatticeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.01
+value = 1.0
+
+[node name="LatticeZ" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/LatticeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.01
+value = 1.0
+
+[node name="AnglesRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/AnglesRow"]
+layout_mode = 2
+text = ""
+
+[node name="AngleX" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/AnglesRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 360.0
+step = 0.1
+value = 90.0
+
+[node name="AngleY" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/AnglesRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 360.0
+step = 0.1
+value = 90.0
+
+[node name="AngleZ" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/AnglesRow"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 360.0
+step = 0.1
+value = 90.0
+
+[node name="Sep3" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="ElementsLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="ElementsRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ElementsList" type="ItemList" parent="MarginContainer/ScrollContainer/VBox/ElementsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(120, 120)
+
+[node name="ElementFields" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SymbolRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/SymbolRow"]
+layout_mode = 2
+text = ""
+
+[node name="ElementSymbolEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/SymbolRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WyckoffRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/WyckoffRow"]
+layout_mode = 2
+text = ""
+
+[node name="ElementWyckoffEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/WyckoffRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MultRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/MultRow"]
+layout_mode = 2
+text = ""
+
+[node name="ElementMultiplicitySpin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/MultRow"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 1000.0
+value = 1.0
+
+[node name="PosRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/PosRow"]
+layout_mode = 2
+text = ""
+
+[node name="ElementPosX" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/PosRow"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.01
+max_value = 1000.0
+
+[node name="ElementPosY" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/PosRow"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.01
+max_value = 1000.0
+
+[node name="ElementPosZ" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/PosRow"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.01
+max_value = 1000.0
+
+[node name="ElementButtons" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddElementBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/ElementButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="RemoveElementBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/ElementsRow/ElementFields/ElementButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="Sep4" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="GoalsLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="GoalsRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="GoalsList" type="ItemList" parent="MarginContainer/ScrollContainer/VBox/GoalsRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_minimum_size = Vector2(120, 120)
+
+[node name="GoalFields" type="VBoxContainer" parent="MarginContainer/ScrollContainer/VBox/GoalsRow"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="TypeRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/TypeRow"]
+layout_mode = 2
+text = ""
+
+[node name="GoalTypeOption" type="OptionButton" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/TypeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DescRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/DescRow"]
+layout_mode = 2
+text = ""
+
+[node name="GoalDescriptionEdit" type="TextEdit" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/DescRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 60)
+
+[node name="GoalButtons" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AddGoalBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/GoalButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="RemoveGoalBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/GoalsRow/GoalFields/GoalButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="Sep5" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="MiscLabel" type="Label" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+
+[node name="RewardRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/RewardRow"]
+layout_mode = 2
+text = ""
+
+[node name="RewardCoresSpin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/RewardRow"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 100.0
+value = 1.0
+
+[node name="HintRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/HintRow"]
+layout_mode = 2
+text = ""
+
+[node name="HintEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/HintRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JournalRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/JournalRow"]
+layout_mode = 2
+text = ""
+
+[node name="JournalEdit" type="TextEdit" parent="MarginContainer/ScrollContainer/VBox/JournalRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 60)
+
+[node name="ScaleRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ScaleRow"]
+layout_mode = 2
+text = ""
+
+[node name="ScaleLabelEdit" type="LineEdit" parent="MarginContainer/ScrollContainer/VBox/ScaleRow"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Å"
+size_flags_horizontal = 3
+
+[node name="ScaleRangeRow" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="MarginContainer/ScrollContainer/VBox/ScaleRangeRow"]
+layout_mode = 2
+text = ""
+
+[node name="ScaleMin" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ScaleRangeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+max_value = 10000.0
+value = 0.5
+
+[node name="ScaleMax" type="SpinBox" parent="MarginContainer/ScrollContainer/VBox/ScaleRangeRow"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+max_value = 10000.0
+value = 10.0
+
+[node name="Sep6" type="HSeparator" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/ScrollContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="SaveBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="LoadBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="NewBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""
+
+[node name="ValidateBtn" type="Button" parent="MarginContainer/ScrollContainer/VBox/Toolbar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ""

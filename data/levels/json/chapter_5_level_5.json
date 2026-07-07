@@ -1,0 +1,94 @@
+{
+  "level_id": "chapter_5_level_5",
+  "chapter": 5,
+  "level_number": 5,
+  "title": "Phase Field",
+  "description": "Set up initial conditions and watch microstructure evolve. Control the gradient to steer the result.",
+  "domain": "thermodynamics",
+  "construction_mode": "mesh_build",
+  "space_group": "P1 (#1)",
+  "lattice": {
+    "a": 10,
+    "b": 10,
+    "c": 10,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "label": "PHASE_A",
+      "wyckoff": "1a",
+      "x": 0.3,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "label": "PHASE_B",
+      "wyckoff": "1b",
+      "x": 0.7,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "mesh_build",
+      "params": {
+        "grid": "x40"
+      }
+    },
+    {
+      "type": "conservation_check",
+      "params": {
+        "property": "potential",
+        "max_dev": 0.1
+      }
+    },
+    {
+      "type": "geometry_check",
+      "params": {
+        "mode": "evolution"
+      }
+    },
+    {
+      "type": "conservation_check",
+      "params": {
+        "property": "free_energy_decreasing",
+        "max_dev": 0.05
+      }
+    },
+    {
+      "type": "conservation_check",
+      "params": {
+        "property": "mass",
+        "max_dev": 0.1
+      }
+    },
+    {
+      "type": "verification",
+      "params": {
+        "required_layer": 3
+      }
+    }
+  ],
+  "constraints": {
+    "max_kappa_adjustments": 3
+  },
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Phase boundary",
+      "position": [0.5, 0.5, 0.5],
+      "radius": 4.0
+    }
+  ],
+  "hints": [
+    "The Allen-Cahn equation drives phases to separate",
+    "Kappa controls how sharp the boundary between phases is"
+  ],
+  "reward_cores": 14,
+  "tools": ["mesh_builder", "potential_designer", "gradient_setter", "evolution_watcher"]
+}

@@ -1,0 +1,207 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmainmenu001"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_script"]
+[ext_resource type="Theme" path="res://resources/ui/qoder_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" path="res://scenes/main_menu_background.tscn" id="3_bg"]
+
+[sub_resource type="Gradient" id="Gradient_overlay"]
+colors = PackedColorArray(0.02, 0.025, 0.04, 0.96, 0.047, 0.065, 0.11, 0.92)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_overlay"]
+gradient = SubResource("Gradient_overlay")
+fill = 1
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_card"]
+bg_color = Color(0.047, 0.055, 0.078, 0.78)
+border_color = Color(0, 0.831, 1, 0.4)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_left = 24
+corner_radius_bottom_right = 24
+shadow_color = Color(0, 0.831, 1, 0.2)
+shadow_size = 24
+shadow_offset = Vector2(0, 8)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="Background3D" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Background3D"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="Background3D" parent="Background3D/SubViewport" instance=ExtResource("3_bg")]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuCard" type="PanelContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_menu_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/MenuCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/MenuCard/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.831, 1, 0.6)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 20
+theme_override_font_sizes/font_size = 72
+text = "INTUITA"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.639, 0.722, 1)
+theme_override_font_sizes/font_size = 26
+text = "存在即被构造"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="CampaignBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "战役模式 — 从基础开始学习"
+
+[node name="SandboxBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "沙盒模式 — 自由探索物理"
+
+[node name="ChallengeBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "挑战模式 — 每日谜题"
+
+[node name="CodexBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "材料图鉴"
+
+[node name="StructureCodexBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "结构图鉴 — 玩家创造"
+
+[node name="EvolutionTreeBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "进化树 — 通关轨迹"
+
+[node name="Spacer2" type="Control" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="GuideLabel" type="Label" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.58, 0.639, 0.722, 0.85)
+theme_override_font_sizes/font_size = 16
+text = "操作: 左键放置 | 右键拖拽旋转视角 | 滚轮缩放 | 1-9切换元素 | P/S/D切换工具 | ESC暂停"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Spacer3" type="Control" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="BottomBar" type="HBoxContainer" parent="CenterContainer/MenuCard/MarginContainer/VBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="HowToPlayBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox/BottomBar"]
+custom_minimum_size = Vector2(160, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "如何游玩"
+
+[node name="QuitBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox/BottomBar"]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "退出游戏"
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Overlay" type="TextureRect" parent="BackgroundLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_overlay")
+
+[node name="VersionLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -36.0
+offset_right = -24.0
+offset_bottom = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.58, 0.639, 0.722, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "v0.2.0"
+horizontal_alignment = 2

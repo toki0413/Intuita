@@ -1,0 +1,83 @@
+{
+  "v": 1,
+  "chapter": 3,
+  "level": 10,
+  "title": "Diffusion",
+  "description": "Set up Fick's diffusion initial conditions and watch concentration evolve correctly. Concentration gradients drive diffusion flux.",
+  "domain": "fluid",
+  "construction_mode": "mesh_build",
+  "space_group_symbol": "P1",
+  "space_group_number": 1,
+  "lattice_parameters": {
+    "x": 15.0,
+    "y": 15.0,
+    "z": 15.0
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "SOLUTE",
+      "position": {
+        "x": 0.25,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 1
+    },
+    {
+      "symbol": "SOLVENT",
+      "position": {
+        "x": 0.75,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "strain_target",
+      "max_avg_strain": 0.5,
+      "sim_mode": "strain",
+      "description": "运行模拟后，结构平均应变需低于0.5（足够松弛）"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "undecidable",
+      "label": "Sharp concentration front",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "radius": 2.0
+    }
+  ],
+  "hint": "Fick's first law: J = -D * grad(c). Larger gradient = faster diffusion. Sharp fronts hide in undecidable fog.",
+  "journal_entry": "Fick's law: Gradients drive the world. Sharp fronts hide in the undecidable fog.",
+  "scale_label": "nm",
+  "scale_range": {
+    "x": 0.1,
+    "y": 40.0
+  },
+  "scene_config": {
+    "diffusion_coefficient": 1e-09,
+    "initial_condition": "step_function",
+    "observation_time_s": 10.0,
+    "mesh_resolution": "adaptive"
+  },
+  "constraints": {},
+  "reward_cores": 7,
+  "available_tools": [
+    "mesh_builder",
+    "concentration_setter",
+    "diffusion_watcher"
+  ]
+}

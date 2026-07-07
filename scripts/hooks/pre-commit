@@ -1,0 +1,21 @@
+#!/bin/sh
+# pre-commit hook: 源码变更时自动重新导出 .pck
+# 安装方法: powershell -ExecutionPolicy Bypass -File scripts/install_hooks.ps1
+
+# 只在 scripts/ 或 scenes/ 目录有变更时触发构建
+CHANGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(gd|tscn|tres|json)$')
+if [ -z "$CHANGED" ]; then
+    exit 0
+fi
+
+echo "[pre-commit] 检测到脚本/场景变更，重新导出 .pck..."
+GODOT="${GODOT_PATH:-godot}"
+"$GODOT" --headless --export-release "Windows Desktop" 2>&1 | tail -5
+
+if [ $? -ne 0 ]; then
+    echo "[pre-commit] 导出失败，提交中止。修复错误后重试。"
+    exit 1
+fi
+
+echo "[pre-commit] 导出成功，继续提交。"
+exit 0

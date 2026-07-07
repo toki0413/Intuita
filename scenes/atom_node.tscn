@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/construction/atom_node.gd" id="1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_default"]
+radius = 0.3
+height = 0.6
+radial_segments = 16
+rings = 8
+
+[node name="AtomNode" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_default")
+script = ExtResource("1")

@@ -1,0 +1,61 @@
+name: Intuita Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-rust:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build Rust extension
+        run: cd rust && cargo build --release
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: intuita-core-windows
+          path: rust/target/release/intuita_core.dll
+
+  package-export:
+    needs: build-rust
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Rust artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: intuita-core-windows
+          path: rust/target/release/
+
+      - name: Export Godot project
+        run: |
+          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_win64.exe.zip
+          Expand-Archive godot.zip
+          ./Godot_v4.6.3-stable_win64.exe/Godot_v4.6.3-stable_win64.exe --headless --export-release "Windows Desktop" ./build/Intuita.exe
+
+      - name: Upload release package
+        uses: actions/upload-artifact@v4
+        with:
+          name: intuita-windows-build
+          path: ./build/
+
+  create-release:
+    needs: package-export
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: intuita-windows-build
+          path: ./release/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./release/*
+          generate_release_notes: true

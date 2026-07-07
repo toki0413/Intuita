@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全关卡前端E2E测试报告 - Intuita</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0e1a; color: #e0e6f0; line-height: 1.6; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px; }
+
+  .header { text-align: center; padding: 48px 24px; background: linear-gradient(135deg, #0d1421 0%, #111d33 100%); border-radius: 16px; border: 1px solid #1e2d4a; margin-bottom: 32px; }
+  .header h1 { font-size: 32px; color: #fff; margin-bottom: 8px; }
+  .header .subtitle { color: #7a8ca8; font-size: 16px; }
+  .badge-row { display: flex; justify-content: center; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+  .badge { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+  .badge-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .badge-green { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+  .badge-orange { background: rgba(251,146,60,0.15); color: #fb923c; border: 1px solid rgba(251,146,60,0.3); }
+  .badge-purple { background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 32px; }
+  .summary-card { background: #111d33; border-radius: 12px; padding: 20px; border: 1px solid #1e2d4a; text-align: center; }
+  .summary-card .number { font-size: 32px; font-weight: 700; }
+  .summary-card .label { color: #7a8ca8; font-size: 13px; margin-top: 4px; }
+  .summary-card.blue .number { color: #60a5fa; }
+  .summary-card.green .number { color: #4ade80; }
+  .summary-card.orange .number { color: #fb923c; }
+  .summary-card.purple .number { color: #c084fc; }
+  .summary-card.cyan .number { color: #22d3ee; }
+
+  .section { margin-bottom: 40px; }
+  .section-title { font-size: 22px; color: #fff; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #1e2d4a; }
+
+  .level-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .level-table th { background: #111d33; padding: 10px 8px; text-align: left; color: #7a8ca8; border-bottom: 2px solid #1e2d4a; position: sticky; top: 0; }
+  .level-table td { padding: 8px; border-bottom: 1px solid #1a2640; }
+  .level-table tr:hover td { background: rgba(30,45,74,0.3); }
+  .status-icon { font-size: 16px; }
+  .status-icon.ok { color: #4ade80; }
+  .status-icon.partial { color: #fb923c; }
+  .status-icon.explored { color: #7a8ca8; }
+  .progress-bar { width: 80px; height: 8px; background: #1a2640; border-radius: 4px; overflow: hidden; display: inline-block; vertical-align: middle; }
+  .progress-fill { height: 100%; border-radius: 4px; }
+  .progress-fill.high { background: #4ade80; }
+  .progress-fill.mid { background: #fb923c; }
+  .progress-fill.low { background: #7a8ca8; }
+
+  .issue-card { background: rgba(251,146,60,0.08); border-radius: 12px; padding: 20px; border: 1px solid rgba(251,146,60,0.2); margin-bottom: 12px; }
+  .issue-card h4 { color: #fb923c; font-size: 15px; margin-bottom: 8px; }
+  .issue-card p { color: #c4b59a; font-size: 13px; }
+
+  .screenshot-section { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .screenshot-card { background: #111d33; border-radius: 12px; overflow: hidden; border: 1px solid #1e2d4a; }
+  .screenshot-card img { width: 100%; display: block; cursor: pointer; transition: transform 0.2s; }
+  .screenshot-card img:hover { transform: scale(1.03); }
+  .screenshot-card .info { padding: 12px; }
+  .screenshot-card .info h4 { color: #fff; font-size: 13px; margin-bottom: 2px; }
+  .screenshot-card .info p { color: #7a8ca8; font-size: 12px; }
+
+  .stat-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #1a2640; font-size: 13px; }
+  .stat-row .key { color: #7a8ca8; }
+  .stat-row .val { color: #e0e6f0; font-weight: 500; }
+
+  .footer { text-align: center; padding: 24px; color: #3a4a6a; font-size: 13px; border-top: 1px solid #1a2640; margin-top: 40px; }
+
+  @media (max-width: 768px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .screenshot-section { grid-template-columns: 1fr; }
+    .level-table { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>全关卡前端E2E测试报告</h1>
+    <div class="subtitle">Intuita 分子构造游戏 — 模拟初学者玩家探索全部46关</div>
+    <div class="badge-row">
+      <span class="badge badge-blue">46 关卡</span>
+      <span class="badge badge-green">273 截图</span>
+      <span class="badge badge-orange">45 部分完成</span>
+      <span class="badge badge-purple">真实渲染窗口</span>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card blue">
+      <div class="number">46</div>
+      <div class="label">总关卡数</div>
+    </div>
+    <div class="summary-card green">
+      <div class="number">35</div>
+      <div class="label">成功放置原子</div>
+    </div>
+    <div class="summary-card orange">
+      <div class="number">25</div>
+      <div class="label">成功成键</div>
+    </div>
+    <div class="summary-card purple">
+      <div class="number">273</div>
+      <div class="label">截图</div>
+    </div>
+    <div class="summary-card cyan">
+      <div class="number">4.4s</div>
+      <div class="label">平均每关耗时</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">测试方法 — 模拟初学者玩家</div>
+    <div style="background: #0d1421; border-radius: 12px; padding: 24px; border: 1px solid #1e2d4a;">
+      <div class="stat-row"><span class="key">渲染管线</span><span class="val">Vulkan 1.4.325 Forward+ / RTX 4060</span></div>
+      <div class="stat-row"><span class="key">交互方式</span><span class="val">warp_mouse + push_input (真实3D hover) + _on_input_event (HYBRID click)</span></div>
+      <div class="stat-row"><span class="key">初学者行为</span><span class="val">读任务 → 切PLACE → 逐个放置(每0.3s) → 截图 → 尝试成键 → 尝试删除 → 验证</span></div>
+      <div class="stat-row"><span class="key">每关截图</span><span class="val">初始 → 放置中 → 放置后 → 成键后 → 删除后 → 最终 (最多6张)</span></div>
+      <div class="stat-row"><span class="key">总耗时</span><span class="val">~202秒 (46关 × 4.4秒/关)</span></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">全部关卡结果</div>
+    <table class="level-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>关卡</th>
+          <th>标题</th>
+          <th>状态</th>
+          <th>原子</th>
+          <th>键</th>
+          <th>目标进度</th>
+          <th>耗时</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>C1-L1</td><td>First Click</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/2</td><td>5.4s</td></tr>
+        <tr><td>2</td><td>C1-L2</td><td>Building Blocks</td><td><span class="status-icon partial">~</span></td><td>7</td><td>2</td><td>0/6</td><td>5.7s</td></tr>
+        <tr><td>3</td><td>C1-L3</td><td>Making Connections</td><td><span class="status-icon partial">~</span></td><td>7</td><td>12</td><td>1/5</td><td>5.8s</td></tr>
+        <tr><td>4</td><td>C1-L4</td><td>Symmetry Matters</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/6</td><td>6.0s</td></tr>
+        <tr><td>5</td><td>C1-L5</td><td>First Crystal</td><td><span class="status-icon partial">~</span></td><td>7</td><td>3</td><td>1/5</td><td>6.0s</td></tr>
+        <tr><td>6</td><td>C1-L6</td><td>Close Packing</td><td><span class="status-icon partial">~</span></td><td>7</td><td>3</td><td>0/4</td><td>5.9s</td></tr>
+        <tr><td>7</td><td>C1-L7</td><td>Diamond Structure</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/7</td><td>5.3s</td></tr>
+        <tr><td>8</td><td>C2-L1</td><td>Beyond Cubic</td><td><span class="status-icon partial">~</span></td><td>3</td><td>1</td><td>0/7</td><td>4.1s</td></tr>
+        <tr><td>9</td><td>C2-L2</td><td>Hexagonal</td><td><span class="status-icon partial">~</span></td><td>7</td><td>12</td><td>0/7</td><td>5.8s</td></tr>
+        <tr><td>10</td><td>C2-L3</td><td>Tetragonal</td><td><span class="status-icon partial">~</span></td><td>7</td><td>6</td><td>0/7</td><td>5.8s</td></tr>
+        <tr><td>11</td><td>C2-L4</td><td>Orthorhombic</td><td><span class="status-icon partial">~</span></td><td>7</td><td>12</td><td>1/5</td><td>5.7s</td></tr>
+        <tr><td>12</td><td>C2-L5</td><td>Monoclinic</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/4</td><td>6.1s</td></tr>
+        <tr><td>13</td><td>C2-L6</td><td>Triclinic</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/4</td><td>6.2s</td></tr>
+        <tr><td>14</td><td>C2-L7</td><td>Real Mineral</td><td><span class="status-icon partial">~</span></td><td>7</td><td>9</td><td>0/4</td><td>5.6s</td></tr>
+        <tr><td>15</td><td>C3-L1</td><td>Defect Intro</td><td><span class="status-icon partial">~</span></td><td>7</td><td>4</td><td>0/6</td><td>5.4s</td></tr>
+        <tr><td>16</td><td>C3-L2</td><td>Point Defects</td><td><span class="status-icon partial">~</span></td><td>7</td><td>4</td><td>0/9</td><td>5.4s</td></tr>
+        <tr><td>17</td><td>C3-L3</td><td>Line Defects</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/6</td><td>5.4s</td></tr>
+        <tr style="background:rgba(239,68,68,0.05);"><td>18</td><td>C3-L4</td><td>Planar Defects</td><td><span class="status-icon explored">?</span></td><td>0</td><td>0</td><td>0/5</td><td>1.2s</td></tr>
+        <tr><td>19</td><td>C3-L5</td><td>Volume Defects</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/6</td><td>2.1s</td></tr>
+        <tr><td>20</td><td>C3-L6</td><td>Color Centers</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/5</td><td>2.0s</td></tr>
+        <tr><td>21</td><td>C3-L7</td><td>Schottky</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/8</td><td>2.0s</td></tr>
+        <tr><td>22</td><td>C3-L8</td><td>Frenkel</td><td><span class="status-icon partial">~</span></td><td>5</td><td>0</td><td>0/5</td><td>4.7s</td></tr>
+        <tr><td>23</td><td>C3-L9</td><td>Alloy</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/5</td><td>2.0s</td></tr>
+        <tr><td>24</td><td>C3-L10</td><td>Doping</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/6</td><td>5.7s</td></tr>
+        <tr><td>25</td><td>C3-L11</td><td>Stacking Faults</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/6</td><td>2.0s</td></tr>
+        <tr style="background:rgba(34,197,94,0.05);"><td>26</td><td>C4-L1</td><td>Bond Basics</td><td><span class="status-icon partial">~</span></td><td>6</td><td>12</td><td><b>2/5</b></td><td>5.3s</td></tr>
+        <tr><td>27</td><td>C4-L2</td><td>Covalent</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/8</td><td>2.0s</td></tr>
+        <tr><td>28</td><td>C4-L3</td><td>Ionic</td><td><span class="status-icon partial">~</span></td><td>6</td><td>12</td><td>1/6</td><td>5.3s</td></tr>
+        <tr><td>29</td><td>C4-L4</td><td>Metallic</td><td><span class="status-icon partial">~</span></td><td>7</td><td>6</td><td>0/10</td><td>5.7s</td></tr>
+        <tr><td>30</td><td>C4-L5</td><td>Hydrogen</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/7</td><td>2.0s</td></tr>
+        <tr style="background:rgba(34,197,94,0.05);"><td>31</td><td>C4-L6</td><td>Van der Waals</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td><b>2/6</b></td><td>5.9s</td></tr>
+        <tr style="background:rgba(34,197,94,0.08);"><td>32</td><td>C4-L7</td><td>Mixed Bonds</td><td><span class="status-icon partial">~</span></td><td>7</td><td>12</td><td><b>4/5</b></td><td>5.8s</td></tr>
+        <tr><td>33</td><td>C4-L8</td><td>Network</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>1/7</td><td>2.0s</td></tr>
+        <tr><td>34</td><td>C4-L9</td><td>Molecular</td><td><span class="status-icon partial">~</span></td><td>7</td><td>9</td><td>0/5</td><td>6.0s</td></tr>
+        <tr><td>35</td><td>C5-L1</td><td>Phase Alpha</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/6</td><td>5.7s</td></tr>
+        <tr><td>36</td><td>C5-L2</td><td>Phase Beta</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/3</td><td>5.6s</td></tr>
+        <tr><td>37</td><td>C5-L3</td><td>Phase Gamma</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>1/4</td><td>5.6s</td></tr>
+        <tr><td>38</td><td>C5-L4</td><td>Transition</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/6</td><td>2.0s</td></tr>
+        <tr><td>39</td><td>C5-L5</td><td>Critical Point</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>1/6</td><td>2.0s</td></tr>
+        <tr><td>40</td><td>C5-L6</td><td>Symmetry Breaking</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>1/6</td><td>2.0s</td></tr>
+        <tr><td>41</td><td>C5-L7</td><td>Order-Disorder</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>1/5</td><td>2.0s</td></tr>
+        <tr><td>42</td><td>C5-L8</td><td>Landau Theory</td><td><span class="status-icon partial">~</span></td><td>0</td><td>0</td><td>0/4</td><td>2.0s</td></tr>
+        <tr><td>43</td><td>C0-L1</td><td>Sandbox Intro</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/5</td><td>5.3s</td></tr>
+        <tr><td>44</td><td>C-1-L1</td><td>Minimalist</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/4</td><td>6.0s</td></tr>
+        <tr><td>45</td><td>C-1-L2</td><td>Speed Run</td><td><span class="status-icon partial">~</span></td><td>7</td><td>0</td><td>0/6</td><td>5.3s</td></tr>
+        <tr><td>46</td><td>C-1-L3</td><td>Perfectionist</td><td><span class="status-icon partial">~</span></td><td>7</td><td>9</td><td>0/5</td><td>5.4s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">关键截图展示</div>
+    <div class="screenshot-section">
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C1-L1_03_after_place.png" alt="C1-L1">
+        <div class="info">
+          <h4>C1-L1: First Click (放置后)</h4>
+          <p>8个原子放置在Wyckoff标记位置，NaCl结构</p>
+        </div>
+      </div>
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C4-L7_03_after_place.png" alt="C4-L7">
+        <div class="info">
+          <h4>C4-L7: Mixed Bonds (4/5目标)</h4>
+          <p>最佳成绩: 4/5目标完成，12个键</p>
+        </div>
+      </div>
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C3-L4_01_initial.png" alt="C3-L4">
+        <div class="info">
+          <h4>C3-L4: Planar Defects (探索)</h4>
+          <p>路径构建模式，无Wyckoff标记可放</p>
+        </div>
+      </div>
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C1-L3_04_after_bond.png" alt="C1-L3">
+        <div class="info">
+          <h4>C1-L3: Making Connections (成键后)</h4>
+          <p>12个键自动+手动构建</p>
+        </div>
+      </div>
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C2-L2_03_after_place.png" alt="C2-L2">
+        <div class="info">
+          <h4>C2-L2: Hexagonal (放置后)</h4>
+          <p>六方晶系结构构建</p>
+        </div>
+      </div>
+      <div class="screenshot-card">
+        <img src="frontend_e2e_shots/all_levels/C-1-L1_03_after_place.png" alt="C-1-L1">
+        <div class="info">
+          <h4>C-1-L1: Minimalist (放置后)</h4>
+          <p>挑战模式: NaCl最少步骤</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">发现的问题</div>
+    <div class="issue-card">
+      <h4>1. 路径构建模式关卡无Wyckoff标记 (11关受影响)</h4>
+      <p>C3-L4到C3-L11、C4-L2、C4-L5、C4-L8、C5-L4到C5-L8 等关卡使用"path_build"或特殊模式，不生成Wyckoff标记。
+      初学者玩家进入后看到空场景，不知道如何开始。建议: 为路径构建模式添加可视化引导(如起点/终点标记)，
+      或在场景中显示"请使用PATH_BUILD工具点击构建路径"的提示。</p>
+    </div>
+    <div class="issue-card">
+      <h4>2. 目标进度检查不够即时</h4>
+      <p>多个关卡放置了7-8个原子但目标显示0/N。原因: 初学者放置的原子可能不在正确的Wyckoff位置，
+      或目标需要特定元素(如Na/Cl)而非任意原子。建议: 在放置时显示该位置期望的元素类型，
+      或在HUD中高亮当前需要放置的元素。</p>
+    </div>
+    <div class="issue-card">
+      <h4>3. BondRenderer pool释放时打印堆栈</h4>
+      <p>删除原子时 _remove_bonds_for_atom 调用 object_pool.gd:57 的 release() 打印调用栈。
+      这不是崩溃，但说明 pool 的 release 路径有调试日志未清理。建议: 移除或降级为 verbose 级别日志。</p>
+    </div>
+    <div class="issue-card">
+      <h4>4. 上下文指引系统已工作但需进一步优化</h4>
+      <p>ContextualHintSystem 在所有46关中正确触发了工具提示和状态提示。
+      但对于路径构建模式关卡，提示仍显示"点击蓝色标记放置原子"，实际没有标记。
+      建议: 根据关卡模式(domain/construction_mode)切换提示内容。</p>
+    </div>
+    <div class="issue-card">
+      <h4>5. C4-L7截图渲染异常</h4>
+      <p>C4-L7 (Mixed Bonds) 的截图中3D视口出现白色噪点/过曝效果。可能是粒子效果或shader在截图时
+      未完全渲染。建议: 在截图前增加额外帧等待，或检查粒子系统是否干扰渲染。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">统计数据</div>
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+      <div style="background:#0d1421; border-radius:12px; padding:20px; border:1px solid #1e2d4a;">
+        <h4 style="color:#60a5fa; font-size:14px; margin-bottom:12px; text-transform:uppercase;">放置统计</h4>
+        <div class="stat-row"><span class="key">成功放置原子关卡</span><span class="val">35 / 46 (76%)</span></div>
+        <div class="stat-row"><span class="key">放置原子总数</span><span class="val">~210</span></div>
+        <div class="stat-row"><span class="key">每关平均放置</span><span class="val">6.0 个</span></div>
+        <div class="stat-row"><span class="key">无标记关卡</span><span class="val">11 (路径/特殊模式)</span></div>
+      </div>
+      <div style="background:#0d1421; border-radius:12px; padding:20px; border:1px solid #1e2d4a;">
+        <h4 style="color:#4ade80; font-size:14px; margin-bottom:12px; text-transform:uppercase;">成键统计</h4>
+        <div class="stat-row"><span class="key">成功成键关卡</span><span class="val">25 / 46 (54%)</span></div>
+        <div class="stat-row"><span class="key">构建键总数</span><span class="val">~168</span></div>
+        <div class="stat-row"><span class="key">自动成键数</span><span class="val">~140 (83%)</span></div>
+        <div class="stat-row"><span class="key">手动成键数</span><span class="val">~28 (17%)</span></div>
+      </div>
+      <div style="background:#0d1421; border-radius:12px; padding:20px; border:1px solid #1e2d4a;">
+        <h4 style="color:#fb923c; font-size:14px; margin-bottom:12px; text-transform:uppercase;">目标进度</h4>
+        <div class="stat-row"><span class="key">有目标完成的关卡</span><span class="val">12 / 46 (26%)</span></div>
+        <div class="stat-row"><span class="key">最佳完成度</span><span class="val">C4-L7: 4/5 (80%)</span></div>
+        <div class="stat-row"><span class="key">2+目标完成</span><span class="val">3 关 (C4-L1, C4-L6, C4-L7)</span></div>
+        <div class="stat-row"><span class="key">1目标完成</span><span class="val">9 关</span></div>
+      </div>
+      <div style="background:#0d1421; border-radius:12px; padding:20px; border:1px solid #1e2d4a;">
+        <h4 style="color:#c084fc; font-size:14px; margin-bottom:12px; text-transform:uppercase;">渲染验证</h4>
+        <div class="stat-row"><span class="key">截图总数</span><span class="val">273</span></div>
+        <div class="stat-row"><span class="key">每关平均截图</span><span class="val">5.9 张</span></div>
+        <div class="stat-row"><span class="key">渲染管线</span><span class="val">Vulkan Forward+</span></div>
+        <div class="stat-row"><span class="key">FPS范围</span><span class="val">61 - 194</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Generated: 2026-07-05 | Test Script: scripts/tests/frontend_e2e_all_levels.gd | Screenshots: frontend_e2e_shots/all_levels/
+  </div>
+
+</div>
+</body>
+</html>

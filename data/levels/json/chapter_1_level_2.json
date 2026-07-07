@@ -1,0 +1,76 @@
+{
+  "chapter": 1,
+  "level": 2,
+  "title": "Three's Company",
+  "description": "三个原子，一个晶胞。放好之后按'测试结构'，看看它们能不能和平共处。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 6.0,
+    "b": 6.0,
+    "c": 6.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Na",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "1b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1c",
+      "position": [
+        0.25,
+        0,
+        0.75
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "放置所有原子后按'测试结构'按钮",
+    "不同元素的应变特性不同"
+  ],
+  "reward_cores": 3,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

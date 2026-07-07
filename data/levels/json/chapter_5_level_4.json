@@ -1,0 +1,84 @@
+{
+  "level_id": "chapter_5_level_4",
+  "chapter": 5,
+  "level_number": 4,
+  "title": "Cascade",
+  "description": "Drive the structure through three levels of symmetry breaking. Each level must stay balanced.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": "P1 (#1)",
+  "lattice": {
+    "a": 3.91,
+    "b": 3.91,
+    "c": 4.07,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "label": "A",
+      "wyckoff": "1a",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "count": 1
+    },
+    {
+      "label": "B",
+      "wyckoff": "1b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "label": "O1",
+      "wyckoff": "3c",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0,
+      "count": 3
+    },
+    {
+      "label": "O2",
+      "wyckoff": "1d",
+      "x": 0.5,
+      "y": 0,
+      "z": 0.52,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_phase_transition",
+      "min_atoms": 2,
+      "target_temp": 400,
+      "description": "对称性破缺级联结构升温至400K后至少2个原子存活"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [
+    {
+      "fog_type": "independent",
+      "label": "Breaking point",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 3.0
+    }
+  ],
+  "hints": [
+    "Each symmetry break removes one symmetry operation",
+    "The matrix must stay continuous through the entire cascade"
+  ],
+  "reward_cores": 15,
+  "tools": [
+    "element_block",
+    "wyckoff_snap",
+    "symmetry_breaker",
+    "strain_tool"
+  ]
+}

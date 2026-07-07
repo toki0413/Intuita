@@ -1,0 +1,143 @@
+{
+  "v": 1,
+  "chapter": 3,
+  "level": 2,
+  "title": "Three Lanes",
+  "description": "Build 3 parallel ion channels. They interfere with each other - adjusting one affects its neighbors.",
+  "domain": "molecular",
+  "construction_mode": "bond_build",
+  "space_group_symbol": "Pnma",
+  "space_group_number": 62,
+  "lattice_parameters": {
+    "x": 10.33,
+    "y": 6.01,
+    "z": 4.69
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "Li1",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "Li2",
+      "position": {
+        "x": 0.0,
+        "y": 0.5,
+        "z": 0.0
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "Li3",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.5
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "O1",
+      "position": {
+        "x": 0.09,
+        "y": 0.25,
+        "z": 0.73
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "O2",
+      "position": {
+        "x": 0.46,
+        "y": 0.25,
+        "z": 0.2
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "O3",
+      "position": {
+        "x": 0.3,
+        "y": 0.25,
+        "z": 0.42
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "P",
+      "position": {
+        "x": 0.09,
+        "y": 0.25,
+        "z": 0.42
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    },
+    {
+      "symbol": "Fe",
+      "position": {
+        "x": 0.28,
+        "y": 0.25,
+        "z": 0.97
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 3,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，至少3个原子存活"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Interference zone",
+      "position": {
+        "x": 0.25,
+        "y": 0.25,
+        "z": 0.5
+      },
+      "radius": 1.8
+    }
+  ],
+  "hint": "Channels interact electrostatically - widening one may narrow another. Think of it like lanes on a highway - they share the road.",
+  "journal_entry": "Three lanes: Electrostatic coupling means no channel is independent. Adjust one, and its neighbors shift — a constructive proof of collective transport.",
+  "scale_label": "Å",
+  "scale_range": {
+    "x": 0.1,
+    "y": 5.0
+  },
+  "scene_config": {
+    "channel_count": 3,
+    "channel_species": "Li+",
+    "bottleneck_min": 1.6,
+    "interference": true
+  },
+  "constraints": {},
+  "reward_cores": 8,
+  "available_tools": [
+    "element_block",
+    "bond_tool",
+    "channel_inspector"
+  ]
+}

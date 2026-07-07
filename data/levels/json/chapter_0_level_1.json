@@ -1,0 +1,79 @@
+{
+    "v": 1,
+    "chapter": 0,
+    "level": 1,
+    "title": "Molecular Folding",
+    "description": "Fold a linear carbon chain into a stable 3D molecule. Satisfy valence rules, avoid steric clashes, find lowest energy conformation.",
+    "domain": "molecular",
+    "construction_mode": "bond_build",
+    "space_group_symbol": "P1",
+    "space_group_number": 1,
+    "lattice_parameters": {
+        "x": 8.0,
+        "y": 8.0,
+        "z": 8.0
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "C",
+            "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 6
+        },
+        {
+            "symbol": "H",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "b",
+            "wyckoff_multiplicity": 14
+        }
+    ],
+    "goals": [
+        {
+            "type": "bond_build",
+            "description": "Build carbon backbone bonds",
+            "required_bonds": 5,
+            "bond_pairs": [["C", "C"]]
+        },
+        {
+            "type": "bond_build",
+            "description": "Satisfy carbon valence (4 bonds/atom)",
+            "required_bonds": 24,
+            "bond_pairs": [["C", "C"], ["C", "H"]],
+            "per_atom_valence": {"C": 4}
+        },
+        {
+            "type": "geometry_check",
+            "description": "No steric clashes (atom spacing > 0.8Å)",
+            "min_distance": 0.8,
+            "check_all_pairs": true
+        },
+        {
+            "type": "conservation_check",
+            "description": "Lowest energy conformation",
+            "max_deviation": 0.1
+        },
+        {
+            "type": "verification",
+            "description": "Complete molecular folding verification",
+            "required_layer": 1
+        }
+    ],
+    "fog_zones": [],
+    "hint": "Carbon's 4 valence bonds must all be satisfied. Avoid atom overlap.",
+    "journal_entry": "Molecular folding: Carbon's four hands must all shake. Sterics are the geometry of refusal.",
+    "scale_label": "Å",
+    "scale_range": { "x": 0.3, "y": 5.0 },
+    "scene_config": {
+        "chain_length": 6,
+        "chain_type": "carbon",
+        "target_valence": 4
+    },
+    "constraints": {},
+    "reward_cores": 5,
+    "available_tools": ["atom_placer", "bond_rotator", "angle_adjuster"]
+}

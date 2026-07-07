@@ -1,0 +1,88 @@
+{
+  "chapter": 4,
+  "level": 5,
+  "title": "Quantum Tunnel",
+  "description": "Build a device where electrons tunnel through barriers they shouldn't be able to cross. Quantum mechanics at work.",
+  "domain": "device",
+  "construction_mode": "assembly",
+  "space_group": {
+    "symbol": "P1",
+    "number": 1
+  },
+  "lattice": {
+    "a": 10,
+    "b": 5,
+    "c": 5,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Ga",
+      "wyckoff": "1a",
+      "x": 0,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "symbol": "As",
+      "wyckoff": "1b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0,
+      "count": 1
+    },
+    {
+      "symbol": "Al",
+      "wyckoff": "1c",
+      "x": 0,
+      "y": 0,
+      "z": 0.5,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "assembly_check",
+      "required_parts": {
+        "Ga": 1,
+        "As": 1,
+        "Al": 1
+      },
+      "description": "组装量子隧穿器件: 放置全部3种组件元素"
+    },
+    {
+      "type": "survives_simulation",
+      "min_atoms": 2,
+      "sim_mode": "strain",
+      "description": "量子隧穿器件在应变弛豫后至少2个原子存活"
+    }
+  ],
+  "constraints": {
+    "max_parts": 5
+  },
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Tunnel barrier",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 2.0
+    }
+  ],
+  "hints": [
+    "Two thin barriers with a well between them - resonance tunneling",
+    "When the energy aligns, electrons pass through walls"
+  ],
+  "reward_cores": 10,
+  "tools": [
+    "layer_builder",
+    "barrier_setter",
+    "iv_curve_tool"
+  ]
+}

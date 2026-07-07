@@ -1,0 +1,55 @@
+{
+  "level_id": "chapter_5_level_3",
+  "chapter": 5,
+  "level_number": 3,
+  "title": "Breeding",
+  "description": "Breed a periodic oscillator in the cellular automaton. Save promising seeds and evolve from them.",
+  "domain": "topology",
+  "construction_mode": "cellular_automaton",
+  "space_group": "P1 (#1)",
+  "lattice": {
+    "a": 10,
+    "b": 10,
+    "c": 10,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [],
+  "goals": [
+    {
+      "type": "ca_pattern_reach",
+      "params": {
+        "pattern": "oscillator",
+        "min_steps": 8
+      }
+    },
+    {
+      "type": "fuzzy_check",
+      "params": {
+        "seed_count": 2,
+        "operator": ">="
+      }
+    },
+    {
+      "type": "ca_step_count",
+      "params": {
+        "min_steps": 20
+      }
+    },
+    {
+      "type": "verification",
+      "params": {
+        "required_layer": 3
+      }
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [],
+  "hints": [
+    "Save seeds! Run a few steps, save, then continue from the seed",
+    "Different starting patterns create different behaviors - experiment"
+  ],
+  "reward_cores": 15,
+  "tools": ["element_block", "cellular_step", "ca_seed_save", "ca_seed_load"]
+}

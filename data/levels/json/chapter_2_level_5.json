@@ -1,0 +1,65 @@
+{
+  "chapter": 2,
+  "level": 5,
+  "title": "No Sodium Allowed",
+  "description": "Na is banned! Use K instead - it's in the same family and does the same job.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "Fm-3m",
+    "number": 225
+  },
+  "lattice_params": {
+    "a": 6.29,
+    "b": 6.29,
+    "c": 6.29,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "K",
+      "wyckoff": "4a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "4b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 4
+    }
+  ],
+  "forbidden_elements": [
+    "Na"
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 5,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，至少5个原子存活"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [],
+  "hints": [
+    "K is just like Na but bigger - same column of the periodic table",
+    "Constraints force creativity"
+  ],
+  "reward_cores": 6,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool"
+  ]
+}

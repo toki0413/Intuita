@@ -1,0 +1,107 @@
+{
+  "v": 1,
+  "chapter": 5,
+  "level": 7,
+  "title": "Universal Designer",
+  "description": "Design a material that satisfies 3 randomly generated property constraints. There is no single optimum — explore the Pareto frontier.",
+  "domain": "open",
+  "construction_mode": "free",
+  "space_group_symbol": "P1",
+  "space_group_number": 1,
+  "lattice_parameters": {
+    "x": 10.0,
+    "y": 10.0,
+    "z": 10.0
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "X",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 1
+    },
+    {
+      "symbol": "Y",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.0
+      },
+      "wyckoff_label": "b",
+      "wyckoff_multiplicity": 1
+    },
+    {
+      "symbol": "Z",
+      "position": {
+        "x": 0.25,
+        "y": 0.25,
+        "z": 0.25
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 2,
+      "sim_mode": "strain",
+      "description": "设计结构在应变弛豫后至少2个原子存活"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "independent",
+      "label": "Optimum unreachable zone",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "radius": 5.0
+    }
+  ],
+  "hint": "Multi-objective optimization has no single optimum. The Pareto front is where truth lives.",
+  "journal_entry": "Universal designer: Three constraints, no single optimum. The Pareto front is where truth lives.",
+  "scale_label": "Å",
+  "scale_range": {
+    "x": 0.5,
+    "y": 50.0
+  },
+  "scene_config": {
+    "target_properties": {
+      "property_1": "randomly_generated",
+      "property_2": "randomly_generated",
+      "property_3": "randomly_generated"
+    },
+    "pareto_optimization": true,
+    "community_ranking": true
+  },
+  "constraints": {
+    "randomly_generated": true
+  },
+  "reward_cores": 18,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool",
+    "interface_builder",
+    "strain_tool",
+    "channel_inspector",
+    "molecule_builder",
+    "reaction_arrow",
+    "energy_diagram",
+    "topology_tool",
+    "path_builder",
+    "self-evolve"
+  ]
+}

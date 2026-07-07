@@ -1,0 +1,91 @@
+{
+    "v": 1,
+    "chapter": -1,
+    "level": 2,
+    "title": "Conservation Purist",
+    "description": "Build an ethanol molecule. Zero conservation warnings allowed — any deviation triggers failure.",
+    "domain": "molecular",
+    "construction_mode": "bond_build",
+    "space_group_symbol": "P1",
+    "space_group_number": 1,
+    "lattice_parameters": {
+        "x": 8.0,
+        "y": 8.0,
+        "z": 8.0
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "C",
+            "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 2
+        },
+        {
+            "symbol": "O",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.0 },
+            "wyckoff_label": "b",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "H",
+            "position": { "x": 0.25, "y": 0.25, "z": 0.25 },
+            "wyckoff_label": "c",
+            "wyckoff_multiplicity": 6
+        }
+    ],
+    "goals": [
+        {
+            "type": "bond_build",
+            "description": "Build C-C backbone bond",
+            "required_bonds": 1,
+            "bond_pairs": [["C", "C"]]
+        },
+        {
+            "type": "bond_build",
+            "description": "Build C-O bond",
+            "required_bonds": 1,
+            "bond_pairs": [["C", "O"]]
+        },
+        {
+            "type": "bond_build",
+            "description": "Build 6 C-H bonds",
+            "required_bonds": 6,
+            "bond_pairs": [["C", "H"]]
+        },
+        {
+            "type": "bond_build",
+            "description": "Build O-H bond",
+            "required_bonds": 1,
+            "bond_pairs": [["O", "H"]]
+        },
+        {
+            "type": "conservation_check",
+            "description": "Zero-warning conservation throughout",
+            "max_deviation": 0.01
+        },
+        {
+            "type": "verification",
+            "description": "Complete conservation purist verification",
+            "required_layer": 1
+        }
+    ],
+    "fog_zones": [],
+    "hint": "Every step must be perfectly conserved. Any deviation triggers a warning and fails the level.",
+    "journal_entry": "Conservation purist: Zero warnings. The matrix must be pristine. Perfection or nothing.",
+    "scale_label": "Å",
+    "scale_range": { "x": 0.3, "y": 5.0 },
+    "scene_config": {
+        "target_molecule": "C2H5OH",
+        "strict_conservation": true
+    },
+    "constraints": {
+        "no_warning_ever": true
+    },
+    "reward_cores": 12,
+    "available_tools": ["atom_placer", "bond_rotator", "angle_adjuster"]
+}

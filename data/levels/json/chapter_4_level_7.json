@@ -1,0 +1,69 @@
+{
+  "chapter": 4,
+  "level": 7,
+  "title": "Material Hunt",
+  "description": "5 minutes. 12+ atoms, 16+ bonds, 3+ elements, deviation under 0.2. Any structure that works counts.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "boss": true,
+  "space_group": {
+    "symbol": "Pm-3m",
+    "number": 221
+  },
+  "lattice": {
+    "a": 3.91,
+    "b": 3.91,
+    "c": 3.91,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Ca",
+      "wyckoff": "4a",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "count": 4
+    },
+    {
+      "symbol": "Ti",
+      "wyckoff": "4b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 4
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "8c",
+      "x": 0.25,
+      "y": 0.25,
+      "z": 0.25,
+      "count": 8
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_phase_transition",
+      "min_atoms": 5,
+      "target_temp": 600,
+      "description": "材料结构升温至600K后至少5个原子存活"
+    }
+  ],
+  "constraints": {
+    "time_limit_seconds": 300
+  },
+  "hints": [
+    "Perovskite CaTiO3 is the classic choice, but anything works",
+    "Place atoms fast, bond them, verify - don't overthink"
+  ],
+  "reward_cores": 15,
+  "tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_build",
+    "substitute"
+  ]
+}

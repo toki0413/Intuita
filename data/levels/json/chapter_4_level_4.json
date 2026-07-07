@@ -1,0 +1,110 @@
+{
+  "chapter": 4,
+  "level": 4,
+  "title": "Super Ice",
+  "description": "Find the critical doping point where the material becomes superconducting. It's a narrow window.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "symbol": "P4mm",
+    "number": 99
+  },
+  "lattice": {
+    "a": 3.82,
+    "b": 3.82,
+    "c": 11.68,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Y",
+      "wyckoff": "1a",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "symbol": "Ba",
+      "wyckoff": "2b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.19,
+      "count": 2
+    },
+    {
+      "symbol": "Cu1",
+      "wyckoff": "1c",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "count": 1
+    },
+    {
+      "symbol": "Cu2",
+      "wyckoff": "2d",
+      "x": 0,
+      "y": 0,
+      "z": 0.36,
+      "count": 2
+    },
+    {
+      "symbol": "O1",
+      "wyckoff": "2e",
+      "x": 0.5,
+      "y": 0,
+      "z": 0.38,
+      "count": 2
+    },
+    {
+      "symbol": "O2",
+      "wyckoff": "2f",
+      "x": 0,
+      "y": 0.5,
+      "z": 0.38,
+      "count": 2
+    },
+    {
+      "symbol": "O3",
+      "wyckoff": "1g",
+      "x": 0.5,
+      "y": 0,
+      "z": 0,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_phase_transition",
+      "min_atoms": 3,
+      "target_temp": 500,
+      "description": "超导结构升温至500K后至少3个原子存活"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "independent",
+      "label": "Tc critical zone",
+      "position": [
+        0.5,
+        0.5,
+        0.36
+      ],
+      "radius": 2.0
+    }
+  ],
+  "hints": [
+    "YBCO superconducts when oxygen content is just right",
+    "Doping changes the oxygen vacancies - find the sweet spot"
+  ],
+  "reward_cores": 12,
+  "tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool",
+    "strain_tool",
+    "doping_tool"
+  ]
+}

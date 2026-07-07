@@ -1,0 +1,42 @@
+# Godot editor cache
+.godot/
+
+# Rust build artifacts
+rust/target/
+
+# Build output
+build/
+
+# Binaries
+*.exe
+*.dll
+*.pdb
+*.lib
+
+# Video files (too large for git)
+*.avi
+*.mp4
+*.mkv
+
+# Godot binary (downloaded separately)
+Godot_v4.6.3-stable_win64.exe/
+
+# Logs
+*.log
+
+# Screenshots
+frontend_e2e_shots/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp

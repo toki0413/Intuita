@@ -1,0 +1,55 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://blevel11001"]
+
+[ext_resource type="Script" path="res://data/levels/level_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+
+metadata/type = "level_data"
+metadata/chapter = 1
+metadata/level = 1
+metadata/title = "NaCl Wyckoff填充"
+
+level/chapter = 1
+level/level = 1
+level/title = "NaCl Wyckoff填充"
+level/description = "在Fm-3m空间群中填充Na和Cl到正确的Wyckoff位置，构建岩盐结构"
+level/space_group_number = 225
+level/space_group_symbol = "Fm-3m"
+level/lattice_type = "face-centered cubic"
+level/lattice_parameters = Vector3(5.64, 5.64, 5.64)
+level/lattice_angles = Vector3(90.0, 90.0, 90.0)
+
+level/elements/0/symbol = "Na"
+level/elements/0/wyckoff_label = "a"
+level/elements/0/wyckoff_multiplicity = 4
+level/elements/0/position = Vector3(0.0, 0.0, 0.0)
+
+level/elements/1/symbol = "Cl"
+level/elements/1/wyckoff_label = "b"
+level/elements/1/wyckoff_multiplicity = 4
+level/elements/1/position = Vector3(0.5, 0.0, 0.0)
+
+level/goals/0/type = "wyckoff_fill"
+level/goals/0/description = "将Na放置在4a位置"
+level/goals/0/element = "Na"
+level/goals/0/wyckoff = "a"
+level/goals/0/required_count = 4
+
+level/goals/1/type = "wyckoff_fill"
+level/goals/1/description = "将Cl放置在4b位置"
+level/goals/1/element = "Cl"
+level/goals/1/wyckoff = "b"
+level/goals/1/required_count = 4
+
+level/goals/2/type = "conservation_check"
+level/goals/2/description = "守恒矩阵保持健康状态"
+level/goals/2/max_deviation = 0.1
+
+level/goals/3/type = "verification"
+level/goals/3/description = "完成L1符号验证"
+level/goals/3/required_layer = 0
+
+level/reward_cores = 3
+level/fog_regions = 0
+level/hint = "岩盐结构中Na和Cl交替占据面心立方格位"

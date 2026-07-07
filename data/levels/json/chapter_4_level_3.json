@@ -1,0 +1,88 @@
+{
+  "chapter": 4,
+  "level": 3,
+  "title": "Light Splitter",
+  "description": "Build a photocatalyst that splits water using sunlight. The band gap must align with the redox potentials.",
+  "domain": "reaction",
+  "construction_mode": "path_build",
+  "space_group": {
+    "symbol": "P1",
+    "number": 1
+  },
+  "lattice": {
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Ti",
+      "wyckoff": "1a",
+      "x": 0,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "2b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0,
+      "count": 2
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "2c",
+      "x": 0.25,
+      "y": 0.25,
+      "z": 0.25,
+      "count": 2
+    }
+  ],
+  "goals": [
+    {
+      "type": "reaction_path",
+      "reaction_steps": [
+        "Ti",
+        "O",
+        "H"
+      ],
+      "description": "按顺序构建光催化路径: Ti → O → H"
+    },
+    {
+      "type": "verification",
+      "description": "通过验证确认光催化反应路径完整"
+    }
+  ],
+  "constraints": {
+    "band_gap_min_ev": 1.23,
+    "redox_aligned": true
+  },
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Band gap zone",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 2.5
+    }
+  ],
+  "hints": [
+    "TiO2 absorbs UV light (band gap ~3.2eV) and splits water",
+    "The conduction band must be above H+/H2, valence band below O2/H2O"
+  ],
+  "reward_cores": 10,
+  "tools": [
+    "molecule_builder",
+    "reaction_arrow",
+    "energy_diagram",
+    "band_gap_tool"
+  ]
+}

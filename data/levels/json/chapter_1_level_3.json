@@ -1,0 +1,86 @@
+{
+  "chapter": 1,
+  "level": 3,
+  "title": "Build and Test",
+  "description": "四个不同元素。放置后运行模拟——结构稳定才算过关。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 7.0,
+    "b": 7.0,
+    "c": 7.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Na",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "1b",
+      "position": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1c",
+      "position": [
+        0.8,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1d",
+      "position": [
+        0,
+        0.8,
+        0.4
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "放完所有原子后按'测试结构'运行模拟",
+    "原子间距越大，应变越低"
+  ],
+  "reward_cores": 3,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

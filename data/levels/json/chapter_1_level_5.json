@@ -1,0 +1,96 @@
+{
+  "chapter": 1,
+  "level": 5,
+  "title": "Crystal Seed",
+  "description": "五个原子的晶种结构。放好后运行模拟，至少四个要稳住。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 8.0,
+    "b": 8.0,
+    "c": 8.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Na",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "1b",
+      "position": [
+        0.3,
+        0.3,
+        0.3
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "1c",
+      "position": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1d",
+      "position": [
+        0.3,
+        0.6,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "1e",
+      "position": [
+        0.6,
+        0,
+        0.3
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "五个原子需要合理分布",
+    "模拟会让原子微调位置寻找能量最低点"
+  ],
+  "reward_cores": 5,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

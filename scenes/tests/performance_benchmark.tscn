@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://bperfbench001"]
+
+[ext_resource type="Script" path="res://scenes/tests/performance_benchmark.gd" id="1_script"]
+
+[node name="PerformanceBenchmark" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="StatusLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 40.0
+offset_right = 300.0
+offset_bottom = 80.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "性能测试: 准备中..."
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -20.0
+offset_right = 300.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 7.0
+step = 1.0
+
+[node name="FPSLabel" type="Label" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -80.0
+offset_right = 300.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 20
+text = "FPS: -- | Atoms: 0"
+horizontal_alignment = 1

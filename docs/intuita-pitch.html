@@ -1,0 +1,2129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intuita — 构造即证明 | CONSTRUCTIO EST PROBATIO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  :root {
+    --bg-deep: #07070c;
+    --bg-section: #0c0c14;
+    --bg-card: #111119;
+    --bg-card-hover: #1a1a28;
+    --bg-code: #0d0d18;
+    --gold: #c9a84c;
+    --gold-dim: #8a7234;
+    --gold-bright: #f0d078;
+    --gold-glow: rgba(201,168,76,0.15);
+    --crystal-blue: #4a9eff;
+    --crystal-blue-dim: #2a5a9a;
+    --crystal-blue-glow: rgba(74,158,255,0.12);
+    --fog-purple: #8b5cf6;
+    --fog-purple-dim: #5b3ca6;
+    --fog-purple-glow: rgba(139,92,246,0.12);
+    --conservation-green: #22c55e;
+    --conservation-green-dim: #166534;
+    --danger-red: #ef4444;
+    --warning-yellow: #eab308;
+    --text-primary: #e8e6e0;
+    --text-secondary: #9a968e;
+    --text-dim: #5a5850;
+    --text-bright: #ffffff;
+    --border: #222230;
+    --border-gold: rgba(201,168,76,0.25);
+    --border-blue: rgba(74,158,255,0.2);
+    --border-purple: rgba(139,92,246,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--gold-dim) var(--bg-deep); }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.85;
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(7,7,12,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    transition: transform 0.3s;
+  }
+
+  nav.hidden { transform: translateY(-100%); }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(74,158,255,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139,92,246,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 30% at 20% 70%, rgba(201,168,76,0.04) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+
+  .hero-particles { position: absolute; inset: 0; pointer-events: none; }
+
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    animation: pFloat 6s ease-in-out infinite;
+  }
+
+  @keyframes pFloat {
+    0%{opacity:0;transform:translateY(0) scale(0)}
+    20%{opacity:0.5;transform:translateY(-20px) scale(1)}
+    80%{opacity:0.2;transform:translateY(-80px) scale(0.5)}
+    100%{opacity:0;transform:translateY(-100px) scale(0)}
+  }
+
+  .hero-content { text-align: center; position: relative; z-index: 2; padding: 2rem; }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border-gold);
+    padding: 0.4rem 1.4rem;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1s ease-out 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', 'Noto Serif SC', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.8rem;
+    animation: fadeUp 1s ease-out 0.4s both;
+  }
+
+  .hero-title .gold { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    animation: fadeUp 1s ease-out 0.6s both;
+  }
+
+  .hero-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+    color: var(--gold-dim);
+    margin-bottom: 3rem;
+    animation: fadeUp 1s ease-out 0.8s both;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-formula span {
+    display: inline-block;
+    transition: color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .hero-formula span:hover { color: var(--gold-bright); transform: translateY(-2px); }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    animation: fadeUp 1s ease-out 1s both;
+  }
+
+  .btn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg-deep);
+  }
+
+  .btn-primary:hover { background: var(--gold-bright); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.25); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover { border-color: var(--gold-dim); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: fadeUp 1s ease-out 1.2s both;
+  }
+
+  .scroll-indicator {
+    width: 22px; height: 38px;
+    border: 2px solid var(--gold-dim);
+    border-radius: 11px;
+    position: relative;
+  }
+
+  .scroll-indicator::after {
+    content: '';
+    position: absolute;
+    top: 6px; left: 50%;
+    transform: translateX(-50%);
+    width: 3px; height: 7px;
+    background: var(--gold);
+    border-radius: 2px;
+    animation: scrollDot 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollDot { 0%,100%{top:6px;opacity:1} 50%{top:18px;opacity:0.3} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ===== SECTIONS ===== */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 7rem 2rem;
+  }
+
+  .section-full {
+    max-width: 100%;
+    padding-left: calc((100% - 1200px)/2 + 2rem);
+    padding-right: calc((100% - 1200px)/2 + 2rem);
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', 'Noto Serif SC', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title .accent { color: var(--gold); }
+  .section-title .blue { color: var(--crystal-blue); }
+  .section-title .purple { color: var(--fog-purple); }
+  .section-title .green { color: var(--conservation-green); }
+
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    line-height: 1.9;
+    margin-bottom: 3rem;
+  }
+
+  /* ===== PROBLEM SECTION ===== */
+  .problem-bg {
+    background: linear-gradient(180deg, var(--bg-deep) 0%, rgba(139,92,246,0.03) 50%, var(--bg-deep) 100%);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .problem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .problem-card:hover {
+    border-color: var(--border-purple);
+    transform: translateY(-4px);
+  }
+
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--fog-purple), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .problem-card:hover::before { opacity: 1; }
+
+  .problem-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(139,92,246,0.1);
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    line-height: 1;
+  }
+
+  .problem-card h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    color: var(--fog-purple);
+  }
+
+  .problem-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .problem-card .highlight-text {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ===== INSPIRATION ===== */
+  .inspire-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 2rem;
+    align-items: center;
+    margin-top: 3rem;
+  }
+
+  .inspire-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    transition: all 0.4s;
+  }
+
+  .inspire-card:hover {
+    border-color: var(--border-gold);
+    transform: translateY(-4px);
+  }
+
+  .inspire-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .inspire-card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .inspire-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .inspire-plus {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--gold-dim);
+    text-align: center;
+  }
+
+  .inspire-equals {
+    grid-column: 1 / -1;
+    background: var(--bg-card);
+    border: 2px solid var(--border-gold);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .inspire-equals::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--gold-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .inspire-equals h3 {
+    font-family: 'Playfair Display', 'Noto Serif SC', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .inspire-equals p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  /* ===== MECHANICS ===== */
+  .mech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .mech-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .mech-card:hover { transform: translateY(-4px); }
+
+  .mech-card.gold-border:hover { border-color: var(--border-gold); }
+  .mech-card.blue-border:hover { border-color: var(--border-blue); }
+  .mech-card.purple-border:hover { border-color: var(--border-purple); }
+  .mech-card.green-border:hover { border-color: rgba(34,197,94,0.2); }
+
+  .mech-card.full-width { grid-column: 1 / -1; }
+
+  .mech-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .mech-card.gold-border .mech-label { color: var(--gold); }
+  .mech-card.blue-border .mech-label { color: var(--crystal-blue); }
+  .mech-card.purple-border .mech-label { color: var(--fog-purple); }
+  .mech-card.green-border .mech-label { color: var(--conservation-green); }
+
+  .mech-card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .mech-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .mech-code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold-dim);
+    background: var(--bg-code);
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  .mech-code .keyword { color: var(--fog-purple); }
+  .mech-code .type { color: var(--crystal-blue); }
+  .mech-code .string { color: var(--conservation-green); }
+  .mech-code .comment { color: var(--text-dim); }
+  .mech-code .number { color: var(--gold); }
+
+  /* ===== MATRIX VISUAL ===== */
+  .matrix-demo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    max-width: 280px;
+    margin: 1.5rem 0;
+  }
+
+  .matrix-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.5s;
+  }
+
+  .matrix-cell.healthy { background: rgba(34,197,94,0.15); color: var(--conservation-green); }
+  .matrix-cell.warning { background: rgba(234,179,8,0.15); color: var(--warning-yellow); }
+  .matrix-cell.critical { background: rgba(239,68,68,0.15); color: var(--danger-red); }
+  .matrix-cell.dead { background: rgba(239,68,68,0.08); color: rgba(239,68,68,0.4); }
+
+  .matrix-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 280px;
+    margin-top: 0.5rem;
+  }
+
+  .matrix-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== FOG VISUAL ===== */
+  .fog-demo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .fog-orb {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fog-orb.semi {
+    background: radial-gradient(circle, rgba(74,158,255,0.2) 0%, rgba(74,158,255,0.05) 70%, transparent 100%);
+    border: 1px solid rgba(74,158,255,0.2);
+    animation: fogPulse 3s ease-in-out infinite;
+  }
+
+  .fog-orb.undecidable {
+    background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, rgba(139,92,246,0.05) 70%, transparent 100%);
+    border: 1px solid rgba(139,92,246,0.25);
+    animation: fogSwirl 4s linear infinite;
+  }
+
+  .fog-orb.independent {
+    background: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+    border: 1px solid rgba(100,100,100,0.15);
+  }
+
+  @keyframes fogPulse { 0%,100%{opacity:0.7;transform:scale(1)} 50%{opacity:1;transform:scale(1.03)} }
+  @keyframes fogSwirl { 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(360deg)} }
+
+  .fog-orb .fog-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .fog-orb.semi .fog-name { color: var(--crystal-blue); }
+  .fog-orb.undecidable .fog-name { color: var(--fog-purple); }
+  .fog-orb.independent .fog-name { color: var(--text-dim); }
+
+  .fog-orb .fog-cost {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+  }
+
+  /* ===== LEVELS ===== */
+  .chapter-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .chapter-tab {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.8rem 1.5rem;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.3s;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .chapter-tab:hover { color: var(--text-secondary); }
+  .chapter-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .level-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .level-card:hover {
+    border-color: var(--border-gold);
+    transform: translateY(-2px);
+  }
+
+  .level-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--gold-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .level-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .level-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+
+  .level-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .level-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .level-tag.crystal { background: rgba(74,158,255,0.1); color: var(--crystal-blue); }
+  .level-tag.molecular { background: rgba(34,197,94,0.1); color: var(--conservation-green); }
+  .level-tag.fluid { background: rgba(74,158,255,0.1); color: var(--crystal-blue); }
+  .level-tag.em { background: rgba(234,179,8,0.1); color: var(--warning-yellow); }
+  .level-tag.thermo { background: rgba(239,68,68,0.1); color: var(--danger-red); }
+  .level-tag.reaction { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .level-tag.topology { background: rgba(139,92,246,0.1); color: var(--fog-purple); }
+  .level-tag.device { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .level-tag.quantum { background: rgba(139,92,246,0.1); color: var(--fog-purple); }
+  .level-tag.stat { background: rgba(34,197,94,0.1); color: var(--conservation-green); }
+  .level-tag.multi { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .level-tag.open { background: rgba(139,92,246,0.1); color: var(--fog-purple); }
+
+  .level-journal {
+    font-size: 0.78rem;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(42,42,53,0.5);
+  }
+
+  /* ===== USERS ===== */
+  .user-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .user-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.4s;
+  }
+
+  .user-card:hover {
+    border-color: var(--border-gold);
+    transform: translateY(-4px);
+  }
+
+  .user-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    margin: 0 auto 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+  }
+
+  .user-card h4 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .user-card .user-scene {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+  }
+
+  .user-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    text-align: left;
+  }
+
+  .user-card .pain-highlight {
+    color: var(--danger-red);
+    font-weight: 600;
+  }
+
+  /* ===== VALUE ===== */
+  .value-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .value-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+
+  .value-block:hover { transform: translateY(-4px); }
+
+  .value-block.commercial:hover { border-color: var(--border-gold); }
+  .value-block.social:hover { border-color: var(--border-blue); }
+
+  .value-block::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .value-block.commercial::after { background: linear-gradient(90deg, var(--gold), var(--gold-dim)); }
+  .value-block.social::after { background: linear-gradient(90deg, var(--crystal-blue), var(--crystal-blue-dim)); }
+
+  .value-block h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .value-block.commercial h3 { color: var(--gold); }
+  .value-block.social h3 { color: var(--crystal-blue); }
+
+  .value-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .value-block.commercial .value-stat { color: var(--gold); }
+  .value-block.social .value-stat { color: var(--crystal-blue); }
+
+  .value-stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .value-block p, .value-block li {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .value-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .value-block li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .value-block li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+  }
+
+  .value-block.commercial li::before { background: var(--gold-dim); }
+  .value-block.social li::before { background: var(--crystal-blue-dim); }
+
+  /* ===== COMPARISON ===== */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .compare-table th {
+    background: var(--bg-card);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 1rem 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-table th:first-child { color: var(--text-dim); font-size: 0.75rem; }
+  .compare-table th:last-child { color: var(--gold); }
+
+  .compare-table td {
+    padding: 0.85rem 1.2rem;
+    font-size: 0.88rem;
+    border-bottom: 1px solid rgba(42,42,53,0.4);
+    color: var(--text-secondary);
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.05em; }
+  .compare-table .hl { color: var(--gold); font-weight: 600; }
+  .compare-table .dim { color: var(--text-dim); }
+
+  /* ===== TECH ===== */
+  .tech-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .tech-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .tech-item:hover { border-color: var(--border-gold); transform: translateY(-2px); }
+
+  .tech-item .tech-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .tech-item .tech-desc {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
+
+  /* ===== ROADMAP ===== */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    position: relative;
+  }
+
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--crystal-blue-dim), var(--fog-purple-dim), var(--conservation-green-dim));
+  }
+
+  .roadmap-phase {
+    text-align: center;
+    position: relative;
+  }
+
+  .roadmap-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    margin: 20px auto 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .roadmap-phase:nth-child(1) .roadmap-dot { background: var(--gold); box-shadow: 0 0 12px var(--gold-glow); }
+  .roadmap-phase:nth-child(2) .roadmap-dot { background: var(--crystal-blue); box-shadow: 0 0 12px var(--crystal-blue-glow); }
+  .roadmap-phase:nth-child(3) .roadmap-dot { background: var(--fog-purple); box-shadow: 0 0 12px var(--fog-purple-glow); }
+  .roadmap-phase:nth-child(4) .roadmap-dot { background: var(--conservation-green); box-shadow: 0 0 12px rgba(34,197,94,0.2); }
+
+  .roadmap-phase h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .roadmap-phase:nth-child(1) h4 { color: var(--gold); }
+  .roadmap-phase:nth-child(2) h4 { color: var(--crystal-blue); }
+  .roadmap-phase:nth-child(3) h4 { color: var(--fog-purple); }
+  .roadmap-phase:nth-child(4) h4 { color: var(--conservation-green); }
+
+  .roadmap-phase h5 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .roadmap-phase p {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .divider-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 5rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-quote {
+    font-family: 'Playfair Display', 'Noto Serif SC', serif;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    font-style: italic;
+    color: var(--gold-dim);
+    max-width: 650px;
+    margin: 0 auto 0.5rem;
+    line-height: 1.6;
+  }
+
+  .footer-attr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+  }
+
+  .footer-manifesto {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin: 2rem auto 0;
+    line-height: 1.8;
+  }
+
+  /* ===== REVEAL ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ===== ARCHITECTURE DIAGRAM ===== */
+  .arch-diagram {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    margin: 2rem 0;
+    position: relative;
+  }
+
+  .arch-layer {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .arch-layer.godot-side { border-left: 3px solid var(--crystal-blue); }
+  .arch-layer.rust-side { border-left: 3px solid var(--gold); }
+  .arch-layer.bridge-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.5rem;
+    border: none;
+    background: none;
+  }
+
+  .arch-layer h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .arch-layer.godot-side h4 { color: var(--crystal-blue); }
+  .arch-layer.rust-side h4 { color: var(--gold); }
+
+  .arch-item {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    padding: 0.35rem 0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .arch-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .arch-layer.godot-side .arch-item::before { background: var(--crystal-blue-dim); }
+  .arch-layer.rust-side .arch-item::before { background: var(--gold-dim); }
+
+  .arch-bridge-line {
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--crystal-blue-dim), var(--gold-dim));
+    position: relative;
+  }
+
+  .arch-bridge-line::after {
+    content: 'GDExtension';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .arch-fallback {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .arch-fallback span { color: var(--warning-yellow); }
+
+  /* ===== PIPELINE FLOW ===== */
+  .pipeline-flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 2rem 0;
+  }
+
+  .pipe-stage {
+    flex: 1;
+    text-align: center;
+    padding: 1.2rem 0.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .pipe-stage:hover { transform: translateY(-3px); }
+
+  .pipe-stage::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0; height: 0;
+    border-left: 8px solid var(--border);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  .pipe-stage:last-child::after { display: none; }
+
+  .pipe-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    margin: 0 auto 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .pipe-stage:nth-child(1) .pipe-icon { background: rgba(154,150,142,0.15); color: var(--text-secondary); }
+  .pipe-stage:nth-child(2) .pipe-icon { background: rgba(154,150,142,0.15); color: var(--text-secondary); }
+  .pipe-stage:nth-child(3) .pipe-icon { background: rgba(74,158,255,0.15); color: var(--crystal-blue); }
+  .pipe-stage:nth-child(4) .pipe-icon { background: rgba(201,168,76,0.15); color: var(--gold); }
+  .pipe-stage:nth-child(5) .pipe-icon { background: rgba(34,197,94,0.15); color: var(--conservation-green); }
+
+  .pipe-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+
+  .pipe-cost {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+
+  .pipe-desc {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    line-height: 1.4;
+  }
+
+  /* ===== TIMING BADGE ===== */
+  .timing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-gold);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .timing-badge .timing-icon {
+    font-size: 1.3rem;
+  }
+
+  .timing-badge .timing-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .timing-badge .timing-text strong { color: var(--gold); }
+
+  /* ===== INTERACTIVE MATRIX ===== */
+  .matrix-demo.interactive .matrix-cell {
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .matrix-demo.interactive .matrix-cell:hover {
+    transform: scale(1.15);
+    z-index: 2;
+  }
+
+  .matrix-demo.interactive .matrix-cell:active {
+    transform: scale(0.95);
+  }
+
+  .matrix-state-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+    text-align: center;
+    min-height: 1.2rem;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .problem-grid, .mech-grid, .value-row, .inspire-row { grid-template-columns: 1fr; }
+    .user-grid { grid-template-columns: 1fr; }
+    .roadmap { grid-template-columns: 1fr 1fr; }
+    .roadmap::before { display: none; }
+    .nav-links { display: none; }
+    .fog-demo { grid-template-columns: 1fr; max-width: 200px; }
+    .arch-diagram { grid-template-columns: 1fr; }
+    .arch-bridge-line { display: none; }
+    .pipeline-flow { flex-wrap: wrap; }
+    .pipe-stage { min-width: 45%; }
+    .pipe-stage::after { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    section { padding: 4rem 1.2rem; }
+    .roadmap { grid-template-columns: 1fr; }
+    .pipe-stage { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-brand">Intuita</div>
+  <ul class="nav-links">
+    <li><a href="#problem">痛点</a></li>
+    <li><a href="#inspiration">灵感</a></li>
+    <li><a href="#mechanics">机制</a></li>
+    <li><a href="#levels">关卡</a></li>
+    <li><a href="#users">用户</a></li>
+    <li><a href="#value">价值</a></li>
+    <li><a href="#tech">技术</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-tag">#生活娱乐</div>
+    <h1 class="hero-title"><span class="gold">Intuita</span></h1>
+    <p class="hero-subtitle">构造即证明 &mdash; CONSTRUCTIO EST PROBATIO</p>
+    <p class="hero-formula">
+      <span>&exist;</span><span>x</span><span>.</span>
+      <span>P</span><span>(</span><span>x</span><span>)</span>
+      <span>&nbsp;&equiv;&nbsp;</span>
+      <span>&#x2200;</span><span>x</span><span>.</span>
+      <span>&#x25C7;</span><span>(</span><span>x</span><span>)</span>
+    </p>
+    <div class="hero-cta">
+      <a href="#mechanics" class="btn btn-primary">探索核心机制 &darr;</a>
+      <a href="#value" class="btn btn-secondary">价值与意义</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-indicator"></div></div>
+</div>
+
+<!-- ===== 1. 创意介绍 ===== -->
+<section id="intro">
+  <div class="reveal">
+    <div class="section-label">01 / Creative Introduction</div>
+    <h2 class="section-title">【生活娱乐赛道】<span class="accent">Intuita</span>&mdash;&mdash;构造即证明</h2>
+    <p class="section-desc">
+      一款 3D 物理构造解谜游戏。玩家在守恒矩阵约束下构建真实材料结构，每一步操作对应一次数学证明。不可判定性被具象化为迷雾，哥德尔不完备定理成为可玩的博弈。LLM 算力由玩家自带 API Key 实现，游戏本身零服务器成本。
+    </p>
+
+    <div class="timing-badge reveal">
+      <div class="timing-icon">&#x23F0;</div>
+      <div class="timing-text">
+        <strong>为什么是现在？</strong> LLM API 开放使 BYOK 模式成为可能（2023年前不可行）；Godot 4 的 GDExtension 使 Rust 原生计算可行（Godot 3 不可行）；Z3 SMT Solver 开源使轻量形式化验证可行（Coq/Lean4 太重）。三个技术条件同时成熟，窗口期就在当下。
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 2. 痛点 ===== -->
+<section id="problem" class="problem-bg">
+  <div class="reveal">
+    <div class="section-label">02 / The Problem</div>
+    <h2 class="section-title">我们发现的<span class="accent">核心痛点</span></h2>
+    <p class="section-desc">
+      科学教育游戏存在一个根本性的断层：要么太"教育"（本质是刷题模拟器），要么太"游戏"（科学只是装饰皮肤）。没有人把数学哲学中"存在即被构造"的直觉主义思想做成可玩的机制。
+    </p>
+  </div>
+
+  <div class="problem-grid reveal">
+    <div class="problem-card">
+      <div class="problem-num">01</div>
+      <h4>科学游戏的两极分化</h4>
+      <p>现有科学游戏要么是<span class="highlight-text">披着科学皮的普通解谜</span>（Minecraft 化学只是换皮合成），要么是<span class="highlight-text">毫无游戏性的专业工具</span>（VASP、Gaussian 的学习曲线比游戏本身还陡）。中间地带几乎空白。</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02</div>
+      <h4>抽象概念无法"亲手触摸"</h4>
+      <p>晶体学中的空间群、Wyckoff 位置、对称性破缺&mdash;&mdash;这些概念在课本上是<span class="highlight-text">二维投影+死记硬背</span>。学生无法直观感受"为什么 NaCl 是 Fm-3m 而不是 Pm-3m"，因为没有人让他们在 3D 空间中亲手构建并观察守恒律的约束。</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03</div>
+      <h4>数学哲学被锁在论文里</h4>
+      <p>Brouwer 的直觉主义、哥德尔的不完备定理、范畴论的态射系统&mdash;&mdash;这些概念通常只出现在大学数学系，<span class="highlight-text">大多数人没有途径直观地理解它们</span>。"存在即被构造"是一种有趣的世界观&mdash;&mdash;但目前只有少数专业人士接触过它。</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">04</div>
+      <h4>硬核解谜的深度天花板</h4>
+      <p>Zachtronics 系列证明了解谜游戏可以有真正的工程深度，但通关后玩家找不到更深的挑战。现有解谜游戏的<span class="highlight-text">物理规则是简化的、装饰性的</span>，不是真实的科学约束。渴望"规则即物理"的硬核体验的玩家无处可去。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 3. 灵感来源 ===== -->
+<section id="inspiration">
+  <div class="reveal">
+    <div class="section-label">03 / Inspiration</div>
+    <h2 class="section-title">灵感来源：<span class="accent">Foldit</span> + <span class="blue">Besiege</span></h2>
+    <p class="section-desc">
+      两个看似不相关的游戏，各自解决了一个核心问题。我们把它们的核心洞察统一在一个数学哲学框架下。
+    </p>
+  </div>
+
+  <div class="inspire-row reveal">
+    <div class="inspire-card">
+      <h4>INSPIRATION A</h4>
+      <h3>Foldit</h3>
+      <p>华盛顿大学的蛋白质折叠游戏。<strong>核心洞察</strong>：普通人的空间直觉可以解决专业科学家用算法解不了的问题。Foldit 玩家在 3 周内解决了困扰科学界 15 年的 M-PMV 逆转录酶结构。<strong>97% 的玩家没有生物化学背景</strong>。证明了"公民科学"的可行性。</p>
+    </div>
+    <div class="inspire-plus">+</div>
+    <div class="inspire-card">
+      <h4>INSPIRATION B</h4>
+      <h3>Besiege</h3>
+      <p>Siege Studios 的物理构造游戏。<strong>核心洞察</strong>：在真实物理约束下的自由构造能产生无穷的创造力和乐趣。玩家不是"解谜"，而是"发明"。每个解决方案都是独一无二的。物理不是装饰，是规则本身&mdash;&mdash;重力、扭矩、应力都是真实的。</p>
+    </div>
+    <div class="inspire-equals">
+      <h3>Intuita</h3>
+      <p>Foldit 的科学深度 + Besiege 的构造自由度，用 Brouwer 直觉主义统一</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 4. 核心机制 ===== -->
+<section id="mechanics">
+  <div class="reveal">
+    <div class="section-label">04 / Core Mechanics</div>
+    <h2 class="section-title">四大核心<span class="accent">机制</span></h2>
+    <p class="section-desc">
+      Intuita 的每一个游戏机制都映射一个数学或物理概念。守恒矩阵是真实的线性代数，证明树是真实的构造性逻辑，迷雾是真实的可判定性层次。
+    </p>
+  </div>
+
+  <div class="mech-grid reveal">
+    <!-- 守恒矩阵 -->
+    <div class="mech-card gold-border">
+      <div class="mech-label">Mechanic I &mdash; Conservation Matrix</div>
+      <h3>守恒矩阵 &mdash; 结构的生死线</h3>
+      <p>一个 <strong>4&times;4 实对称矩阵</strong>追踪质量、电荷、动量、能量四种守恒律的状态。每次放置原子或成键都会扰动矩阵。引擎通过 <strong>Householder 变换 + QR 迭代</strong>（Rust nalgebra 实现）实时计算特征值。</p>
+      <p>特征值偏离 1.0 的程度决定结构状态：<strong>健康</strong>（&lt;0.3）&rarr; <strong>警告</strong>（0.3-0.6）&rarr; <strong>危险</strong>（0.6-0.9）&rarr; <strong>崩解</strong>（&gt;0.9）。玩家必须像走钢丝一样维持四种守恒律的平衡。</p>
+
+      <div class="matrix-demo interactive" id="matrixDemo">
+        <div class="matrix-cell healthy" data-val="1.00">1.00</div>
+        <div class="matrix-cell healthy" data-val="0.02">0.02</div>
+        <div class="matrix-cell warning" data-val="0.15">0.15</div>
+        <div class="matrix-cell healthy" data-val="0.01">0.01</div>
+        <div class="matrix-cell healthy" data-val="0.02">0.02</div>
+        <div class="matrix-cell healthy" data-val="1.00">1.00</div>
+        <div class="matrix-cell healthy" data-val="0.03">0.03</div>
+        <div class="matrix-cell critical" data-val="0.72">0.72</div>
+        <div class="matrix-cell warning" data-val="0.15">0.15</div>
+        <div class="matrix-cell healthy" data-val="0.03">0.03</div>
+        <div class="matrix-cell healthy" data-val="1.00">1.00</div>
+        <div class="matrix-cell healthy" data-val="0.01">0.01</div>
+        <div class="matrix-cell healthy" data-val="0.01">0.01</div>
+        <div class="matrix-cell critical" data-val="0.72">0.72</div>
+        <div class="matrix-cell healthy" data-val="0.01">0.01</div>
+        <div class="matrix-cell healthy" data-val="1.00">1.00</div>
+      </div>
+      <div class="matrix-labels">
+        <span class="matrix-label">质量</span>
+        <span class="matrix-label">电荷</span>
+        <span class="matrix-label">动量</span>
+        <span class="matrix-label">能量</span>
+      </div>
+      <div class="matrix-state-label" id="matrixState">点击单元格扰动守恒律</div>
+
+      <div class="mech-code">
+<span class="comment"># Rust 核心引擎 (nalgebra)</span>
+<span class="keyword">fn</span> <span class="type">compute_eigenvalues</span>(matrix: &amp;DMatrix&lt;<span class="type">f64</span>&gt;) -&gt; Vec&lt;<span class="type">f64</span>&gt; {
+    <span class="keyword">let</span> sym = matrix.symmetric();
+    sym.eigenvalues().unwrap().iter().map(|v| v.re).collect()
+}
+
+<span class="comment"># 状态判定</span>
+<span class="keyword">fn</span> <span class="type">get_state</span>(eigenvalues: &amp;[<span class="type">f64</span>]) -&gt; State {
+    <span class="keyword">let</span> max_dev = eigenvalues.iter().map(|v| (v - <span class="number">1.0</span>).abs()).fold(<span class="number">0.0</span>f64, |a,b| a.max(b));
+    <span class="keyword">match</span> max_dev {
+        d <span class="keyword">if</span> d &lt; <span class="number">0.3</span> =&gt; State::Healthy,
+        d <span class="keyword">if</span> d &lt; <span class="number">0.6</span> =&gt; State::Warning,
+        d <span class="keyword">if</span> d &lt; <span class="number">0.9</span> =&gt; State::Critical,
+        _ =&gt; State::Disintegrated,
+    }
+}</div>
+    </div>
+
+    <!-- 证明树 -->
+    <div class="mech-card blue-border">
+      <div class="mech-label">Mechanic II &mdash; Proof Tree</div>
+      <h3>证明树 &mdash; 构造即证明</h3>
+      <p>每个操作都是证明树的一个节点。这不是比喻&mdash;&mdash;这是 Brouwer 直觉主义数学的精确实现。在直觉主义中，<strong>存在性证明必须给出构造方法</strong>，不能只是反证法。你放置的每一个原子、形成的每一个键，都是"这个结构存在"的构造性证明步骤。</p>
+      <p>玩家可以<strong>分叉</strong>（探索不同路径）、<strong>嫁接</strong>（合并子证明）、<strong>回溯</strong>（撤销错误分支）。证明树深度影响最终得分&mdash;&mdash;最短证明 = 最高分。UI 中每个节点可右键操作，活跃分支高亮，非活跃分支暗淡。</p>
+      <div class="mech-code">
+<span class="comment"># 证明树操作</span>
+<span class="type">ProofTree</span>.fork(node_id)     <span class="comment"># 从当前节点分叉出新分支</span>
+<span class="type">ProofTree</span>.graft(src, dst)  <span class="comment"># 将子树嫁接到目标节点</span>
+<span class="type">ProofTree</span>.backtrack(id)   <span class="comment"># 回溯：删除节点及后代</span>
+
+<span class="comment"># 评分：深度惩罚</span>
+score = base * (<span class="number">1.0</span> + k / depth)
+<span class="comment"># k 越大，短证明的奖励越高</span></div>
+    </div>
+
+    <!-- 迷雾 -->
+    <div class="mech-card purple-border">
+      <div class="mech-label">Mechanic III &mdash; Undecidability Fog</div>
+      <h3>不可判定迷雾 &mdash; 哥德尔可玩化</h3>
+      <p>这是 Intuita 最独特的设计。三种迷雾精确映射可判定性层次，让哥德尔不完备定理成为可玩的博弈：</p>
+
+      <div class="fog-demo">
+        <div class="fog-orb semi">
+          <div class="fog-name">半可判定</div>
+          <div class="fog-cost">1 核心 &bull; 确定性驱散</div>
+        </div>
+        <div class="fog-orb undecidable">
+          <div class="fog-name">不可判定</div>
+          <div class="fog-cost">3 核心 &bull; 50% 穿透</div>
+        </div>
+        <div class="fog-orb independent">
+          <div class="fog-name">独立</div>
+          <div class="fog-cost">不可驱散 &bull; 只能绕行</div>
+        </div>
+      </div>
+
+      <p><strong>半可判定雾</strong>：蓝色薄雾，花 1 核心确定性驱散。映射：停机问题的半可判定性&mdash;&mdash;如果程序停机，你最终会知道。</p>
+      <p><strong>不可判定雾</strong>：紫色漩涡，花 3 核心有 50% 概率穿透。失败时紫色闪电击出。映射：停机问题的不可判定性&mdash;&mdash;你永远无法预先知道结果。</p>
+      <p><strong>独立雾</strong>：纯黑虚无，任何交互都无声反弹。映射：G&ouml;del 独立命题&mdash;&mdash;既不可证真也不可证伪，你只能绕行。</p>
+
+      <div class="mech-code">
+<span class="comment"># 迷雾类型精确映射可判定性层次</span>
+<span class="keyword">enum</span> <span class="type">FogType</span> {
+    SemiDecidable,   <span class="comment"># &exist;x.P(x) &mdash; 可枚举，可驱散</span>
+    Undecidable,     <span class="comment"># &not;(&exist;x.P(x)) &and; &not;(&exist;x.&not;P(x))</span>
+    Independent,      <span class="comment"># G&ouml;del: P &nvdash; &phi; &and; P &nvdash; &not;&phi;</span>
+}
+
+<span class="comment"># 穿透不可判定雾：赌徒的抉择</span>
+<span class="keyword">func</span> <span class="type">penetrate</span>(fog) -&gt; <span class="type">bool</span>:
+    <span class="keyword">if</span> fog.type == Undecidable:
+        <span class="keyword">return</span> randf() &lt; <span class="number">0.5</span>  <span class="comment"># 3核心的赌注</span></div>
+    </div>
+
+    <!-- 验证管线 -->
+    <div class="mech-card green-border">
+      <div class="mech-label">Mechanic IV &mdash; Verification Pipeline</div>
+      <h3>五层验证管线 &mdash; 从符号到形式化</h3>
+      <p>验证不是简单的"对/错"二分法，而是一个从浅到深的五层管线。每层更深、更贵、更可靠。L3 层需要玩家接入自己的 LLM API Key（OpenAI/Anthropic/本地模型均可），算力由玩家自行承担，游戏本身不提供也不存储 API Key。高级验证通过后奖励核心，形成"投资"循环：</p>
+
+      <div class="pipeline-flow">
+        <div class="pipe-stage">
+          <div class="pipe-icon">L0</div>
+          <div class="pipe-name">符号</div>
+          <div class="pipe-cost">免费</div>
+          <div class="pipe-desc">语句非空检查</div>
+        </div>
+        <div class="pipe-stage">
+          <div class="pipe-icon">L1</div>
+          <div class="pipe-name">类型</div>
+          <div class="pipe-cost">免费</div>
+          <div class="pipe-desc">类型兼容性</div>
+        </div>
+        <div class="pipe-stage">
+          <div class="pipe-icon">L2</div>
+          <div class="pipe-name">逻辑</div>
+          <div class="pipe-cost">1 核心&rarr;+1</div>
+          <div class="pipe-desc">逻辑一致性</div>
+        </div>
+        <div class="pipe-stage">
+          <div class="pipe-icon">L3</div>
+          <div class="pipe-name">LLM</div>
+          <div class="pipe-cost">2 核心&rarr;+2</div>
+          <div class="pipe-desc">BYOK 物理推理</div>
+        </div>
+        <div class="pipe-stage">
+          <div class="pipe-icon">L4</div>
+          <div class="pipe-name">Z3</div>
+          <div class="pipe-cost">5 核心&rarr;+5</div>
+          <div class="pipe-desc">SMT 约束求解</div>
+        </div>
+      </div>
+
+      <div class="mech-code">
+<span class="type">L0</span> 符号验证    <span class="comment"># 免费 &mdash; 检查语句非空</span>
+<span class="type">L1</span> 类型验证    <span class="comment"># 免费 &mdash; 检查类型兼容性</span>
+<span class="type">L2</span> 逻辑验证    <span class="comment"># 1核心 &rarr; 通过奖励1核心 &mdash; 检查逻辑一致性</span>
+<span class="type">L3</span> LLM 验证    <span class="comment"># 2核心 &rarr; 通过奖励2核心 &mdash; 玩家自带API Key的AI物理推理</span>
+<span class="type">L4</span> Z3 形式化验证   <span class="comment"># 5核心 &rarr; 通过奖励5核心 &mdash; SMT约束求解</span>
+
+<span class="comment"># 验证动画：逐层展开</span>
+<span class="type">L0</span>: 原子标签依次亮起 &rarr; <span class="string">"存在性检查"</span>
+<span class="type">L1</span>: 化学键依次高亮 &rarr; <span class="string">"兼容性检查"</span>
+<span class="type">L2</span>: 守恒矩阵4行逐行亮起 &rarr; <span class="string">"一致性检查"</span>
+<span class="type">L3</span>: 金色微光扫过所有原子 &rarr; <span class="string">"物理推理"</span>
+<span class="type">L4</span>: 完整金色脉冲+粒子爆发 &rarr; <span class="string">"形式化证明完成"</span></div>
+    </div>
+
+    <!-- 范畴论态射 -->
+    <div class="mech-card gold-border full-width">
+      <div class="mech-label">Mechanic V &mdash; Categorical Morphisms</div>
+      <h3>范畴论态射系统 &mdash; 结构变换的数学</h3>
+      <p>8 种态射类型精确映射范畴论概念，每种有不同的可逆性和组合规则。态射组合不是交换的&mdash;&mdash;f&compfn;g &ne; g&compfn;f&mdash;&mdash;这直接来自范畴论的公理。Surrogate 态射会"吸收"左侧组合（类似范畴中的零态射），Approximation 是"传染性"的（类似拓扑中的开集传递性）。</p>
+
+      <div class="mech-code">
+<span class="comment"># 8种态射类型 &mdash; 每种映射一个范畴论概念</span>
+<span class="type">Transformation</span>  <span class="comment"># 同构 &mdash; 可逆，保持所有结构</span>
+<span class="type">Restriction</span>     <span class="comment"># 单态射 &mdash; 注入，信息不丢失</span>
+<span class="type">Embedding</span>       <span class="comment"># 单态射 &mdash; 子结构嵌入</span>
+<span class="type">Projection</span>      <span class="comment"># 满态射 &mdash; 商结构，信息压缩</span>
+<span class="type">Approximation</span>  <span class="comment"># 一般态射 &mdash; 传染性：组合后仍为Approximation</span>
+<span class="type">Surrogate</span>      <span class="comment"># 零态射 &mdash; 吸收性：Surrogate&compfn;X = Surrogate</span>
+<span class="type">Composite</span>      <span class="comment"># 复合态射 &mdash; 可逆当且仅当两个分量都可逆</span>
+<span class="type">Identity</span>        <span class="comment"># 恒等态射 &mdash; 不改变结构</span>
+
+<span class="comment"># 组合规则示例</span>
+compose(Transformation, Transformation) = Composite, <span class="keyword">invertible</span>
+compose(Restriction, Embedding) = Projection, <span class="keyword">not invertible</span>
+compose(Surrogate, X) = Surrogate, <span class="comment"># 吸收律</span>
+compose(Approximation, X) = Approximation, <span class="comment"># 传染性</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 5. 关卡 ===== -->
+<section id="levels">
+  <div class="reveal">
+    <div class="section-label">05 / 42 Levels + Infinite Daily Challenges</div>
+    <h2 class="section-title">从<span class="accent">盐与骨</span>到<span class="blue">流与界</span>到<span class="purple">火与路</span>到<span class="green">涌与生</span></h2>
+    <p class="section-desc">
+      42 个固定关卡覆盖 8 个物理域，从 NaCl 到超导体到量子隧穿二极管到涌现现象。每章引入新构造模式和新守恒律，难度曲线平滑上升。另有 5 个挑战关卡和无限每日挑战。
+    </p>
+  </div>
+
+  <div class="reveal">
+    <div class="chapter-tabs">
+      <button class="chapter-tab active" onclick="showChapter(1, this)">Ch1 盐与骨</button>
+      <button class="chapter-tab" onclick="showChapter(2, this)">Ch2 流与界</button>
+      <button class="chapter-tab" onclick="showChapter(3, this)">Ch3 火与路</button>
+      <button class="chapter-tab" onclick="showChapter(4, this)">Ch4 涌与生</button>
+      <button class="chapter-tab" onclick="showChapter(0, this)">挑战+每日</button>
+    </div>
+
+    <div id="chapterContent">
+      <div class="level-grid" id="levelGrid"></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 6. 目标用户 ===== -->
+<section id="users">
+  <div class="reveal">
+    <div class="section-label">06 / Target Users</div>
+    <h2 class="section-title">目标用户<span class="accent">及痛点</span></h2>
+  </div>
+
+  <div class="user-grid reveal">
+    <div class="user-card">
+      <div class="user-avatar" style="background:rgba(74,158,255,0.1)">&#x1F393;</div>
+      <h4>理工科学生 & 科研入门者</h4>
+      <div class="user-scene">场景：固体物理课后 / 晶体学实验前</div>
+      <p>学空间群和 Wyckoff 位置时只能面对 2D 投影图死记硬背。<span class="pain-highlight">无法直观理解"为什么 NaCl 是 Fm-3m 而不是 Pm-3m"</span>。Intuita 让他们在 3D 空间中亲手构建，守恒矩阵实时反馈每一步操作是否物理合法。</p>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar" style="background:rgba(201,168,76,0.1)">&#x1F3AE;</div>
+      <h4>硬核解谜爱好者</h4>
+      <div class="user-scene">场景：Zachtronics 全通关后 / 周末深度游戏</div>
+      <p>通关 Shenzhen I/O、Opus Magnum 后找不到更有深度的构造游戏。<span class="pain-highlight">现有解谜游戏的物理规则是简化的、装饰性的</span>，不是真实的科学约束。Intuita 的守恒矩阵特征值计算是真实的线性代数，证明树是真实的构造性逻辑。</p>
+    </div>
+    <div class="user-card">
+      <div class="user-avatar" style="background:rgba(34,197,94,0.1)">&#x1F4DA;</div>
+      <h4>科学传播工作者 & 教师</h4>
+      <div class="user-scene">场景：课堂演示 / 科普活动 / 实验教学</div>
+      <p>课堂上讲对称性破缺、相变、守恒律，学生昏昏欲睡。<span class="pain-highlight">缺乏"亲手做出来"而非"听老师讲出来"的交互工具</span>。Intuita 的交互式教程覆盖 6 种构造模式，AI 助手在 30 分钟后解锁提供专业指导。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 7. 价值与意义 ===== -->
+<section id="value">
+  <div class="reveal">
+    <div class="section-label">07 / Value & Significance</div>
+    <h2 class="section-title">价值与<span class="accent">意义</span></h2>
+  </div>
+
+  <div class="value-row reveal">
+    <div class="value-block commercial">
+      <h3>商业价值</h3>
+      <div class="value-stat">0</div>
+      <div class="value-stat-label">服务器算力成本 &mdash; 玩家自带 API Key</div>
+      <ul>
+        <li><strong>极低运营成本</strong>。LLM 算力由玩家自行承担（接入自己的 API Key），游戏本身不提供也不存储 API 密钥。核心计算（守恒矩阵特征值）在本地 Rust 引擎完成，无需云端。这意味着我们不需要为 AI 推理付费，运营成本几乎为零。</li>
+        <li><strong>差异化定位</strong>。Foldit 验证了公民科学游戏的可行性，Zachtronics 验证了硬核构造解谜的付费意愿。Intuita 处于两者交集，"数学哲学可玩化"是一个尚未被占据的细分方向。</li>
+        <li><strong>长线留存设计</strong>：37 关卡 + 每日挑战 + 沙盒模式 + 自进化规则系统 + 材料图鉴收集。核心经济系统（验证投资循环 + 核心商店 + 进化点兑换）提供持续游玩动力。</li>
+        <li><strong>变现模式</strong>：基础版免费（Ch1-2）+ 完整版买断 + 教育机构授权。不依赖内购或广告，不卖算力。</li>
+      </ul>
+    </div>
+    <div class="value-block social">
+      <h3>社会价值</h3>
+      <div class="value-stat">BYOK</div>
+      <div class="value-stat-label">Bring Your Own Key &mdash; 算力归玩家所有</div>
+      <ul>
+        <li><strong>降低科学直觉门槛</strong>。晶体学、固体物理中的空间群、Wyckoff 位置、对称性破缺等概念，从课本上的 2D 投影变成可亲手操作的 3D 构造。交互式教程覆盖 6 种构造模式，AI 助手在 30 分钟后解锁提供指导。</li>
+        <li><strong>让抽象思想可触摸</strong>。Brouwer 直觉主义、哥德尔不完备定理、范畴论态射&mdash;&mdash;这些通常只出现在大学数学系课堂上的概念，通过游戏机制变得可交互、可体验。不是"科普"，是"亲手做"。</li>
+        <li><strong>社区驱动的内容生态</strong>。每日挑战（同一天全球同一题）、自进化规则导入导出（.intuita_rule 文件）、构造分享，让玩家不仅是消费者，也是内容创造者。</li>
+        <li><strong>无障碍设计</strong>：色盲安全 4 模式配色、光敏性雾强度控制、字体缩放支持，确保不同需求的玩家都能参与。</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 8. 对比 ===== -->
+<section>
+  <div class="reveal">
+    <div class="section-label">08 / Competitive Landscape</div>
+    <h2 class="section-title">与现有产品<span class="accent">对比</span></h2>
+  </div>
+
+  <div class="reveal">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>维度</th>
+          <th>Foldit</th>
+          <th>Besiege</th>
+          <th>Minecraft EDU</th>
+          <th>Zachtronics</th>
+          <th class="hl">Intuita</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>科学约束真实性</td>
+          <td>高（蛋白质物理）</td>
+          <td class="dim">低（简化物理）</td>
+          <td class="dim">低（化学是皮肤）</td>
+          <td class="dim">低（工程简化）</td>
+          <td class="hl">极高（守恒矩阵+特征值）</td>
+        </tr>
+        <tr>
+          <td>构造自由度</td>
+          <td class="dim">低（固定折叠路径）</td>
+          <td>高（自由组装）</td>
+          <td>极高（方块世界）</td>
+          <td>中（有限组件）</td>
+          <td class="hl">高（6种模式+沙盒+自进化）</td>
+        </tr>
+        <tr>
+          <td>数学哲学深度</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="hl">直觉主义+哥德尔+范畴论</td>
+        </tr>
+        <tr>
+          <td>不可判定性玩法</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="hl">3种迷雾类型映射可判定性</td>
+        </tr>
+        <tr>
+          <td>证明系统</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="hl">5层验证+证明树+回溯</td>
+        </tr>
+        <tr>
+          <td>形式化验证</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="dim">无</td>
+          <td class="hl">Z3 SMT Solver</td>
+        </tr>
+        <tr>
+          <td>公民科学潜力</td>
+          <td>已验证</td>
+          <td class="dim">无</td>
+          <td>部分</td>
+          <td class="dim">无</td>
+          <td class="hl">自进化规则+社区竞赛</td>
+        </tr>
+        <tr>
+          <td>教育适用性</td>
+          <td>窄（蛋白质）</td>
+          <td class="dim">无</td>
+          <td>广但浅</td>
+          <td class="dim">无</td>
+          <td class="hl">8个物理域+交互教程</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 9. 技术栈 ===== -->
+<section id="tech">
+  <div class="reveal">
+    <div class="section-label">09 / Technology Stack</div>
+    <h2 class="section-title">技术<span class="accent">架构</span></h2>
+    <p class="section-desc">
+      双引擎架构：Godot 4 GDScript 处理游戏逻辑和 UI，Rust GDExtension 处理高性能数学计算。Rust 不可用时自动降级到 GDScript 回退引擎。
+    </p>
+  </div>
+
+  <div class="arch-diagram reveal">
+    <div class="arch-layer godot-side">
+      <h4>Godot 4.6 &mdash; 游戏层</h4>
+      <div class="arch-item">场景管理 &amp; 节点树</div>
+      <div class="arch-item">UI / HUD / 交互逻辑</div>
+      <div class="arch-item">GPUParticles3D 特效系统</div>
+      <div class="arch-item">FogVolume3D 迷雾渲染</div>
+      <div class="arch-item">GLSL Shader 辉光/瓦解</div>
+      <div class="arch-item">Z3 SMT2 命令行调用</div>
+      <div class="arch-item">LLM API 网关 (BYOK)</div>
+    </div>
+    <div class="arch-layer bridge-col">
+      <div class="arch-bridge-line"></div>
+      <div class="arch-bridge-line"></div>
+      <div class="arch-bridge-line"></div>
+    </div>
+    <div class="arch-layer rust-side">
+      <h4>Rust GDExtension &mdash; 计算层</h4>
+      <div class="arch-item">4&times;4 守恒矩阵引擎</div>
+      <div class="arch-item">Householder + QR 特征值</div>
+      <div class="arch-item">8种态射组合规则</div>
+      <div class="arch-item">5层验证管线核心</div>
+      <div class="arch-item">nalgebra 线性代数</div>
+      <div class="arch-item">对象池 &amp; MultiMesh</div>
+      <div class="arch-item">Z3 Rust API (预留)</div>
+    </div>
+    <div class="arch-fallback">Rust DLL 不可用时 <span>&rarr;</span> GDScript 回退引擎自动接管</div>
+  </div>
+
+  <div class="tech-stack reveal">
+    <div class="tech-item">
+      <div class="tech-name">Godot 4.6</div>
+      <div class="tech-desc">游戏引擎 &amp; 场景管理</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Rust + gdext</div>
+      <div class="tech-desc">守恒矩阵 &amp; 特征值引擎</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">nalgebra</div>
+      <div class="tech-desc">线性代数 &amp; QR 分解</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">Z3 SMT Solver</div>
+      <div class="tech-desc">L5 形式化约束验证</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">FogVolume3D</div>
+      <div class="tech-desc">Godot 4 体积雾渲染</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">GPUParticles3D</div>
+      <div class="tech-desc">粒子特效 &amp; 反馈</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">GLSL Shaders</div>
+      <div class="tech-desc">守恒辉光 &amp; 迷雾 &amp; 瓦解</div>
+    </div>
+    <div class="tech-item">
+      <div class="tech-name">GitHub Actions</div>
+      <div class="tech-desc">CI/CD 自动化构建</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div></div>
+
+<!-- ===== 10. 路线图 ===== -->
+<section>
+  <div class="reveal">
+    <div class="section-label">10 / Roadmap</div>
+    <h2 class="section-title">发展<span class="accent">路线</span></h2>
+  </div>
+
+  <div class="roadmap reveal">
+    <div class="roadmap-phase">
+      <div class="roadmap-dot"></div>
+      <h4>Phase 1</h4>
+      <h5>核心验证</h5>
+      <p>Ch1-2 关卡完善<br>守恒矩阵引擎优化<br>教程系统测试<br>内部 Alpha</p>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot"></div>
+      <h4>Phase 2</h4>
+      <h5>深度扩展</h5>
+      <p>Ch3-4 全部关卡<br>Z3 SMT Solver 已集成<br>程序化音效系统<br>测试框架<br>封闭 Beta 测试</p>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot"></div>
+      <h4>Phase 3</h4>
+      <h5>社区建设</h5>
+      <p>每日挑战上线<br>规则市场<br>在线排行榜<br>教育版授权</p>
+    </div>
+    <div class="roadmap-phase">
+      <div class="roadmap-dot"></div>
+      <h4>Phase 4</h4>
+      <h5>公民科学</h5>
+      <p>科研合作项目<br>论文发表<br>新物理域扩展<br>跨平台移植</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p class="footer-quote">&ldquo;存在即被构造&rdquo;<br>&mdash; L. E. J. Brouwer</p>
+  <p class="footer-attr">INTUITA &middot; CONSTRUCTIO EST PROBATIO &middot; 2026</p>
+  <p class="footer-manifesto">
+    晶体是静止的舞台，离子开始流动，流动需要方向，方向需要意志。<br>
+    每个结构都是一次证明，每次证明都是一次构造。<br>
+    你自带算力，我们提供规则。
+  </p>
+</footer>
+
+<script>
+// Particles
+(function(){
+  const c = document.getElementById('particles');
+  const colors = ['#c9a84c','#4a9eff','#8b5cf6','#22c55e'];
+  for(let i=0;i<40;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.top=20+Math.random()*70+'%';
+    p.style.animationDelay=Math.random()*6+'s';
+    p.style.animationDuration=4+Math.random()*4+'s';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.appendChild(p);
+  }
+})();
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+reveals.forEach(el=>obs.observe(el));
+
+// Nav hide/show
+let lastScroll = 0;
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll',()=>{
+  const st = window.scrollY;
+  if(st > lastScroll && st > 100) nav.classList.add('hidden');
+  else nav.classList.remove('hidden');
+  lastScroll = st;
+});
+
+// Level data
+const levels = {
+  1: [
+    {id:'1-1',name:'NaCl Wyckoff填充',desc:'在Fm-3m空间群中填充Na和Cl到4a和4b Wyckoff位置',tags:['crystal'],journal:'NaCl: 最简单的盐。每个厨房都是一个存在性证明。'},
+    {id:'1-2',name:'LiFePO\u2084骨架',desc:'在Pnma中构建橄榄石结构，6种元素9个目标',tags:['crystal'],journal:'LiFePO₄: 自然的电池。橄榄石结构储存的不仅是锂。'},
+    {id:'1-3',name:'八面体倾斜',desc:'在Pna2₁中构建对称性破缺结构',tags:['crystal'],journal:'对称性破缺是自然的创造力。'},
+    {id:'1-4',name:'氧空位补偿',desc:'在Fm-3m中通过构造性修复补偿氧空位',tags:['crystal'],journal:'缺陷不是错误，是特性。'},
+    {id:'1-5',name:'金刚石网络',desc:'构建sp3四面体配位的金刚石结构',tags:['crystal'],journal:'碳的最美形态：每个原子都是完美的四面体。'},
+    {id:'1-6',name:'水分子',desc:'构建H₂O，VSEPR键角104.5°',tags:['molecular'],journal:'最简单的分子，最不简单的键角。'},
+    {id:'1-7',name:'乙醇合成',desc:'构建C₂H₅OH，有机价键规则',tags:['molecular'],journal:'酒精：人类最古老的化学实验。'},
+    {id:'1-8',name:'钙钛矿ABO₃',desc:'Goldschmidt容忍因子决定稳定性',tags:['crystal'],journal:'以伯爵命名，以容忍为法则。'},
+    {id:'1-9',name:'热膨胀',desc:'热应变1%下的晶体畸变',tags:['crystal','thermo'],journal:'热让一切膨胀，包括守恒矩阵的偏离。'},
+    {id:'1-10',name:'相变临界',desc:'立方→四方相变的临界点',tags:['crystal','thermo'],journal:'相变：在临界点上，一切皆有可能。'},
+  ],
+  2: [
+    {id:'2-1',name:'锂离子通道',desc:'构建Li⁺输运通道，几何输运检查',tags:['molecular'],journal:'离子不关心你的理论，它只走能走的路。'},
+    {id:'2-2',name:'晶界桥接',desc:'跨晶粒的守恒矩阵连续性',tags:['crystal'],journal:'晶界：两个世界的交涉。'},
+    {id:'2-3',name:'拓扑相变',desc:'穿越不可判定迷雾',tags:['topology'],journal:'拓扑不在乎距离，只在乎连接。'},
+    {id:'2-4',name:'多通道竞速',desc:'并行输运路径优化',tags:['molecular'],journal:'最快的路径不一定是最短的。'},
+    {id:'2-5',name:'流体边界层',desc:'Navier-Stokes直觉构建',tags:['fluid'],journal:'流体不撒谎，但它们会欺骗你的直觉。'},
+    {id:'2-6',name:'电磁屏蔽',desc:'Faraday笼的电磁约束',tags:['em'],journal:'法拉第的笼子：保护也是一种约束。'},
+    {id:'2-7',name:'热传导路径',desc:'Fourier定律下的热流构建',tags:['thermo'],journal:'热从不停下，它只是找到了新的路。'},
+    {id:'2-8',name:'统计涨落',desc:'Boltzmann分布的粒子系统',tags:['stat'],journal:'涨落不是噪声，是信号。'},
+    {id:'2-9',name:'扩散方程',desc:'Fick定律下的浓度场',tags:['fluid','stat'],journal:'扩散：从有序到无序的单程旅行。'},
+    {id:'2-10',name:'多物理场耦合',desc:'Seebeck效应：热+电+输运',tags:['multi'],journal:'当物理联手，奇迹发生。'},
+  ],
+  3: [
+    {id:'3-1',name:'催化循环',desc:'CO₂→CH₄反应路径攀登',tags:['reaction'],journal:'催化剂不参与反应，但改变了整个故事。'},
+    {id:'3-2',name:'全固态电池',desc:'跨尺度组装：电极+电解质+界面',tags:['device'],journal:'固态：没有液体，只有意志。'},
+    {id:'3-3',name:'未知材料悬赏',desc:'开放探索，社区竞赛',tags:['open'],journal:'未知不是恐惧，是邀请。'},
+    {id:'3-4',name:'光催化分解水',desc:'带隙对齐+光吸收+电荷分离',tags:['reaction','em'],journal:'阳光+催化剂=氢气。最简单的方程，最难的工程。'},
+    {id:'3-5',name:'锂硫电池',desc:'多硫化物穿梭的抑制',tags:['device','reaction'],journal:'穿梭：电池的阿喀琉斯之踵。'},
+    {id:'3-6',name:'超导临界',desc:'Cooper对形成与Tc',tags:['crystal','quantum'],journal:'零电阻：不是没有阻力，是阻力被配对消除了。'},
+    {id:'3-7',name:'量子隧穿二极管',desc:'负微分电阻的量子机制',tags:['device','quantum'],journal:'量子隧穿：穿墙不是魔法，是概率。'},
+    {id:'3-8',name:'蛋白质折叠漏斗',desc:'能量景观导航',tags:['molecular','stat'],journal:'蛋白质不思考，它只是滑向最低点。'},
+    {id:'3-9',name:'CO₂捕获材料',desc:'MOF吸附位点设计',tags:['crystal','reaction'],journal:'MOF：给CO₂一个它无法拒绝的笼子。'},
+    {id:'3-10',name:'通用材料设计师',desc:'多目标Pareto优化',tags:['multi','open'],journal:'你已成为创造性主体。存在即被构造。'},
+  ],
+  4: [
+    {id:'4-1',name:'自组装',desc:'设计相互作用规则让粒子自发组织',tags:['molecular','stat'],journal:'设定规则，让热力学替你建造。结构从定律中涌现。'},
+    {id:'4-2',name:'对称性破缺级联',desc:'三级对称性破缺(Pm-3m→P4mm→Amm2→P1)',tags:['crystal','topology'],journal:'三次破缺，一条链。每下降一级失去对称，但守恒不变。'},
+    {id:'4-3',name:'拓扑缺陷',desc:'Burgers矢量与拓扑荷',tags:['topology'],journal:'Burgers矢量是晶格中的结。连续形变无法解开它。'},
+    {id:'4-4',name:'相场演化',desc:'Allen-Cahn方程驱动微结构演化',tags:['thermo','stat'],journal:'自由能泛函写剧本，梯度项导演。'},
+    {id:'4-5',name:'开放涌现',desc:'从简单规则中创造不可预测的复杂行为',tags:['open','emergence'],journal:'涌现 = 简单规则 + 不可预测的结果。不可判定性不是bug，是游戏本身。'},
+  ],
+  0: [
+    {id:'C-1',name:'极简主义',desc:'证明树深度≤4完成结构',tags:['crystal'],journal:'少即是多。4步之内证明存在。'},
+    {id:'C-2',name:'迷雾盲行',desc:'禁止消雾通关',tags:['topology'],journal:'在黑暗中行走，信任你的守恒矩阵。'},
+    {id:'C-3',name:'守恒洁癖',desc:'零警告完成',tags:['crystal'],journal:'完美不是做不到，是值得做。'},
+    {id:'C-4',name:'速度构造',desc:'60秒限时',tags:['multi'],journal:'时间是最严格的守恒律。'},
+    {id:'C-5',name:'全知全能',desc:'L0-L4全验证通过',tags:['multi'],journal:'从符号到形式化，你看到了一切。'},
+    {id:'D-∞',name:'每日挑战',desc:'基于日期种子确定性生成，全球同题',tags:['open'],journal:'今天，全世界都在构建同一个结构。'},
+  ]
+};
+
+function showChapter(ch, btn) {
+  document.querySelectorAll('.chapter-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  const grid = document.getElementById('levelGrid');
+  grid.innerHTML = '';
+  const data = levels[ch] || [];
+  data.forEach(lv => {
+    const card = document.createElement('div');
+    card.className = 'level-card';
+    const tagHTML = lv.tags.map(t => `<span class="level-tag ${t}">${t}</span>`).join('');
+    card.innerHTML = `
+      <div class="level-id">${lv.id}</div>
+      <div class="level-name">${lv.name}</div>
+      <div class="level-desc">${lv.desc}</div>
+      <div class="level-tags">${tagHTML}</div>
+      <div class="level-journal">${lv.journal}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// Init
+showChapter(1, document.querySelector('.chapter-tab'));
+
+// Interactive matrix demo
+(function(){
+  const grid = document.getElementById('matrixDemo');
+  const label = document.getElementById('matrixState');
+  if (!grid || !label) return;
+
+  const states = ['healthy','warning','critical','dead'];
+  const stateNames = {healthy:'健康',warning:'警告',critical:'危险',dead:'崩解'};
+  const stateColors = {healthy:'var(--conservation-green)',warning:'var(--warning-yellow)',critical:'var(--danger-red)',dead:'rgba(239,68,68,0.4)'};
+
+  grid.addEventListener('click', function(e){
+    const cell = e.target.closest('.matrix-cell');
+    if (!cell) return;
+    const idx = states.indexOf(cell.className.replace('matrix-cell ','').trim());
+    const next = states[(idx+1)%states.length];
+    cell.className = 'matrix-cell ' + next;
+    const v = next === 'healthy' ? (Math.random()*0.2+0.9).toFixed(2)
+            : next === 'warning' ? (Math.random()*0.3+0.3).toFixed(2)
+            : next === 'critical' ? (Math.random()*0.3+0.6).toFixed(2)
+            : (Math.random()*0.2+0.9).toFixed(2);
+    cell.textContent = v;
+    cell.setAttribute('data-val', v);
+
+    // Calculate worst state
+    const cells = grid.querySelectorAll('.matrix-cell');
+    let worst = 0;
+    cells.forEach(c => {
+      const ci = states.indexOf(c.className.replace('matrix-cell ','').trim());
+      if (ci > worst) worst = ci;
+    });
+    label.textContent = '结构状态: ' + stateNames[states[worst]];
+    label.style.color = stateColors[states[worst]];
+  });
+})();
+</script>
+
+</body>
+</html>

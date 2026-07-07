@@ -1,0 +1,334 @@
+{
+	"domain_tutorials": {
+		"assembly": [
+			{
+				"action": "enter_assembly_mode",
+				"description": "In this mode, you assemble components into a device. Each component is a pre-built unit.",
+				"highlight": "ToolPanel",
+				"id": "as_1",
+				"text": "Assembly Mode"
+			},
+			{
+				"action": "select_component",
+				"description": "Click a component from the parts list, then click in the workspace to place it.",
+				"highlight": "ToolPanel",
+				"id": "as_2",
+				"text": "Select a Component"
+			},
+			{
+				"action": "place_component",
+				"description": "Click in the 3D workspace to place the component at the cursor position.",
+				"highlight": "ConstructionCanvas",
+				"id": "as_3",
+				"text": "Place the Component"
+			},
+			{
+				"action": "connect_components",
+				"description": "Components near each other will automatically connect if they're compatible. Check the interface status.",
+				"highlight": "ConservationHUD",
+				"id": "as_4",
+				"text": "Connect Components"
+			},
+			{
+				"action": "complete_assembly",
+				"description": "Place all required components and ensure all interfaces are stable.",
+				"highlight": "GoalsPanel",
+				"id": "as_5",
+				"text": "Complete Assembly"
+			}
+		],
+		"bond_build": [
+			{
+				"action": "enter_bond_mode",
+				"description": "现在切换到分子构建模式。你不再填充晶格位置，而是自由放置原子。",
+				"highlight": "ToolPanel",
+				"id": "bb_switch_1",
+				"text": "模式切换：分子构建"
+			},
+			{
+				"action": "atom_placed",
+				"description": "选择 atom_placer 工具，点击空白处放置原子。这里没有Wyckoff标记约束你。",
+				"highlight": "ToolPanel",
+				"id": "bb_switch_2",
+				"text": "放置自由原子"
+			},
+			{
+				"action": "bond_created",
+				"description": "选择 bond_rotator 工具，依次点击两个原子即可在它们之间创建化学键。",
+				"highlight": "ToolPanel",
+				"id": "bb_switch_3",
+				"text": "创建化学键"
+			},
+			{
+				"action": "enter_bond_mode",
+				"description": "In this mode, you connect atoms with chemical bonds. Select two atoms to form a bond between them.",
+				"highlight": "ToolPanel",
+				"id": "bb_1",
+				"text": "Bond Building Mode"
+			},
+			{
+				"action": "select_atom",
+				"description": "Click on the first atom you want to bond. It will glow to show it's selected.",
+				"highlight": "ConstructionCanvas",
+				"id": "bb_2",
+				"text": "Select First Atom"
+			},
+			{
+				"action": "select_second_atom",
+				"description": "Now click the second atom. A bond will form between them if the valence rules allow it.",
+				"highlight": "ConstructionCanvas",
+				"id": "bb_3",
+				"text": "Select Second Atom"
+			},
+			{
+				"action": "bond_created",
+				"description": "The bond appears as a cylinder between atoms. Check the conservation matrix — bonding may affect it.",
+				"highlight": "ConservationHUD",
+				"id": "bb_4",
+				"text": "Bond Created!"
+			},
+			{
+				"action": "complete_bonds",
+				"description": "Continue bonding atoms until all required bonds are formed. Watch the goals panel for progress.",
+				"highlight": "GoalsPanel",
+				"id": "bb_5",
+				"text": "Complete the Structure"
+			}
+		],
+		"cellular_automaton": [
+			{
+				"action": "enter_ca_mode",
+				"description": "现在你进入了3D元胞自动机世界。规则很简单：每个细胞的死活只取决于周围26个邻居的数量。",
+				"highlight": "ConservationHUD",
+				"id": "ca_1",
+				"text": "元胞自动机模式"
+			},
+			{
+				"action": "rule_explained",
+				"description": "规则写法B/S: B=死细胞复活需要的邻居数, S=活细胞存活需要的邻居数。例如B4555表示5邻居出生, 4或5邻居存活。",
+				"highlight": "ObjectivePanel",
+				"id": "ca_2",
+				"text": "Bays'规则"
+			},
+			{
+				"action": "cell_toggled",
+				"description": "左键点击网格中的细胞可以切换它的死活。设计一个好的初始态是关键——很多模式会快速灭绝。",
+				"highlight": "ConstructionCanvas",
+				"id": "ca_3",
+				"text": "点击修改初始态"
+			},
+			{
+				"action": "evolution_started",
+				"description": "按空格键开始/暂停自动演化, 按N键单步前进。观察右上角的守恒矩阵如何随细胞生灭变化。",
+				"highlight": "ToolPanel",
+				"id": "ca_4",
+				"text": "按空格演化"
+			},
+			{
+				"action": "test_structure",
+				"description": "任务清单会要求你演化出稳定结构、振荡器或相变。点击'测试结构'按钮验证目标是否完成。",
+				"highlight": "ObjectivePanel",
+				"id": "ca_5",
+				"text": "达成目标模式"
+			}
+		],
+		"evolution": [
+			{
+				"action": "evolution_intro",
+				"description": "通关关卡会同时获得核心和进化点（1 核心 = 1 进化点）。核心是货币，进化点用来创造规则。",
+				"highlight": "ConservationHUD",
+				"id": "evo_1",
+				"text": "进化点与核心"
+			},
+			{
+				"action": "evolution_open",
+				"description": "在自进化面板中，花 5 进化点即可创建一条自定义物理规则。规则模板有量子隧穿、热激发等。",
+				"highlight": "ToolPanel",
+				"id": "evo_2",
+				"text": "打开自进化面板"
+			},
+			{
+				"action": "evolution_rule_created",
+				"description": "创建的规则会写入守恒矩阵，改变游戏的物理行为。大胆尝试——存在即被构造。",
+				"highlight": "ConservationHUD",
+				"id": "evo_3",
+				"text": "规则影响守恒矩阵"
+			}
+		],
+		"fog": [
+			{
+				"action": "fog_intro",
+				"description": "看到那片紫色的雾了吗？那是不可判定区域，物理定律在此失效，里面的内容被隐藏。",
+				"highlight": "ConstructionCanvas",
+				"id": "fog_1",
+				"text": "不可判定区域"
+			},
+			{
+				"action": "fog_peeked",
+				"description": "按 F 键可以切换迷雾可见性，或花核心预览雾中内容——窥视能帮你判断是否值得驱散。",
+				"highlight": "ToolPanel",
+				"id": "fog_2",
+				"text": "切换与预览迷雾"
+			},
+			{
+				"action": "fog_warning",
+				"description": "独立型迷雾（暗紫色）无法被驱散，只能绕行；半可判定型（蓝色）花核心即可驱散。",
+				"highlight": "ConstructionCanvas",
+				"id": "fog_3",
+				"text": "小心独立型迷雾"
+			}
+		],
+		"free": [
+			{
+				"action": "enter_free_mode",
+				"description": "No restrictions! Use any tool to build whatever you want. The only limit is conservation.",
+				"highlight": "ToolPanel",
+				"id": "fr_1",
+				"text": "Free Build Mode"
+			},
+			{
+				"action": "select_tool",
+				"description": "All tools are unlocked. Experiment with different construction approaches.",
+				"highlight": "ToolPanel",
+				"id": "fr_2",
+				"text": "Choose Your Tools"
+			},
+			{
+				"action": "check_conservation",
+				"description": "Even in free mode, the conservation matrix tracks your structure. Keep it healthy!",
+				"highlight": "ConservationHUD",
+				"id": "fr_3",
+				"text": "Watch Conservation"
+			}
+		],
+		"mesh_build": [
+			{
+				"action": "enter_mesh_mode",
+				"description": "In this mode, you define a mesh for fluid or field simulation. Set boundaries and conditions.",
+				"highlight": "ToolPanel",
+				"id": "mb_1",
+				"text": "Mesh Building Mode"
+			},
+			{
+				"action": "define_boundary",
+				"description": "Click points to define the boundary of your mesh. Close the loop to complete the boundary.",
+				"highlight": "ConstructionCanvas",
+				"id": "mb_2",
+				"text": "Define Boundaries"
+			},
+			{
+				"action": "set_condition",
+				"description": "Right-click on boundary segments to set conditions (no-slip, inflow, outflow, etc.).",
+				"highlight": "ConstructionCanvas",
+				"id": "mb_3",
+				"text": "Set Conditions"
+			},
+			{
+				"action": "generate_mesh",
+				"description": "Click Generate to create the mesh. The conservation matrix will check if your setup is physically valid.",
+				"highlight": "ToolPanel",
+				"id": "mb_4",
+				"text": "Generate Mesh"
+			}
+		],
+		"path_build": [
+			{
+				"action": "enter_path_mode",
+				"description": "In this mode, you construct a path through a transformation. Think of it as drawing a roadmap for change.",
+				"highlight": "ToolPanel",
+				"id": "pb_1",
+				"text": "Path Building Mode"
+			},
+			{
+				"action": "place_start_node",
+				"description": "Click to place the starting node of your path. This is the initial state.",
+				"highlight": "ConstructionCanvas",
+				"id": "pb_2",
+				"text": "Place Starting Point"
+			},
+			{
+				"action": "place_path_node",
+				"description": "Click along the path to add intermediate nodes. Each node is a step in the transformation.",
+				"highlight": "ConstructionCanvas",
+				"id": "pb_3",
+				"text": "Add Intermediate Steps"
+			},
+			{
+				"action": "place_end_node",
+				"description": "Place the final node — the target state. The path must maintain conservation at every step.",
+				"highlight": "ConstructionCanvas",
+				"id": "pb_4",
+				"text": "Place Ending Point"
+			},
+			{
+				"action": "verify_path",
+				"description": "Use Ask Physics to verify each step of the path. Fog zones may hide parts of the path — decide whether to investigate.",
+				"highlight": "ToolPanel",
+				"id": "pb_5",
+				"text": "Verify the Path"
+			}
+		]
+	},
+	"steps": [
+		{
+			"highlight": "",
+			"key": "welcome",
+			"text": "这是你的3D构造画布。在这里，你将用数学构建晶体结构——从Wyckoff位置到守恒矩阵，每一步都是一次证明。",
+			"title": "欢迎来到 Intuita"
+		},
+		{
+			"highlight": "ObjectivePanel",
+			"key": "goals_panel",
+			"text": "顶部中央是任务清单，显示本关目标。○=待办 ◐=进行中 ●=完成。带🔍标记的目标需要点击'测试结构'按钮验证才能完成。",
+			"title": "任务清单"
+		},
+		{
+			"highlight": "ConstructionCanvas",
+			"key": "wyckoff",
+			"text": "看到那些标记点了吗？它们是Wyckoff位置——空间群允许的合法原子占位。每个标记代表一组对称等价的原子位置。",
+			"title": "Wyckoff位置"
+		},
+		{
+			"highlight": "ToolPanel",
+			"key": "place_atom",
+			"text": "点击一个Wyckoff标记，然后选择元素Na。原子会被放置到对应位置上，同时生成对称等价原子。",
+			"title": "放置原子"
+		},
+		{
+			"highlight": "ConservationHUD",
+			"key": "conservation",
+			"text": "右上角的4x4矩阵是你的守恒状态。M=质量 Q=电荷 P=宇称 E=能量。对角线目标1.00(绿色=安全)，非对角线目标0.00。放置原子会让数值变化——保持对角线接近1.00！",
+			"title": "守恒矩阵"
+		},
+		{
+			"highlight": "ObjectivePanel",
+			"key": "test_structure",
+			"text": "放置完原子后，点击任务清单中的'🔬 测试结构'按钮。这会验证你的结构是否稳定。验证类目标(🔍)必须通过测试才能完成！不测试就无法通关。",
+			"title": "测试结构 (关键!)"
+		},
+		{
+			"highlight": "",
+			"key": "complete",
+			"text": "继续填充剩余的Wyckoff位置。NaCl结构需要Na在4a、Cl在4b。填满所有位置后守恒矩阵会变绿。",
+			"title": "完成结构"
+		},
+		{
+			"highlight": "",
+			"key": "ask_physics",
+			"text": "点击'测试结构'按钮触发物理验证。系统会检查你的结构是否满足守恒定律。验证通过=证明完成！如果结构不稳定，根据提示调整后重新测试。",
+			"title": "物理验证"
+		},
+		{
+			"highlight": "ConservationHUD",
+			"key": "core_economy",
+			"text": "验证会消耗核心，通过后返还。核心是游戏的货币，用于购买道具、驱散迷雾和进化规则。",
+			"title": "核心经济"
+		},
+		{
+			"highlight": "",
+			"key": "proof_done",
+			"text": "恭喜！你刚刚用数学构造了一个真实的晶体结构。每个结构都是一次存在性证明——存在即被构造。",
+			"title": "证明完成！"
+		}
+	]
+}

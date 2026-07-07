@@ -1,0 +1,61 @@
+{
+    "v": 1,
+    "chapter": 3,
+    "level": 4,
+    "title": "Shortcut",
+    "description": "Guide the structure through a topological phase transition. The path goes through uncertain territory.",
+    "domain": "topology",
+    "construction_mode": "path_build",
+    "space_group_symbol": "I4/mmm",
+    "space_group_number": 139,
+    "lattice_parameters": {
+        "x": 3.91,
+        "y": 3.91,
+        "z": 4.07
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "M",
+            "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 4
+        },
+        {
+            "symbol": "O",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "b",
+            "wyckoff_multiplicity": 4
+        }
+    ],
+    "goals": [
+        {
+            "type": "verification",
+            "description": "Build the topological path through the transition zone"
+        }
+    ],
+    "fog_zones": [
+        {
+            "fog_type": "independent",
+            "label": "Transition zone",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "radius": 3.0
+        }
+    ],
+    "hint": "Some transitions can't be predicted - you have to try and see. The fog represents undecidability - not all paths are knowable.",
+    "journal_entry": "Topological transition: Fm-3m to I4/mmm. The path through the fog is independent of any single algorithm — a constructive proof of emergence.",
+    "scale_label": "Å",
+    "scale_range": { "x": 0.1, "y": 5.0 },
+    "scene_config": {
+        "source_space_group": 225,
+        "target_space_group": 139,
+        "transition_type": "topological"
+    },
+    "constraints": {},
+    "reward_cores": 10,
+    "available_tools": ["element_block", "topology_tool", "path_builder"]
+}

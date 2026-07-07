@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgame001"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/construction/construction_canvas.tscn" id="2_canvas"]
+[ext_resource type="PackedScene" path="res://scenes/hud/conservation_hud.tscn" id="3_conshud"]
+[ext_resource type="PackedScene" path="res://scenes/hud/proof_panel.tscn" id="4_proof"]
+[ext_resource type="PackedScene" path="res://scenes/hud/tool_panel.tscn" id="5_tool"]
+[ext_resource type="Script" path="res://scripts/hud/objective_panel.gd" id="6_objective"]
+[ext_resource type="PackedScene" path="res://scenes/hud/tutorial_overlay.tscn" id="7_tutorial"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_script")
+
+[node name="ConstructionCanvas" parent="." instance=ExtResource("2_canvas")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="ConservationHUD" parent="HUD" instance=ExtResource("3_conshud")]
+
+[node name="ProofPanel" parent="HUD" instance=ExtResource("4_proof")]
+
+[node name="ToolPanel" parent="HUD" instance=ExtResource("5_tool")]
+
+[node name="ObjectivePanel" type="PanelContainer" parent="HUD"]
+script = ExtResource("6_objective")
+
+[node name="TutorialOverlay" parent="HUD" instance=ExtResource("7_tutorial")]

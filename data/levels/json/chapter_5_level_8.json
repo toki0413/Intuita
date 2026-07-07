@@ -1,0 +1,96 @@
+{
+  "v": 1,
+  "chapter": 5,
+  "level": 8,
+  "title": "Open Emergence",
+  "description": "Create emergent phenomena in a sandbox — simple rules producing unpredictable complex behavior. Emergence is undecidability.",
+  "domain": "open",
+  "construction_mode": "free",
+  "space_group_symbol": "P1",
+  "space_group_number": 1,
+  "lattice_parameters": {
+    "x": 30.0,
+    "y": 30.0,
+    "z": 30.0
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "X",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 50
+    },
+    {
+      "symbol": "Y",
+      "position": {
+        "x": 0.3,
+        "y": 0.7,
+        "z": 0.5
+      },
+      "wyckoff_label": "b",
+      "wyckoff_multiplicity": 50
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 30,
+      "sim_mode": "strain",
+      "description": "涌现结构在应变弛豫后至少30个原子存活"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "independent",
+      "label": "Emergence undecidable zone",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "radius": 8.0
+    }
+  ],
+  "hint": "Emergence = simple rules + unpredictable outcomes. You cannot predict behavior from rules — that is Gödel's shadow.",
+  "journal_entry": "Open emergence: Simple rules, complex outcomes. Undecidability is not a bug — it is the game.",
+  "scale_label": "nm",
+  "scale_range": {
+    "x": 0.1,
+    "y": 100.0
+  },
+  "scene_config": {
+    "emergence_targets": [
+      "spontaneous_symmetry_breaking",
+      "pattern_formation",
+      "self_organized_criticality"
+    ],
+    "verification_depth": "deepest_possible",
+    "community_ranking": true
+  },
+  "constraints": {
+    "emergence_required": true
+  },
+  "reward_cores": 25,
+  "available_tools": [
+    "interaction_designer",
+    "potential_setter",
+    "assembly_watcher",
+    "mesh_builder",
+    "potential_designer",
+    "gradient_setter",
+    "evolution_watcher",
+    "defect_placer",
+    "burgers_calculator",
+    "symmetry_breaker",
+    "self-evolve"
+  ]
+}

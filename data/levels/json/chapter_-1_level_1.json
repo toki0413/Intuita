@@ -1,0 +1,72 @@
+{
+    "v": 1,
+    "chapter": -1,
+    "level": 1,
+    "title": "Minimalist",
+    "description": "Build NaCl in the fewest steps possible. Proof tree depth must be <= 4.",
+    "domain": "crystal",
+    "construction_mode": "wyckoff_fill",
+    "space_group_symbol": "Fm-3m",
+    "space_group_number": 225,
+    "lattice_parameters": {
+        "x": 5.64,
+        "y": 5.64,
+        "z": 5.64
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "Na",
+            "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 4
+        },
+        {
+            "symbol": "Cl",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "b",
+            "wyckoff_multiplicity": 4
+        }
+    ],
+    "goals": [
+        {
+            "type": "wyckoff_fill",
+            "description": "Place Na at 4a site",
+            "element": "Na",
+            "wyckoff": "a",
+            "required_count": 4
+        },
+        {
+            "type": "wyckoff_fill",
+            "description": "Place Cl at 4b site",
+            "element": "Cl",
+            "wyckoff": "b",
+            "required_count": 4
+        },
+        {
+            "type": "conservation_check",
+            "description": "Conservation matrix healthy",
+            "max_deviation": 0.1
+        },
+        {
+            "type": "verification",
+            "description": "Complete minimalist build verification",
+            "required_layer": 0
+        }
+    ],
+    "fog_zones": [],
+    "hint": "Every step must justify itself. Proof depth <= 4. Elegance is efficiency.",
+    "journal_entry": "Minimalist: Every step must justify itself. Proof depth <= 4. Elegance is efficiency.",
+    "scale_label": "Å",
+    "scale_range": { "x": 0.5, "y": 10.0 },
+    "scene_config": {},
+    "constraints": {
+        "max_proof_depth": 4
+    },
+    "reward_cores": 8,
+    "available_tools": ["element_block", "wyckoff_snap"]
+}

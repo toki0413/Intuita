@@ -1,0 +1,100 @@
+[gd_scene load_steps=2 format=3 uid="uid://bproofpanel001"]
+
+[ext_resource type="Script" path="res://scripts/hud/proof_panel.gd" id="1_script"]
+
+[node name="ProofPanel" type="PanelContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 340.0
+offset_bottom = -20.0
+mouse_filter = 2
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""
+
+[node name="Checklist" type="VBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Check1" type="CheckBox" parent="MarginContainer/VBox/Checklist"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="Check2" type="CheckBox" parent="MarginContainer/VBox/Checklist"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="Check3" type="CheckBox" parent="MarginContainer/VBox/Checklist"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="Check4" type="CheckBox" parent="MarginContainer/VBox/Checklist"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="Check5" type="CheckBox" parent="MarginContainer/VBox/Checklist"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NewBranchBtn" type="Button" parent="MarginContainer/VBox/Toolbar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="UndoBtn" type="Button" parent="MarginContainer/VBox/Toolbar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBox/Toolbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DepthLabel" type="Label" parent="MarginContainer/VBox/Toolbar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="CoresLabel" type="Label" parent="MarginContainer/VBox/Toolbar"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="TreeDisplay" type="Tree" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 200)
+size_flags_vertical = 3
+hide_root = false
+allow_rmb_select = true
+
+[node name="ContextMenu" type="PopupMenu" parent="."]

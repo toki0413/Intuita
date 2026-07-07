@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://baiassist001"]
+
+[ext_resource type="Script" path="res://scripts/hud/ai_assistant_panel.gd" id="1_script"]
+
+[node name="AIAssistantPanel" type="PanelContainer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -360.0
+grow_horizontal = 0
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleHBox" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBox/TitleHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 24
+text = ""
+
+[node name="CloseBtn" type="Button" parent="MarginContainer/VBox/TitleHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+flat = true
+text = "✕"
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+autowrap_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="HintText" type="RichTextLabel" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+size_flags_vertical = 3
+bbcode_enabled = true
+fit_content = true
+
+[node name="BottomVBox" type="VBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CostLabel" type="Label" parent="MarginContainer/VBox/BottomVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="HintBtn" type="Button" parent="MarginContainer/VBox/BottomVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""

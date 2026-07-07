@@ -1,0 +1,122 @@
+{
+  "v": 1,
+  "chapter": 4,
+  "level": 8,
+  "title": "Li-S Battery",
+  "description": "Build a lithium-sulfur battery and manage the polysulfide shuttle effect. Control capacity fade by designing an interception layer.",
+  "domain": "device",
+  "construction_mode": "assembly",
+  "space_group_symbol": "P1",
+  "space_group_number": 1,
+  "lattice_parameters": {
+    "x": 15.0,
+    "y": 15.0,
+    "z": 15.0
+  },
+  "lattice_angles": {
+    "x": 90.0,
+    "y": 90.0,
+    "z": 90.0
+  },
+  "elements": [
+    {
+      "symbol": "Li",
+      "position": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "wyckoff_label": "a",
+      "wyckoff_multiplicity": 2
+    },
+    {
+      "symbol": "S",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.0
+      },
+      "wyckoff_label": "b",
+      "wyckoff_multiplicity": 8
+    },
+    {
+      "symbol": "C",
+      "position": {
+        "x": 0.33,
+        "y": 0.0,
+        "z": 0.5
+      },
+      "wyckoff_label": "c",
+      "wyckoff_multiplicity": 4
+    }
+  ],
+  "goals": [
+    {
+      "type": "assembly_check",
+      "required_parts": {
+        "Li": 1,
+        "S": 1,
+        "C": 1
+      },
+      "description": "组装锂硫电池: 放置全部3种组件元素"
+    },
+    {
+      "type": "survives_simulation",
+      "min_atoms": 3,
+      "sim_mode": "strain",
+      "description": "锂硫电池结构在应变弛豫后至少3个原子存活"
+    }
+  ],
+  "fog_zones": [
+    {
+      "fog_type": "undecidable",
+      "label": "Polysulfide dissolution zone",
+      "position": {
+        "x": 0.5,
+        "y": 0.5,
+        "z": 0.5
+      },
+      "radius": 3.0
+    }
+  ],
+  "hint": "Polysulfide Li2Sn (n=4-8) dissolves in electrolyte causing shuttle. Design an interception layer or adsorbent.",
+  "journal_entry": "Li-S battery: The shuttle is the enemy. Intercept the polysulfide, save the capacity.",
+  "scale_label": "μm",
+  "scale_range": {
+    "x": 0.1,
+    "y": 20.0
+  },
+  "scene_config": {
+    "components": [
+      "anode",
+      "cathode",
+      "electrolyte",
+      "shuttle_interceptor",
+      "separator"
+    ],
+    "anode_material": "Li_metal",
+    "cathode_material": "S8",
+    "polysulfide_species": [
+      "Li2S8",
+      "Li2S6",
+      "Li2S4",
+      "Li2S2"
+    ]
+  },
+  "constraints": {
+    "max_parts": 8
+  },
+  "reward_cores": 11,
+  "available_tools": [
+    "element_block",
+    "bond_tool",
+    "interface_builder",
+    "strain_tool",
+    "channel_inspector",
+    "molecule_builder",
+    "reaction_arrow",
+    "energy_diagram",
+    "topology_tool",
+    "path_builder"
+  ]
+}

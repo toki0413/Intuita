@@ -1,0 +1,104 @@
+{
+  "chapter": 4,
+  "level": 1,
+  "title": "Catalyst",
+  "description": "Design a reaction that turns CO2 into CH4. Every step must be balanced - atoms can't appear or disappear.",
+  "domain": "reaction",
+  "construction_mode": "path_build",
+  "space_group": {
+    "symbol": "P1",
+    "number": 1
+  },
+  "lattice": {
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "C",
+      "wyckoff": "1a",
+      "x": 0,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "2b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0,
+      "count": 2
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "8c",
+      "x": 0.25,
+      "y": 0.25,
+      "z": 0.25,
+      "count": 8
+    },
+    {
+      "symbol": "Ni",
+      "wyckoff": "1d",
+      "x": 0.5,
+      "y": 0,
+      "z": 0.5,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "reaction_path",
+      "reaction_steps": [
+        "C",
+        "O",
+        "H",
+        "Ni"
+      ],
+      "description": "按顺序构建催化反应路径: C → O → H → Ni"
+    },
+    {
+      "type": "survives_simulation",
+      "min_atoms": 2,
+      "sim_mode": "strain",
+      "description": "催化结构在应变弛豫后至少2个原子存活"
+    }
+  ],
+  "constraints": {
+    "max_intermediates": 5
+  },
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Transition state",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 2.0
+    }
+  ],
+  "scene_config": {
+    "temperature": 0.2,
+    "auto_bond_formation": true,
+    "bond_form_distance": 1.8,
+    "bond_break_distance": 3.0,
+    "damping": 0.88
+  },
+  "hints": [
+    "CO2 + 4H2 becomes CH4 + 2H2O - the Sabatier reaction",
+    "Every intermediate must be a real molecule - no half-atoms allowed"
+  ],
+  "reward_cores": 10,
+  "tools": [
+    "molecule_builder",
+    "reaction_arrow",
+    "energy_diagram"
+  ]
+}

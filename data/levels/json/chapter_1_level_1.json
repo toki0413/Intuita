@@ -1,0 +1,66 @@
+{
+  "chapter": 1,
+  "level": 1,
+  "title": "First Experiment",
+  "description": "放置原子构建结构，然后按'测试结构'按钮运行物理模拟。结构稳定即过关。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 5.0,
+    "b": 5.0,
+    "c": 5.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Na",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "1b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "放置原子后运行模拟，结构需达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "放置所有原子后按'测试结构'按钮",
+    "原子间距太近会在模拟中被弹出"
+  ],
+  "reward_cores": 3,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

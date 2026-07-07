@@ -1,0 +1,61 @@
+{
+  "level_id": "chapter_5_level_2",
+  "chapter": 5,
+  "level_number": 2,
+  "title": "Life Game",
+  "description": "Place some cells and hit space to evolve. Simple rules create complex patterns. Watch emergence happen.",
+  "domain": "open",
+  "construction_mode": "cellular_automaton",
+  "space_group": "P1 (#1)",
+  "lattice": {
+    "a": 10,
+    "b": 10,
+    "c": 10,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "label": "CA",
+      "wyckoff": "1a",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5,
+      "count": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "ca_pattern_reach",
+      "params": {
+        "pattern": "stable",
+        "min_steps": 10
+      }
+    },
+    {
+      "type": "ca_conservation_maintain",
+      "params": {
+        "max_dev": 0.25,
+        "min_steps": 15
+      }
+    },
+    {
+      "type": "verification",
+      "params": {
+        "required_layer": 2
+      }
+    }
+  ],
+  "constraints": {
+    "max_edits": 20,
+    "max_steps": 50
+  },
+  "fog_zones": [],
+  "hints": [
+    "B4555 rule: dead cell born with 5 neighbors, alive survives with 4-5",
+    "Try a cross-shaped seed in the center"
+  ],
+  "reward_cores": 15,
+  "tools": ["ca_placer", "ca_step", "ca_run", "ca_reset"]
+}

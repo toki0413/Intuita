@@ -1,0 +1,15 @@
+{
+  "v": 1,
+  "defaults": {
+    "intuita:render:hdri_quality": "high",
+    "intuita:audio:music_volume": 0.5,
+    "intuita:audio:sfx_volume": 0.86,
+    "intuita:game:show_tutorial": true,
+    "intuita:game:language": "en",
+    "intuita:render:atom_glow": true,
+    "intuita:render:fog_density": 0.36,
+    "intuita:render:vsync": true,
+    "intuita:render:anti_aliasing": 2,
+    "intuita:render:fullscreen": false
+  }
+}

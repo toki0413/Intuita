@@ -1,0 +1,89 @@
+{
+  "chapter": 2,
+  "level": 6,
+  "title": "Free Spirit",
+  "description": "No fixed positions. Build ANY charge-balanced structure with 8+ atoms. NaCl, KBr, or something nobody has seen before — if it satisfies the laws, it passes.",
+  "domain": "crystal",
+  "construction_mode": "free",
+  "space_group": {
+    "name": "Fm-3m",
+    "number": 225
+  },
+  "lattice_params": {
+    "a": 5.64,
+    "b": 5.64,
+    "c": 5.64,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Na",
+      "wyckoff": "4a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "Cl",
+      "wyckoff": "4b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "K",
+      "wyckoff": "4c",
+      "position": [
+        0.5,
+        0,
+        0
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "Br",
+      "wyckoff": "4d",
+      "position": [
+        0,
+        0.5,
+        0
+      ],
+      "multiplicity": 4
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 5,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，至少5个原子存活"
+    }
+  ],
+  "scene_config": {
+    "temperature": 0.15,
+    "auto_bond_formation": true,
+    "bond_form_distance": 2.2,
+    "damping": 0.9
+  },
+  "constraints": {},
+  "fog_zones": [],
+  "hints": [
+    "No single right answer — just satisfy the laws of physics",
+    "Charge must balance: total positive = total negative",
+    "Try NaCl, KBr, or mix them — any valid structure counts"
+  ],
+  "reward_cores": 6,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool"
+  ]
+}

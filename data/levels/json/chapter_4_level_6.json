@@ -1,0 +1,97 @@
+{
+  "chapter": 4,
+  "level": 6,
+  "title": "Folding",
+  "description": "Guide a protein to its natural shape. The energy landscape is full of traps - find the global minimum.",
+  "domain": "molecular",
+  "construction_mode": "path_build",
+  "space_group": {
+    "symbol": "P1",
+    "number": 1
+  },
+  "lattice": {
+    "a": 10,
+    "b": 10,
+    "c": 10,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "N",
+      "wyckoff": "12a",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "count": 12
+    },
+    {
+      "symbol": "C",
+      "wyckoff": "12b",
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0,
+      "count": 12
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "12c",
+      "x": 0.25,
+      "y": 0.25,
+      "z": 0.25,
+      "count": 12
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "24d",
+      "x": 0.75,
+      "y": 0.75,
+      "z": 0.75,
+      "count": 24
+    }
+  ],
+  "goals": [
+    {
+      "type": "reaction_path",
+      "reaction_steps": [
+        "N",
+        "C",
+        "O",
+        "H"
+      ],
+      "description": "按顺序构建蛋白质折叠路径: N → C → O → H"
+    },
+    {
+      "type": "survives_phase_transition",
+      "min_atoms": 20,
+      "target_temp": 400,
+      "description": "蛋白质结构升温至400K后至少20个原子存活"
+    }
+  ],
+  "constraints": {
+    "max_intermediates": 8
+  },
+  "fog_zones": [
+    {
+      "fog_type": "undecidable",
+      "label": "Kinetic trap",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 3.0
+    }
+  ],
+  "hints": [
+    "The folding funnel leads downhill to the natural state",
+    "Local minima are traps - you need to go uphill briefly to escape"
+  ],
+  "reward_cores": 11,
+  "tools": [
+    "atom_placer",
+    "bond_rotator",
+    "energy_landscape_navigator"
+  ]
+}

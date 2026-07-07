@@ -1,0 +1,76 @@
+{
+  "chapter": 1,
+  "level": 7,
+  "title": "Molecular Bonds",
+  "description": "构建水分子：一个氧两个氢。运行模拟后看看键是否形成、结构是否稳定。",
+  "domain": "molecular",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 6.0,
+    "b": 6.0,
+    "c": 6.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "O",
+      "wyckoff": "1a",
+      "position": [
+        0.4,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "1b",
+      "position": [
+        0.6,
+        0.35,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "H",
+      "wyckoff": "1c",
+      "position": [
+        0.6,
+        0.65,
+        0.5
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建水分子并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "O-H间距约1.5Å，模拟中可能自动成键",
+    "水分子的H-O-H角约104.5度"
+  ],
+  "reward_cores": 4,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

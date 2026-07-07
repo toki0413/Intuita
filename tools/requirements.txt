@@ -1,0 +1,5 @@
+jsonschema>=4.23.0
+numpy>=1.24.0
+# 可选：AI 关卡生成器依赖
+# openai>=1.0
+# google-generativeai>=0.7

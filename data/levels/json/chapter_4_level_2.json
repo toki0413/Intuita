@@ -1,0 +1,114 @@
+{
+  "chapter": 4,
+  "level": 2,
+  "title": "Battery",
+  "description": "Assemble a solid-state battery: cathode, electrolyte, anode. Ions flow through, electrons flow around.",
+  "domain": "device",
+  "construction_mode": "assembly",
+  "space_group": {
+    "symbol": "P1",
+    "number": 1
+  },
+  "lattice": {
+    "a": 10,
+    "b": 5,
+    "c": 5,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Li",
+      "wyckoff": "4a",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "count": 4
+    },
+    {
+      "symbol": "Co",
+      "wyckoff": "2b",
+      "x": 0.33,
+      "y": 0,
+      "z": 0,
+      "count": 2
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "6c",
+      "x": 0.33,
+      "y": 0.5,
+      "z": 0,
+      "count": 6
+    },
+    {
+      "symbol": "Zr",
+      "wyckoff": "2d",
+      "x": 0.66,
+      "y": 0,
+      "z": 0,
+      "count": 2
+    },
+    {
+      "symbol": "La",
+      "wyckoff": "2e",
+      "x": 0.66,
+      "y": 0.5,
+      "z": 0,
+      "count": 2
+    }
+  ],
+  "goals": [
+    {
+      "type": "assembly_check",
+      "required_parts": {
+        "Li": 1,
+        "Co": 1,
+        "O": 1,
+        "Zr": 1,
+        "La": 1
+      },
+      "description": "组装电池: 放置全部5种组件元素(Li/Co/O/Zr/La)"
+    },
+    {
+      "type": "survives_simulation",
+      "min_atoms": 3,
+      "sim_mode": "strain",
+      "description": "电池结构在应变弛豫后至少3个原子存活"
+    }
+  ],
+  "constraints": {
+    "budget_cores": 15,
+    "max_parts": 10
+  },
+  "fog_zones": [
+    {
+      "fog_type": "undecidable",
+      "label": "Anode-electrolyte interface",
+      "position": [
+        0.66,
+        0.5,
+        0.5
+      ],
+      "radius": 2.5
+    }
+  ],
+  "hints": [
+    "Cathode supplies Li+, electrolyte conducts Li+, anode collects Li+",
+    "The interface is where things go wrong - stability matters"
+  ],
+  "reward_cores": 12,
+  "tools": [
+    "element_block",
+    "bond_tool",
+    "interface_builder",
+    "strain_tool",
+    "channel_inspector",
+    "molecule_builder",
+    "reaction_arrow",
+    "energy_diagram",
+    "topology_tool",
+    "path_builder"
+  ]
+}

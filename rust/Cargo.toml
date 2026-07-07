@@ -1,0 +1,15 @@
+[package]
+name = "intuita-core"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+godot = { git = "https://github.com/godot-rust/gdext", branch = "master" }
+nalgebra = "0.33"
+# z3 = "0.12"  # 需要 Z3 C 库，启用前需安装 libz3-dev / z3.lib
+
+[profile.dev]
+strip = "debuginfo"

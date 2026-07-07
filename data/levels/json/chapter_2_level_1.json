@@ -1,0 +1,81 @@
+{
+  "chapter": 2,
+  "level": 1,
+  "title": "Tilt",
+  "description": "Rotate the octahedra and watch the symmetry drop. The structure is still valid - just less symmetric.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "Pna2₁",
+    "number": 33
+  },
+  "lattice_params": {
+    "a": 10.33,
+    "b": 6.01,
+    "c": 4.69,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Li",
+      "wyckoff": "4a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "Fe",
+      "wyckoff": "4a",
+      "position": [
+        0.28,
+        0.25,
+        0.97
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "P",
+      "wyckoff": "4a",
+      "position": [
+        0.09,
+        0.25,
+        0.42
+      ],
+      "multiplicity": 4
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "12a",
+      "position": [
+        0.09,
+        0.27,
+        0.73
+      ],
+      "multiplicity": 12
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 5,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，至少5个原子存活"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [],
+  "hints": [
+    "Symmetry can drop when atoms shift slightly",
+    "The octahedra tilted - that's a real thing crystals do!"
+  ],
+  "reward_cores": 5,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ]
+}

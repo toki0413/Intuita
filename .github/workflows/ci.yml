@@ -1,0 +1,41 @@
+name: Intuita CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust-check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Check Rust format
+        run: cd rust && cargo fmt --check
+      - name: Clippy
+        run: cd rust && cargo clippy -- -D warnings
+      - name: Test
+        run: cd rust && cargo test
+
+  godot-check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Godot
+        run: |
+          curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_win64.exe.zip
+          Expand-Archive godot.zip -DestinationPath .
+      - name: Install gdUnit4
+        run: |
+          curl -L -o gdunit.zip https://github.com/godot-gdunit-labs/gdUnit4/archive/refs/tags/v6.1.3.zip
+          Expand-Archive gdunit.zip -DestinationPath .
+          New-Item -ItemType Directory -Path addons/gdUnit4 -Force
+          Copy-Item -Path gdUnit4-6.1.3/addons/gdUnit4/* -Destination addons/gdUnit4 -Recurse -Force
+      - name: Validate project
+        run: |
+          ./Godot_v4.6.3-stable_win64_console.exe --headless --check-only --path .
+      - name: Run gdUnit4 tests
+        run: |
+          ./Godot_v4.6.3-stable_win64_console.exe --headless --path . -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://scripts/tests/ --ignoreHeadlessMode

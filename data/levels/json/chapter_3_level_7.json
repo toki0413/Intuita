@@ -1,0 +1,89 @@
+{
+    "v": 1,
+    "chapter": 3,
+    "level": 7,
+    "title": "Power Plant",
+    "description": "Build a thermoelectric generator: heat flows in, electricity comes out. Three physics fields meet at one point.",
+    "domain": "multiphysics",
+    "construction_mode": "assembly",
+    "space_group_symbol": "P1",
+    "space_group_number": 1,
+    "lattice_parameters": {
+        "x": 10.0,
+        "y": 5.0,
+        "z": 5.0
+    },
+    "lattice_angles": {
+        "x": 90.0,
+        "y": 90.0,
+        "z": 90.0
+    },
+    "elements": [
+        {
+            "symbol": "HOT_SIDE",
+            "position": { "x": 0.0, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "COLD_SIDE",
+            "position": { "x": 1.0, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "P_LEG",
+            "position": { "x": 0.3, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "N_LEG",
+            "position": { "x": 0.7, "y": 0.5, "z": 0.5 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "METAL_TOP",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.7 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        },
+        {
+            "symbol": "METAL_BOT",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.3 },
+            "wyckoff_label": "a",
+            "wyckoff_multiplicity": 1
+        }
+    ],
+    "goals": [
+        {
+            "type": "survives_phase_transition",
+            "description": "The thermoelectric assembly must survive heating to 450K with at least 4 atoms intact",
+            "min_atoms": 4,
+            "target_temp": 450
+        }
+    ],
+    "fog_zones": [
+        {
+            "fog_type": "independent",
+            "label": "Coupling point",
+            "position": { "x": 0.5, "y": 0.5, "z": 0.5 },
+            "radius": 3.0
+        }
+    ],
+    "hint": "Seebeck effect: temperature difference creates voltage. P-type and N-type legs connect through metal - it's a circuit.",
+    "journal_entry": "Thermoelectric generator: Heat in, electricity out. Three physics fields — thermal, electrical, semiconductor — converge at one point. A constructive proof of energy transduction.",
+    "scale_label": "nm",
+    "scale_range": { "x": 0.1, "y": 10.0 },
+    "scene_config": {
+        "generator_type": "thermoelectric",
+        "p_leg_material": "Bi2Te3",
+        "n_leg_material": "Bi2Te3",
+        "delta_T": 200,
+        "coupling_fields": ["thermal", "electrical", "semiconductor"]
+    },
+    "constraints": {},
+    "reward_cores": 12,
+    "available_tools": ["element_block", "bond_tool", "interface_builder", "strain_tool", "channel_inspector", "molecule_builder", "reaction_arrow", "energy_diagram", "topology_tool", "path_builder"]
+}

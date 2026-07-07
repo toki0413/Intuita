@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites id="2026-07-02" name="report_334" tests="7" failures="0" skipped="0" flaky="0" time="0.000">
+	<testsuite id="0" name="undo_redo_test" package="scripts/tests" timestamp="2026-07-02T10:22:41" hostname="localhost" tests="2" failures="0" errors="2" skipped="0" flaky="0" time="13.094">
+		<testcase name="test_undo_redo_atom_placement" classname="undo_redo_test" time="12.037">
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:0" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid assignment of property or key '_instability_modifier' with value of type 'float' on a base object of type 'Node (05_level_manager.gd)'.'
+	at res://scripts/gameplay/dynamic_difficulty.gd:101
+]]>
+			</error>
+		</testcase>
+		<testcase name="test_undo_redo_substitute_atom" classname="undo_redo_test" time="1.009">
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:0" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid assignment of property or key '_instability_modifier' with value of type 'float' on a base object of type 'Node (05_level_manager.gd)'.'
+	at res://scripts/gameplay/dynamic_difficulty.gd:101
+]]>
+			</error>
+		</testcase>
+	</testsuite>
+	<testsuite id="1" name="conservation_engine_test" package="scripts/tests" timestamp="2026-07-02T10:22:54" hostname="localhost" tests="5" failures="0" errors="0" skipped="0" flaky="0" time="0.199">
+		<testcase name="test_engine_autoload_exists" classname="conservation_engine_test" time="0.019">
+		</testcase>
+		<testcase name="test_get_deviation_summary_returns_dict" classname="conservation_engine_test" time="0.022">
+		</testcase>
+		<testcase name="test_matrix_set_and_read" classname="conservation_engine_test" time="0.023">
+		</testcase>
+		<testcase name="test_diagonal_near_1_gives_healthy" classname="conservation_engine_test" time="0.019">
+		</testcase>
+		<testcase name="test_large_off_diagonal_gives_warning_or_worse" classname="conservation_engine_test" time="0.037">
+		</testcase>
+	</testsuite>
+</testsuites>

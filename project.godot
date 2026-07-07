@@ -1,0 +1,154 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Intuita"
+config/description="存在即被构造 - A mathematical construction game"
+config/version="0.2.0"
+run/main_scene="res://scenes/main_menu.tscn"
+config/features=PackedStringArray("4.6")
+config/icon="res://icon.svg"
+
+[autoload]
+
+GameLogger="*res://scripts/autoload/00_game_logger.gd"
+AchievementManager="*res://scripts/autoload/04_achievement_manager.gd"
+SettingsManager="*res://scripts/autoload/02_settings_manager.gd"
+I18nManager="*res://scripts/autoload/03_i18n_manager.gd"
+LLMBridge="*res://scripts/autoload/llm_bridge.gd"
+ErrorHandler="*res://scripts/autoload/01_error_handler.gd"
+GameState="*res://scripts/autoload/game_state.gd"
+ConservationEngine="*res://scripts/autoload/07_conservation_engine.gd"
+MorphismSystem="*res://scripts/autoload/11_morphism_system.gd"
+FogSystem="*res://scripts/autoload/08_fog_system.gd"
+ProofTree="*res://scripts/autoload/10_proof_tree.gd"
+VerificationPipeline="*res://scripts/autoload/12_verification_pipeline.gd"
+TutorialManager="*res://scripts/autoload/09_tutorial_manager.gd"
+LevelManager="*res://scripts/autoload/05_level_manager.gd"
+SoundManager="*res://scripts/autoload/06_sound_manager.gd"
+LeaderboardManager="*res://scripts/autoload/13_leaderboard_manager.gd"
+ProceduralAudio="*res://scripts/autoload/procedural_audio.gd"
+AIAssistant="*res://scripts/autoload/ai_assistant.gd"
+SelfEvolve="*res://scripts/autoload/self_evolve.gd"
+DailyChallenge="*res://scripts/autoload/daily_challenge.gd"
+MaterialCodex="*res://scripts/autoload/material_codex.gd"
+SaveManager="*res://scripts/autoload/save_manager.gd"
+ParticlePool="*res://scripts/autoload/particle_pool.gd"
+UiAnimator="*res://scripts/autoload/ui_animator.gd"
+PerformanceBenchmark="res://scripts/autoload/performance_benchmark.gd"
+LODManager="*res://scripts/autoload/lod_manager.gd"
+StructureCodex="*res://scripts/autoload/11_structure_codex.gd"
+EvolutionTree="*res://scripts/autoload/14_evolution_tree.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdUnit4/plugin.cfg")
+
+[gdscript]
+
+warnings/inferenced_declaration=0
+warnings/unsafe_method_access=0
+warnings/unsafe_property_access=0
+warnings/unsafe_cast=0
+warnings/unsafe_call_argument=0
+warnings/return_value_discarded=0
+
+[gdunit4]
+
+report/verbose_orphans=false
+
+[gui]
+
+theme/custom="res://resources/themes/intuita_theme.tres"
+
+[input]
+
+construct_place={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+construct_delete={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":2,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+ask_physics={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+undo={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"key_label":0,"unicode":122,"location":0,"echo":false,"script":null)
+]
+}
+redo={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"key_label":0,"unicode":90,"location":0,"echo":false,"script":null)
+]
+}
+zoom_in={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":61,"key_label":0,"unicode":61,"location":0,"echo":false,"script":null)
+]
+}
+zoom_out={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":45,"key_label":0,"unicode":45,"location":0,"echo":false,"script":null)
+]
+}
+select={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+cancel={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+toggle_proof_tree={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":84,"key_label":0,"unicode":116,"location":0,"echo":false,"script":null)
+]
+}
+toggle_fog={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="construction"
+2d_physics/layer_2="element"
+2d_physics/layer_3="fog"
+2d_physics/layer_4="proof_node"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
+textures/vram_compression/import_s3tc_bptc=true
+anti_aliasing/quality/msaa_3d=0
+anti_aliasing/quality/screen_space_aa=0
+rendering/anti_aliasing/quality/use_taa=true
+rendering/lights_and_shadows/directional_shadow/size=1024
+rendering/lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
+rendering/lights_and_shadows/positional_shadow/soft_shadow_filter_quality=1

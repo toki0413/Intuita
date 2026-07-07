@@ -1,0 +1,84 @@
+{
+  "chapter": 2,
+  "level": 2,
+  "title": "Stretch",
+  "description": "Heat makes things expand. Stretch the lattice by 1% and keep the matrix happy.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "Pm-3m",
+    "number": 221
+  },
+  "lattice_params": {
+    "a": 3.91,
+    "b": 3.91,
+    "c": 3.91,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Sr",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Ti",
+      "wyckoff": "1b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "3c",
+      "position": [
+        0.5,
+        0.5,
+        0
+      ],
+      "multiplicity": 3
+    }
+  ],
+  "goals": [
+    {
+      "type": "survives_simulation",
+      "min_atoms": 2,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，至少2个原子存活"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "High strain zone",
+      "position": [
+        0.5,
+        0.5,
+        0.25
+      ],
+      "radius": 1.2
+    }
+  ],
+  "hints": [
+    "Use the strain tool to stretch the lattice",
+    "1% expansion means a goes from 3.91 to 3.95"
+  ],
+  "reward_cores": 5,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool",
+    "strain_tool"
+  ]
+}

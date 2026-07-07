@@ -1,0 +1,63 @@
+{
+  "chapter": 2,
+  "level": 7,
+  "title": "Resonance Dance",
+  "description": "Make the matrix resonate - two rows warning at once - and survive for 30 seconds. It's a dance on the edge.",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P4₂/mnm",
+    "number": 136
+  },
+  "lattice_params": {
+    "a": 4.59,
+    "b": 4.59,
+    "c": 2.96,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Ti",
+      "wyckoff": "2a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 2
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "4b",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 4
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [],
+  "hints": [
+    "Use tune_matrix to push two rows into warning at the same time",
+    "Resonance: 30% chance of cascade failure, 70% chance of double efficiency. Hold on!"
+  ],
+  "reward_cores": 10,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_build",
+    "tune_matrix"
+  ]
+}

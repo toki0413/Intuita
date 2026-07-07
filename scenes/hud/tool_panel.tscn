@@ -1,0 +1,184 @@
+[gd_scene load_steps=12 format=3 uid="uid://btoolpanel001"]
+
+[ext_resource type="Script" path="res://scripts/hud/tool_panel.gd" id="1_script"]
+[ext_resource type="Theme" path="res://resources/ui/qoder_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" uid="uid://brb8db0dy8x4y" path="res://assets/third_party/phosphor/anchor.svg" id="2_anchor"]
+[ext_resource type="Texture2D" uid="uid://b2tuqk3eau33w" path="res://assets/third_party/phosphor/archive.svg" id="3_archive"]
+[ext_resource type="Texture2D" uid="uid://dh5mhmqchxvbo" path="res://assets/third_party/phosphor/arrow-bend-double-up-right.svg" id="4_bond"]
+[ext_resource type="Texture2D" uid="uid://bnd6kp6p5yuk0" path="res://assets/third_party/phosphor/arrow-bend-left-down.svg" id="5_break"]
+[ext_resource type="Texture2D" uid="uid://bkk1ucg4d3w6f" path="res://assets/third_party/phosphor/aperture.svg" id="6_verify"]
+[ext_resource type="Texture2D" uid="uid://bgduqpq1ov0pd" path="res://assets/third_party/phosphor/acorn.svg" id="7_evolve"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glass_panel"]
+bg_color = Color(0.047, 0.055, 0.078, 0.82)
+border_color = Color(0, 0.831, 1, 0.45)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_left = 16
+corner_radius_bottom_right = 16
+shadow_color = Color(0, 0.831, 1, 0.16)
+shadow_size = 12
+shadow_offset = Vector2(0, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tool_active"]
+bg_color = Color(0, 0.831, 1, 0.16)
+border_color = Color(0, 0.831, 1, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+shadow_color = Color(0, 0.831, 1, 0.35)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_core_card"]
+bg_color = Color(0.616, 0.302, 0.929, 0.14)
+border_color = Color(0.616, 0.302, 0.929, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+shadow_color = Color(0.616, 0.302, 0.929, 0.22)
+shadow_size = 6
+
+[node name="ToolPanel" type="PanelContainer"]
+anchors_preset = 0
+anchor_top = 0.02
+anchor_bottom = 0.88
+offset_left = 20.0
+offset_right = 120.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+theme_override_styles/panel = SubResource("StyleBoxFlat_glass_panel")
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 16
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.831, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.831, 1, 0.5)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 22
+text = ""
+horizontal_alignment = 1
+
+[node name="PlaceBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("2_anchor")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="DeleteBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("3_archive")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="BondBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("4_bond")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="BreakBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("5_break")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="Spacer" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="VerifyBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("6_verify")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="CoreCard" type="PanelContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_core_card")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBox/CoreCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="MarginContainer/VBox/CoreCard/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="CoreIcon" type="Label" parent="MarginContainer/VBox/CoreCard/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "◆"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CoresLabel" type="Label" parent="MarginContainer/VBox/CoreCard/MarginContainer/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = ""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer2" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="EvolveBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+theme_override_font_sizes/font_size = 14
+text = ""
+icon = ExtResource("7_evolve")
+expand_icon = true
+icon_alignment = 1
+vertical_icon_alignment = 0

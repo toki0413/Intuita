@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites id="2026-07-02" name="report_333" tests="7" failures="0" skipped="0" flaky="0" time="0.000">
+	<testsuite id="0" name="undo_redo_test" package="scripts/tests" timestamp="2026-07-02T10:11:31" hostname="localhost" tests="2" failures="0" errors="11" skipped="0" flaky="0" time="8.368">
+		<testcase name="test_undo_redo_atom_placement" classname="undo_redo_test" time="7.622">
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Could not resolve external class member "_init".'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Parse Error: Function "_process" has the same name as a previously declared function.'
+	at res://addons/gdUnit4/src/core/GdUnitSceneRunnerImpl.gd:60
+	at res://addons/gdUnit4/src/GdUnitTestSuite.gd:242
+	at res://scripts/tests/undo_redo_test.gd:7
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid access to property or key '_atom_mgr' on a base object of type 'Node3D'.'
+	at res://scripts/tests/undo_redo_test.gd:18
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid access to property or key 'tool_changed' on a base object of type 'Node3D'.'
+	at res://scripts/hud/tool_panel.gd:346
+]]>
+			</error>
+		</testcase>
+		<testcase name="test_undo_redo_substitute_atom" classname="undo_redo_test" time="0.675">
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid access to property or key '_atom_mgr' on a base object of type 'Node3D'.'
+	at res://scripts/tests/undo_redo_test.gd:57
+]]>
+			</error>
+			<error message="ERROR: res://scripts/tests/undo_redo_test.gd:7" type="ABORT">
+<![CDATA[
+Godot Runtime Error !
+Error: 'Invalid access to property or key 'tool_changed' on a base object of type 'Node3D'.'
+	at res://scripts/hud/tool_panel.gd:346
+]]>
+			</error>
+		</testcase>
+	</testsuite>
+	<testsuite id="1" name="conservation_engine_test" package="scripts/tests" timestamp="2026-07-02T10:11:40" hostname="localhost" tests="5" failures="0" errors="0" skipped="0" flaky="0" time="0.203">
+		<testcase name="test_engine_autoload_exists" classname="conservation_engine_test" time="0.017">
+		</testcase>
+		<testcase name="test_get_deviation_summary_returns_dict" classname="conservation_engine_test" time="0.017">
+		</testcase>
+		<testcase name="test_matrix_set_and_read" classname="conservation_engine_test" time="0.049">
+		</testcase>
+		<testcase name="test_diagonal_near_1_gives_healthy" classname="conservation_engine_test" time="0.017">
+		</testcase>
+		<testcase name="test_large_off_diagonal_gives_warning_or_worse" classname="conservation_engine_test" time="0.032">
+		</testcase>
+	</testsuite>
+</testsuites>

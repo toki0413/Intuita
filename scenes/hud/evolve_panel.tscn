@@ -1,0 +1,432 @@
+[gd_scene format=3 uid="uid://dhbufkn8w2b4s"]
+
+[ext_resource type="Script" path="res://scripts/hud/evolve_panel.gd" id="1_script"]
+
+[node name="EvolvePanel" type="PanelContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_bottom = 600.0
+grow_horizontal = 0
+script = ExtResource("1_script")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""
+
+[node name="PointsLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="TemplateLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="TemplateList" type="ItemList" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 100)
+theme_override_font_sizes/font_size = 20
+item_count = 4
+item_0/text = "量子隧穿 - 动量行微扰"
+item_1/text = "热激发 - 能量行微扰"
+item_2/text = "应变工程 - 质量行微扰"
+item_3/text = "缺陷工程 - 电荷行微扰"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="CreateLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="NameBox" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBox/NameBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(60, 0)
+text = ""
+
+[node name="NameEdit" type="LineEdit" parent="MarginContainer/VBox/NameBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = ""
+
+[node name="DescBox" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="DescLabel" type="Label" parent="MarginContainer/VBox/DescBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+custom_minimum_size = Vector2(60, 0)
+text = ""
+
+[node name="DescEdit" type="LineEdit" parent="MarginContainer/VBox/DescBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+placeholder_text = ""
+
+[node name="ImpactLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="ImpactGrid" type="GridContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 2
+columns = 5
+
+[node name="HeaderEmpty" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="HeaderM" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "M"
+horizontal_alignment = 1
+
+[node name="HeaderQ" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Q"
+horizontal_alignment = 1
+
+[node name="HeaderP" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "P"
+horizontal_alignment = 1
+
+[node name="HeaderE" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "E"
+horizontal_alignment = 1
+
+[node name="RowM" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "M"
+
+[node name="Slider00" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider01" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider02" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider03" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="RowQ" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Q"
+
+[node name="Slider10" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider11" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider12" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider13" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="RowP" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "P"
+
+[node name="Slider20" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider21" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider22" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider23" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="RowE" type="Label" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "E"
+
+[node name="Slider30" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider31" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider32" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="Slider33" type="HSlider" parent="MarginContainer/VBox/ImpactGrid"]
+layout_mode = 2
+custom_minimum_size = Vector2(60, 20)
+min_value = -10.0
+max_value = 10.0
+step = 1.0
+value = 0.0
+
+[node name="ValueGrid" type="GridContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/h_separation = 4
+theme_override_constants/v_separation = 2
+columns = 4
+
+[node name="Val00" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val01" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val02" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val03" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val10" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val11" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val12" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val13" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val20" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val21" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val22" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val23" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val30" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val31" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val32" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="Val33" type="Label" parent="MarginContainer/VBox/ValueGrid"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "0.00"
+horizontal_alignment = 1
+
+[node name="ValidationLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+text = ""
+
+[node name="ColorBox" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="ColorLabel" type="Label" parent="MarginContainer/VBox/ColorBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="ColorPicker" type="ColorPickerButton" parent="MarginContainer/VBox/ColorBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(80, 30)
+color = Color(0.3, 0.7, 1, 1)
+
+[node name="CreateBtn" type="Button" parent="MarginContainer/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="RulesLabel" type="Label" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="RulesList" type="VBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="IOBox" type="HBoxContainer" parent="MarginContainer/VBox"]
+layout_mode = 2
+
+[node name="ImportBtn" type="Button" parent="MarginContainer/VBox/IOBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+theme_override_font_sizes/font_size = 20
+text = ""
+
+[node name="ExportAllBtn" type="Button" parent="MarginContainer/VBox/IOBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+theme_override_font_sizes/font_size = 20
+text = ""

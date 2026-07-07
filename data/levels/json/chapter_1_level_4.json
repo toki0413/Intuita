@@ -1,0 +1,86 @@
+{
+  "chapter": 1,
+  "level": 4,
+  "title": "Tight Quarters",
+  "description": "晶胞变小了，原子挤在一起。模拟时应变会更高——小心被弹出。",
+  "domain": "crystal",
+  "construction_mode": "wyckoff_fill",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 5.0,
+    "b": 5.0,
+    "c": 5.0,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Fe",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Fe",
+      "wyckoff": "1b",
+      "position": [
+        0.5,
+        0.5,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1c",
+      "position": [
+        0.5,
+        0,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1d",
+      "position": [
+        0,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {
+    "forbidden_tools": [
+      "bond_tool"
+    ]
+  },
+  "fog_zones": [],
+  "hints": [
+    "Fe的应变系数高，靠近的Fe容易互相排斥",
+    "按'测试结构'看看谁被弹出去"
+  ],
+  "reward_cores": 4,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap"
+  ],
+  "scene_config": {}
+}

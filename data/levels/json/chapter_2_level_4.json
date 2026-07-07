@@ -1,0 +1,98 @@
+{
+  "chapter": 2,
+  "level": 4,
+  "title": "Into the Fog",
+  "description": "Some areas are hidden in fog. You can spend cores to clear it, or try building blind.",
+  "domain": "molecular",
+  "construction_mode": "assembly",
+  "space_group": {
+    "name": "P1",
+    "number": 1
+  },
+  "lattice_params": {
+    "a": 5,
+    "b": 5,
+    "c": 5,
+    "alpha": 90,
+    "beta": 90,
+    "gamma": 90
+  },
+  "elements": [
+    {
+      "symbol": "Si",
+      "wyckoff": "1a",
+      "position": [
+        0,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1a",
+      "position": [
+        1,
+        0.5,
+        0.5
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "Si",
+      "wyckoff": "1a",
+      "position": [
+        0.5,
+        0.5,
+        0
+      ],
+      "multiplicity": 1
+    },
+    {
+      "symbol": "O",
+      "wyckoff": "1a",
+      "position": [
+        0.5,
+        0.5,
+        1
+      ],
+      "multiplicity": 1
+    }
+  ],
+  "goals": [
+    {
+      "type": "stability_target",
+      "min_stability": 1,
+      "sim_mode": "strain",
+      "description": "构建结构并运行模拟，达到至少亚稳态"
+    }
+  ],
+  "constraints": {},
+  "fog_zones": [
+    {
+      "fog_type": "semi_decidable",
+      "label": "Clearable fog - spend 2 cores to reveal",
+      "position": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "radius": 2.0,
+      "dispel_cost": 2
+    }
+  ],
+  "hints": [
+    "Fog hides what's inside. Spend cores to see, or build by intuition",
+    "Fog is uncertainty made visible - some things can't be known for sure"
+  ],
+  "reward_cores": 6,
+  "available_tools": [
+    "element_block",
+    "wyckoff_snap",
+    "bond_tool",
+    "interface_builder",
+    "strain_tool",
+    "channel_inspector",
+    "molecule_builder"
+  ]
+}

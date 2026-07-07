@@ -1,0 +1,9 @@
+Initialize godot-rust (API v4.6.stable.official, runtime v4.6.3.stable.official, safeguards strict)
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+Vulkan 1.4.325 - Forward+ - Using Device #0: NVIDIA - NVIDIA GeForce RTX 4060 Laptop GPU
+
+[2026-06-17T18:57:27] [INFO] [Logger] Logger initialized, level=0
+[2026-06-17T18:57:27] [INFO] [ErrorHandler] Initialized, rust_available=true
+[守恒] Rust后端已初始化
+[2026-06-17T18:57:27] [INFO] [ConservationEngine] Using Rust-accelerated backend
+[2026-06-17T18:57:28] [INFO] [SaveManager] Initialized, save dir: user://saves
