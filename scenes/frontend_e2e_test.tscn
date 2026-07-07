@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://scripts/tests/frontend_e2e_runner.gd" id="1_runner"]
+[ext_resource type="Script" path="res://scripts/e2e/frontend_e2e_runner.gd" id="1_runner"]
 
 [node name="FrontendE2E" type="Node"]
 script = ExtResource("1_runner")
