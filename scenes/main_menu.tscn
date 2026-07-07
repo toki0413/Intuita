@@ -170,6 +170,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 18
 text = "如何游玩"
 
+[node name="DevBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox/BottomBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "开发者选项"
+
 [node name="QuitBtn" type="Button" parent="CenterContainer/MenuCard/MarginContainer/VBox/BottomBar"]
 custom_minimum_size = Vector2(140, 44)
 layout_mode = 2
