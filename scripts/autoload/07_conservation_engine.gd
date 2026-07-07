@@ -178,11 +178,17 @@ func apply_perturbation(row: int, col: int, delta: float, operation: String = ""
 		_eigenvalues = []
 		for v in result:
 			_eigenvalues.append(v)
-		# 同步更新 GDScript matrix
+		# 同步更新 GDScript matrix (Rust 对称应用，这里也要)
 		matrix[row][col] = matrix[row][col] + delta
+		if row != col:
+			matrix[col][row] = matrix[col][row] + delta
 		_recompute_state_from_eigenvalues()
 	else:
+		# Rust 后端对称应用扰动 (matrix[(row,col)] += delta; matrix[(col,row)] += delta)
+		# GDScript 回退必须保持同样行为，否则非对角扰动只改上三角，特征值不变
 		set_entry(row, col, matrix[row][col] + delta)
+		if row != col:
+			set_entry(col, row, matrix[col][row] + delta)
 		_recompute_state()
 	# 矩阵变更后立即检测共振
 	_check_resonance()
