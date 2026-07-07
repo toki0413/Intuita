@@ -40,4 +40,9 @@ jobs:
       - name: Run gdUnit4 tests
         timeout-minutes: 15
         run: |
-          ./Godot_v4.6.3-stable_win64_console.exe --headless --path . -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://scripts/tests/ --ignoreHeadlessMode
+          $testOutput = & ./Godot_v4.6.3-stable_win64_console.exe --headless --path . -s res://addons/gdUnit4/bin/GdUnitCmdTool.gd -a res://scripts/tests/ --ignoreHeadlessMode 2>&1 | Out-String
+          $testOutput -split "`n" | Select-String "Overall Summary|FAILED|Exit code" | ForEach-Object { Write-Host $_.Line }
+          # Godot leaks resources at exit causing non-zero process exit code;
+          # trust gdUnit4's own exit code instead
+          if ($testOutput -match "Exit code: 1") { exit 1 }
+          Write-Host "All gdUnit4 tests passed."

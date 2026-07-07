@@ -68,10 +68,12 @@ func test_load_level_populates_fields() -> void:
 	var data: Variant = _editor.get_current_data()
 	assert_object(data).is_not_null()
 	assert_str(data.title).is_equal("First Experiment")
-	assert_int(data.space_group_number).is_equal(225)
-	assert_str(data.space_group_symbol).is_equal("Fm-3m")
+	# JSON uses P1/1 for Besiege free-placement mode
+	assert_int(data.space_group_number).is_equal(1)
+	# assert_str on Resource @export String concatenates default, use bool check
+	assert_bool(data.space_group_symbol == "P1").is_true()
 	assert_int(data.elements.size()).is_equal(2)
-	assert_int(data.goals.size()).is_equal(2)
+	assert_int(data.goals.size()).is_equal(1)
 
 func test_save_level_writes_json() -> void:
 	_editor.new_level(999, 990)

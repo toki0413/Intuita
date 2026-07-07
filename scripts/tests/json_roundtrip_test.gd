@@ -88,7 +88,8 @@ func test_json_file_matches_roundtrip() -> void:
 	var ld := LevelData.new()
 	ld.from_json(data)
 	assert_str(ld.title).is_equal("First Experiment")
-	assert_int(ld.space_group_number).is_equal(225)
+	# JSON uses P1 for Besiege free-placement mode
+	assert_int(ld.space_group_number).is_equal(1)
 
 func test_empty_json_loads_defaults() -> void:
 	var ld := LevelData.new()

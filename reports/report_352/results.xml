@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<testsuites id="2026-07-04" name="report_352" tests="2" failures="0" skipped="0" flaky="0" time="0.000">
-	<testsuite id="0" name="ui_playthrough_test" package="scripts/tests" timestamp="2026-07-04T10:17:49" hostname="localhost" tests="2" failures="0" errors="0" skipped="0" flaky="0" time="51.228">
-		<testcase name="test_campaign_playthrough" classname="ui_playthrough_test" time="46.882">
-		</testcase>
-		<testcase name="test_challenge_playthrough" classname="ui_playthrough_test" time="4.334">
-		</testcase>
-	</testsuite>
-</testsuites>
