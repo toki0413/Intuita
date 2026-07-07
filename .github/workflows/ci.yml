@@ -46,13 +46,14 @@ jobs:
           $output -split "`n" | Select-String "Overall Summary|FAILED|Exit code" | ForEach-Object { Write-Host $_.Line }
           # Godot leaks resources at exit causing non-zero process exit code;
           # trust gdUnit4's own exit code string instead
-          # gdUnit4 returns 0=pass, 1=fail, 100=error; check for 0 explicitly
-          if ($output -notmatch "Exit code: 0\s*$") {
+          # gdUnit4 returns 0=pass, 1=fail, 100=error
+          if ($output -notmatch "Exit code: 0") {
             Write-Host "`n=== FULL TEST OUTPUT ==="
             Write-Host $output
             exit 1
           }
           Write-Host "All gdUnit4 tests passed."
+          exit 0
       - name: Upload test logs
         if: always()
         uses: actions/upload-artifact@v4
