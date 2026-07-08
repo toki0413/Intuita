@@ -30,11 +30,32 @@ jobs:
           name: intuita-core-windows
           path: rust/target/release/
 
-      - name: Export Godot project
+      - name: Download Godot
         run: |
           curl -L -o godot.zip https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_win64.exe.zip
-          Expand-Archive godot.zip
-          ./Godot_v4.6.3-stable_win64.exe/Godot_v4.6.3-stable_win64.exe --headless --export-release "Windows Desktop" ./build/Intuita.exe
+          Expand-Archive godot.zip -DestinationPath .
+
+      - name: Install export templates
+        run: |
+          $templateDir = "$env:APPDATA\Godot\export_templates\4.6.3.stable"
+          New-Item -ItemType Directory -Path $templateDir -Force
+          curl -L -o templates.tpz https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_export_templates.tpz
+          # tpz is a zip; extract only Windows templates
+          Expand-Archive templates.tpz -DestinationPath templates_tmp -Force
+          Copy-Item -Path templates_tmp/templates/windows_* -Destination $templateDir -Force
+
+      - name: Import project assets
+        timeout-minutes: 10
+        run: |
+          ./Godot_v4.6.3-stable_win64_console.exe --headless --import --path .
+
+      - name: Export Godot project
+        run: |
+          New-Item -ItemType Directory -Path build -Force
+          ./Godot_v4.6.3-stable_win64_console.exe --headless --export-release "Windows Desktop" --path . ./build/Intuita.exe
+          # Godot leaks resources at exit causing non-zero exit code; check if pck was created
+          if (Test-Path ./build/Intuita.pck) { Write-Host "Export OK" ; exit 0 }
+          else { Write-Host "Export FAILED: Intuita.pck not found" ; exit 1 }
 
       - name: Upload release package
         uses: actions/upload-artifact@v4
